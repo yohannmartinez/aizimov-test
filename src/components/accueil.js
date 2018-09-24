@@ -13,7 +13,7 @@ class accueil extends React.Component {
 
             /* --> states creation compte */
             compte_creation_mail: 'ee',
-            compte_creation_password: '',
+            compte_creation_password: 'ee',
             compte_creation_id_compte: 'ee',
             compte_creation_id_utilisateur: 'ee',
             compte_creation_type: 'ee',
@@ -57,6 +57,7 @@ class accueil extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 id_compte: this.state.compte_creation_id_compte,
+                id_utilisateur: "denis",
                 nom_utilisateur: this.state.compte_creation_username,
                 type: this.state.compte_creation_type,
             })
