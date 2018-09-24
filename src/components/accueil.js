@@ -46,51 +46,51 @@ class accueil extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    creerCompte() {
+    async creerCompte() {
         /* --> hasher le mot de passe */
         let hashedpassword = passwordHash.generate(this.state.compte_creation_password);
         this.setState({ compte_creation_hashedpassword: hashedpassword });
 
-        /* envoyer les infos en bdd */
-        fetch("http://localhost:3000/creerCompteInfos", {
+        var body = JSON.stringify({
+            id_compte: this.state.compte_creation_id_compte,
+            id_utilisateur: this.state.compte_creation_username,
+            nom_utilisateur: this.state.compte_creation_username,
+            type: this.state.compte_creation_type,
+            })
+          console.log(body)
+          try {    
+          var response = await fetch('http://localhost:3000/creerCompteInfos', {
             method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                id_compte: this.state.compte_creation_id_compte,
-                id_utilisateur: "denis",
-                nom_utilisateur: this.state.compte_creation_username,
-                type: this.state.compte_creation_type,
-            })
-        })
-            .then(response => { response.json() })
-            .then(response => {
-                if (response === 'succes') {
-                    console.log('ok')
-                }
-                else {
-                    console.log('pas ok')
-                }
-            })
+            headers: {'Content-Type': 'application/json'},
+            body: body
+          })
+          if (response.status >= 200 && response.status < 300) {
+            this.props.history.push('/mes-demandes')
+            }
+          } catch (errors) {
+           alert("Ca n'a pas marché pour l'ajout de la demande ",  errors);
+           }
 
-        fetch("http://localhost:3000/creerComptePassword", {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                id_utilisateur: this.state.compte_creation_id_utilisateur,
-                mot_de_passe: this.state.compte_creation_hashedpassword,
-                utilisateur: this.state.compte_creation_username,
-            })
-        })
-            .then(response => { response.json() })
-            .then(response => {
-                if (response === 'succes') {
-                    console.log('ok')
-                }
-                else {
-                    console.log('pas ok')
-                }
-            })
-        console.log(this.state)
+
+        // fetch("http://localhost:3000/creerComptePassword", {
+        //     method: 'post',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({
+        //         id_utilisateur: this.state.compte_creation_id_utilisateur,
+        //         mot_de_passe: this.state.compte_creation_hashedpassword,
+        //         utilisateur: this.state.compte_creation_username,
+        //     })
+        // })
+        //     .then(response => { response.json() })
+        //     .then(response => {
+        //         if (response === 'succes') {
+        //             console.log('ok')
+        //         }
+        //         else {
+        //             console.log('pas ok')
+        //         }
+        //     })
+        // console.log(this.state)
     }
 
     connexion() {
