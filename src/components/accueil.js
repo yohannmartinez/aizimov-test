@@ -12,11 +12,11 @@ class accueil extends React.Component {
             entrepots: [],
 
             /* --> states creation compte */
-            compte_creation_mail: 'ee',
-            compte_creation_password: 'ee',
-            compte_creation_id_compte: 'ee',
-            compte_creation_id_utilisateur: 'ee',
-            compte_creation_type: 'ee',
+            compte_creation_mail: null,
+            compte_creation_password: null,
+            compte_creation_id_compte: null,
+            compte_creation_id_utilisateur: null,
+            compte_creation_type: '',
             compte_creation_username: '',
             compte_creation_hashedpassword: '',
 
@@ -30,6 +30,14 @@ class accueil extends React.Component {
     }
 
     async componentDidMount() {
+
+        /* generer id utilisateur */
+        let ramdom_id_user = "F-" + Math.floor((Math.random() * 1000000000) + 1);
+        this.setState({ compte_creation_id_utilisateur: ramdom_id_user });
+
+        /* generer id compte */
+        let ramdom_id_account = "A-" + Math.floor((Math.random() * 1000000000) + 1);
+        this.setState({ compte_creation_id_compte: ramdom_id_account });
 
         /* --> fonction pour récupérer les entrepots */
         try {
@@ -47,50 +55,52 @@ class accueil extends React.Component {
     }
 
     async creerCompte() {
+
+        this.setState({ compte_creation_type: "fournisseur" });
         /* --> hasher le mot de passe */
         let hashedpassword = passwordHash.generate(this.state.compte_creation_password);
         this.setState({ compte_creation_hashedpassword: hashedpassword });
 
+        /* --> envoyer les infos en bdd */
         var body = JSON.stringify({
             id_compte: this.state.compte_creation_id_compte,
             id_utilisateur: this.state.compte_creation_username,
             nom_utilisateur: this.state.compte_creation_username,
             type: this.state.compte_creation_type,
+        })
+        console.log(body)
+        try {
+            var response = await fetch('http://localhost:3000/creerCompteInfos', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: body
             })
-          console.log(body)
-          try {    
-          var response = await fetch('http://localhost:3000/creerCompteInfos', {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: body
-          })
-          if (response.status >= 200 && response.status < 300) {
-            this.props.history.push('/mes-demandes')
+            if (response.status >= 200 && response.status < 300) {
+                this.props.history.push('/mes-demandes')
             }
-          } catch (errors) {
-           alert("Ca n'a pas marché pour l'ajout de la demande ",  errors);
-           }
+        } catch (errors) {
+            alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
+        }
 
 
-        // fetch("http://localhost:3000/creerComptePassword", {
-        //     method: 'post',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //         id_utilisateur: this.state.compte_creation_id_utilisateur,
-        //         mot_de_passe: this.state.compte_creation_hashedpassword,
-        //         utilisateur: this.state.compte_creation_username,
-        //     })
-        // })
-        //     .then(response => { response.json() })
-        //     .then(response => {
-        //         if (response === 'succes') {
-        //             console.log('ok')
-        //         }
-        //         else {
-        //             console.log('pas ok')
-        //         }
-        //     })
-        // console.log(this.state)
+        var body2 = JSON.stringify({
+            id_utilisateur: this.state.compte_creation_id_utilisateur,
+            mot_de_passe: this.state.compte_creation_hashedpassword,
+            utilisateur: this.state.compte_creation_username,
+        })
+        console.log(body2)
+        try {
+            var response = await fetch('http://localhost:3000/creerComptePassword', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: body2
+            })
+            if (response.status >= 200 && response.status < 300) {
+                this.props.history.push('/mes-demandes')
+            }
+        } catch (errors) {
+            alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
+        }
     }
 
     connexion() {
@@ -120,6 +130,7 @@ class accueil extends React.Component {
                     <input type="text" placeholder="mot de passe" name="compte_creation_password" value={this.state.compte_creation_password} onChange={this.handleChange} />
                     <input type="text" placeholder="nom d'utilisateur" name="compte_creation_username" value={this.state.compte_creation_username} onChange={this.handleChange} />
                     <button onClick={this.creerCompte}>Valider</button>
+                    <button onClick={() => { console.log(this.state) }}>getstate</button>
                     {/* </form> */}
                 </div>
             </div>
