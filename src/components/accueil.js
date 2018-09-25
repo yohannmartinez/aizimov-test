@@ -2,6 +2,10 @@ import React from 'react';
 import passwordHash from 'password-hash'
 import store from '../store/store'
 import { Route, Link } from 'react-router-dom'
+import jwt from 'jsonwebtoken'
+import { checkConnection } from '../actions/authGuard'
+
+const token = '';
 
 
 
@@ -10,13 +14,14 @@ class accueil extends React.Component {
         super(props);
         this.state = {
             entrepots: [],
+            fournisseurs: [],
 
             /* --> states creation compte */
             compte_creation_mail: null,
             compte_creation_password: null,
             compte_creation_id_compte: null,
             compte_creation_id_utilisateur: null,
-            compte_creation_type: '',
+            compte_creation_type: 'fournisseur',
             compte_creation_username: '',
             compte_creation_hashedpassword: '',
 
@@ -30,6 +35,17 @@ class accueil extends React.Component {
     }
 
     async componentDidMount() {
+
+        /* fonction pour check si l'user est connecté */
+        if (localStorage.getItem('token')) {
+            let check_connection = checkConnection();
+            if(check_connection === true) {
+                this.props.history.push('/dashboard')
+            }
+        } else {
+            console.log('non')
+        }
+
 
         /* generer id utilisateur */
         let ramdom_id_user = "F-" + Math.floor((Math.random() * 1000000000) + 1);
@@ -48,6 +64,16 @@ class accueil extends React.Component {
         } catch (error) {
             console.log(error);
         }
+
+        /* --> fonction pour récupérer les fournisseurs */
+        try {
+            const response = await fetch("http://localhost:3000/fournisseurs_mot_de_passe");
+            const json = await response.json();
+            this.setState({ fournisseurs: json });
+            console.log(this.state.fournisseurs);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     handleChange(event) {
@@ -56,7 +82,6 @@ class accueil extends React.Component {
 
     async creerCompte() {
 
-        this.setState({ compte_creation_type: "fournisseur" });
         /* --> hasher le mot de passe */
         let hashedpassword = passwordHash.generate(this.state.compte_creation_password);
         this.setState({ compte_creation_hashedpassword: hashedpassword });
@@ -64,7 +89,7 @@ class accueil extends React.Component {
         /* --> envoyer les infos en bdd */
         var body = JSON.stringify({
             id_compte: this.state.compte_creation_id_compte,
-            id_utilisateur: this.state.compte_creation_username,
+            id_utilisateur: this.state.compte_creation_id_utilisateur,
             nom_utilisateur: this.state.compte_creation_username,
             type: this.state.compte_creation_type,
         })
@@ -84,6 +109,7 @@ class accueil extends React.Component {
 
 
         var body2 = JSON.stringify({
+            email: this.state.compte_creation_mail,
             id_utilisateur: this.state.compte_creation_id_utilisateur,
             mot_de_passe: this.state.compte_creation_hashedpassword,
             utilisateur: this.state.compte_creation_username,
@@ -104,7 +130,32 @@ class accueil extends React.Component {
     }
 
     connexion() {
-        console.log('connexion')
+
+        let mail_faux = 0;
+
+        /* --> fonction qui verifie le mot de passe et l'adresse mail */
+        this.state.fournisseurs.forEach((fournisseur, index) => {
+            if (this.state.compte_connexion_mail === fournisseur.email) {
+                console.log('mail bon');
+                if (passwordHash.verify(this.state.compte_connexion_password, this.state.fournisseurs[index].mot_de_passe) === true) {
+                    console.log('tout est bon');
+                    /* --> si tout est bon on met le token dans le local storage */
+                    this.token = jwt.sign({ connecte: true }, 'connectToken');
+                    localStorage.setItem("token", this.token)
+                    this.props.history.push('/dashboard');
+                } else {
+                    console.log("mot de passe pas bon")
+                }
+            } else {
+                mail_faux++;
+            }
+        })
+
+        /* --> fonction pour check si l'adresse mail existe */
+        if (mail_faux === this.state.fournisseurs.length) {
+            console.log('mail pas bon' + mail_faux + this.state.fournisseurs.length);
+
+        }
     }
 
     render() {
@@ -140,3 +191,4 @@ class accueil extends React.Component {
 
 export default accueil;
 
+/* let checktoken = jwt.verify(localStorage.getItem('token'), 'connectToken'); console.log(token) ;if(checktoken.connecte === true){console.log("c'estbon")} */
