@@ -4,6 +4,7 @@ import store from '../store/store'
 import { Route, Link } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import { checkConnection } from '../actions/authGuard'
+import axios from 'axios'
 
 const token = '';
 
@@ -15,15 +16,15 @@ class dashboard extends React.Component {
         this.state = {
             entrepots: [],
             fournisseurs: [],
-            userId: '',
+            userId: null,
             user: '',
-            user_infos:'',
+            user_infos: '',
         }
         this.handleChange = this.handleChange.bind(this);
     }
 
     async componentDidMount() {
-        
+
         console.log(store.getState());
 
 
@@ -32,41 +33,18 @@ class dashboard extends React.Component {
             let check_connection = checkConnection();
             if (check_connection === true) {
                 let userloged = jwt.verify(localStorage.getItem('token'), 'connectToken');
-                this.setState({ userId: userloged.id_utilisateur })
+                this.setState({ userId: userloged.id_utilisateur });
+                axios.get('http://localhost:3000/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
+                    console.log(user);
+                    this.setState({ user: user.data[0] })
+                })
             }
         } else {
-            console.log('non')
+            console.log('pas de token')
         }
 
 
 
-
-
-        /* --> fonction pour récupérer les entrepots */
-        try {
-            const response = await fetch("http://localhost:3000/entrepots");
-            const json = await response.json();
-            this.setState({ entrepots: json });
-            console.log(this.state.entrepots);
-        } catch (error) {
-            console.log(error);
-        }
-
-        /* --> fonction pour récupérer les fournisseurs */
-        try {
-            const response = await fetch("http://localhost:3000/fournisseurs_infos");
-            const json = await response.json();
-            this.setState({ fournisseurs: json });
-            console.log(this.state.fournisseurs);
-            this.state.fournisseurs.forEach((fournisseur, index) => {
-                if (fournisseur.id_utilisateur === this.state.userId) {
-                    this.setState({ user: this.state.fournisseurs[index] });
-                    store.dispatch("user_infos"(this.state.fournisseurs[index]))
-                }
-            })
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     handleChange(event) {

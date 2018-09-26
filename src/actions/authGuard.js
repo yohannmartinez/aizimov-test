@@ -5,6 +5,7 @@ import { Route, Link } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 
 
+
 export const checkConnection = () => {
     let checktoken = jwt.verify(localStorage.getItem('token'), 'connectToken');
     if (checktoken.connecte === true) {
@@ -13,3 +14,6 @@ export const checkConnection = () => {
         return false;
     }
 }
+
+
+

@@ -30,6 +30,7 @@
     "webpack-livereload-plugin": "^1.2.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "draft-js": "^0.10.5",
     "file-loader": "^1.1.11",
     "immutability-helper": "^2.7.1",

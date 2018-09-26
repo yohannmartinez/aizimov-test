@@ -4,6 +4,7 @@ import store from '../store/store'
 import { Route, Link } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import { checkConnection } from '../actions/authGuard'
+import axios from 'axios'
 
 const token = '';
 
@@ -13,8 +14,6 @@ class accueil extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            entrepots: [],
-            fournisseurs: [],
 
             /* --> states creation compte */
             compte_creation_mail: null,
@@ -39,7 +38,7 @@ class accueil extends React.Component {
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
             let check_connection = checkConnection();
-            if(check_connection === true) {
+            if (check_connection === true) {
                 this.props.history.push('/dashboard')
             }
         } else {
@@ -55,25 +54,6 @@ class accueil extends React.Component {
         let ramdom_id_account = "A-" + Math.floor((Math.random() * 1000000000) + 1);
         this.setState({ compte_creation_id_compte: ramdom_id_account });
 
-        /* --> fonction pour récupérer les entrepots */
-        try {
-            const response = await fetch("http://localhost:3000/entrepots");
-            const json = await response.json();
-            this.setState({ entrepots: json });
-            console.log(this.state.entrepots);
-        } catch (error) {
-            console.log(error);
-        }
-
-        /* --> fonction pour récupérer les fournisseurs */
-        try {
-            const response = await fetch("http://localhost:3000/fournisseurs_mot_de_passe");
-            const json = await response.json();
-            this.setState({ fournisseurs: json });
-            console.log(this.state.fournisseurs);
-        } catch (error) {
-            console.log(error);
-        }
     }
 
     handleChange(event) {
@@ -128,34 +108,21 @@ class accueil extends React.Component {
             alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
         }
     }
-
+    /* back */
     connexion() {
-
-        let mail_faux = 0;
-
         /* --> fonction qui verifie le mot de passe et l'adresse mail */
-        this.state.fournisseurs.forEach((fournisseur, index) => {
-            if (this.state.compte_connexion_mail === fournisseur.email) {
-                console.log('mail bon');
-                if (passwordHash.verify(this.state.compte_connexion_password, this.state.fournisseurs[index].mot_de_passe) === true) {
-                    console.log('tout est bon');
-                    /* --> si tout est bon on met le token dans le local storage */
-                    this.token = jwt.sign({ connecte: true }, 'connectToken');
-                    localStorage.setItem("token", this.token)
-                    this.props.history.push('/dashboard');
-                } else {
-                    console.log("mot de passe pas bon")
-                }
+        axios.get('http://localhost:3000/checkInfos', { params: { email: this.state.compte_connexion_mail, password: this.state.compte_connexion_password } }).then(response => {
+            if (response.data.value !== "OK") {
+                /* quand l'adresse mail ou le mot de passe est faux */
+                console.log(response.data.value);
             } else {
-                mail_faux++;
+                /* quand tout est bon */
+                console.log(response.data.value);
+                let token = jwt.sign({ connecte: true, id_utilisateur: response.data.id_utilisateur }, 'connectToken');
+                localStorage.setItem("token", token)
+                this.props.history.push('/dashboard');
             }
-        })
-
-        /* --> fonction pour check si l'adresse mail existe */
-        if (mail_faux === this.state.fournisseurs.length) {
-            console.log('mail pas bon' + mail_faux + this.state.fournisseurs.length);
-
-        }
+        });
     }
 
     render() {
