@@ -1,3 +1,147 @@
-span{
-	color:blue;
+.register_navbar{
+	height:70px;
+	background-color:white;
+	display:block;
+	margin:0;
+	padding:0;
+}
+
+.register_button_connexion{
+	background-color:#64c1f0;
+	border:none;
+	border-radius:5px;
+	color:white;
+	font-weight:bold;
+	width:200px;
+	height:40px;
+	float:right;
+	margin-top:15px;
+	margin-right:40px;
+	font-family:"amiko",sans-serif;
+	font-size:14px;
+	cursor:pointer;
+}
+
+.register_container{
+	background-color:rgba(47,61,77,0.8);
+	z-index:10;
+	height:calc(100vh - 70px);
+	border:1px solid transparent;
+	display:flex;
+}
+.register_container::before{
+	content:"";
+	position:absolute;
+	z-index:-1;
+	top:70px;
+	left:0;
+	background: url('../img/entrepot.jpg');
+	width:100%;
+	height:calc(100vh - 70px);
+}
+
+
+/* tous les elements de la partie gauche */
+.register_div_gauche{
+	flex:1.5;
+	position: relative;
+}
+
+.register_container_texte{
+	width:100%;
+	height:auto;
+	color:white;
+	font-family:'amiko',sans-serif;
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+	padding:20px;
+	max-width:700px;
+
+}
+
+.register_title{
+	font-size:30px;
+	font-weight:bold;
+	margin:0;
+}
+
+.register_bluetxt{
+	color:#64c1f0;
+}
+
+.register_texte{
+	display:block;
+	font-size:18px;
+	margin-top:10px;
+	font-weight:bold;
+}
+
+
+/* tous les elements de la partie droite */
+.register_div_droite{
+	flex:1;
+	border:1px solid;
+	position:relative;
+}
+
+.register_form_container{
+	background-color:#F2F1F1;
+	border-radius:5px;
+	width:400px;
+	height:90%;
+	margin-top:5%;
+	position:relative;
+}
+
+.register_infos_container{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+	width:80%;
+	text-align:center;
+}
+
+.register_title_inscription{
+	color:#605A5A;
+	font-weight:bold;
+	font-size:30px;
+	margin:5px;
+	margin-bottom:30px;
+}
+
+.register_input{
+	background-color:white;
+	border:none;
+	border-radius:5px;
+	text-align:center;
+	height:40px;
+	width:90%;
+	margin-top:5px;
+	margin-bottom:5px;
+	box-shadow: inset 0 0 2px #000;
+}
+
+.register_input::placeholder{
+	color:rgb(212, 207, 207);
+}
+
+.register_button_inscription{
+	background-color:#64c1f0;
+	border:none;
+	border-radius:5px;
+	color:white;
+	font-weight:bold;
+	width:90%;
+	height:40px;
+	margin-top:30px;
+	font-family:"amiko",sans-serif;
+	font-size:14px;
+	cursor:pointer;
+}
+
+.register_button_connexion:hover, .register_button_inscription:hover {
+	background-color:#3398ca;
 }

@@ -18,11 +18,15 @@ class accueil extends React.Component {
             /* --> states creation compte */
             compte_creation_mail: null,
             compte_creation_password: null,
+            compt_creation_confirm_password:'',
             compte_creation_id_compte: null,
             compte_creation_id_utilisateur: null,
             compte_creation_type: 'fournisseur',
             compte_creation_username: '',
             compte_creation_hashedpassword: '',
+            compte_creation_nom_entreprise:'',
+            compte_creation_siret:'',
+
 
             /* --> states connexion compte */
             compte_connexion_mail: '',
@@ -72,6 +76,8 @@ class accueil extends React.Component {
             id_utilisateur: this.state.compte_creation_id_utilisateur,
             nom_utilisateur: this.state.compte_creation_username,
             type: this.state.compte_creation_type,
+            siret: this.state.compte_creation_siret,
+            nom_entreprise: this.state.compte_creation_nom_entreprise
         })
         console.log(body)
         try {
@@ -129,27 +135,38 @@ class accueil extends React.Component {
 
         return (
             <div>
-
-                {/* --> espace de connexion */}
-                <div>
-                    {/* <form> */}
-                    <span>se connecter :</span>
-                    <input type="text" placeholder="adresse mail" name="compte_connexion_mail" value={this.state.compte_connexion_mail} onChange={this.handleChange} />
-                    <input type="text" placeholder="mot de passe" name="compte_connexion_password" value={this.state.compte_connexion_password} onChange={this.handleChange} />
-                    <button onClick={this.connexion}>Valider</button>
-                    {/* </form> */}
+                {/* navbar */}
+                <div className="register_navbar">
+                    <button class="register_button_connexion">Connexion</button>
                 </div>
 
-                {/*--> espace de creation de compte */}
-                <div>
-                    {/* <form> */}
-                    <span>créer un compte</span>
-                    <input type="text" placeholder="adresse mail" name="compte_creation_mail" value={this.state.compte_creation_mail} onChange={this.handleChange} />
-                    <input type="text" placeholder="mot de passe" name="compte_creation_password" value={this.state.compte_creation_password} onChange={this.handleChange} />
-                    <input type="text" placeholder="nom d'utilisateur" name="compte_creation_username" value={this.state.compte_creation_username} onChange={this.handleChange} />
-                    <button onClick={this.creerCompte}>Valider</button>
-                    <button onClick={() => { console.log(this.state) }}>getstate</button>
-                    {/* </form> */}
+                {/* div en dessous de la navbar */}
+                <div class="register_container">
+                    {/* div contenant le texte */}
+                    <div class="register_div_gauche">
+                        <div class="register_container_texte">
+                            <p className="register_title">Connectez vous ou Inscrivez-vous pour commencer à utiliser l'espace fournisseur de Space<span className="register_bluetxt">Fill</span> !</p>
+                            <span className="register_texte">• Suivez toute votre activité et gérez les demandes en ligne</span>
+                            <span className="register_texte">• Rentabilisez vos actifs simplement avec une solution sécurisée</span>
+                            <span className="register_texte">• Confidentialité de vos espaces et de votre vide assurée</span>
+                        </div>
+                    </div>
+
+                    {/* div contenant le formulaire */}
+                    <div class="register_div_droite">
+                        <div class="register_form_container">
+                            <div class="register_infos_container">
+                                <p className="register_title_inscription">INSCRIPTION</p>
+                                <input className="register_input" placeholder="Nom et Prénom" name="compte_creation_username" value={this.state.compte_creation_username} onChange={this.handleChange}/>
+                                <input className="register_input" placeholder="Entreprise" name="compte_creation_nom_entreprise" value={this.state.compte_creation_nom_entreprise} onChange={this.handleChange}/>
+                                <input className="register_input" placeholder="Siret" name="compte_creation_siret" value={this.state.compte_creation_siret} onChange={this.handleChange}/>
+                                <input className="register_input" placeholder="Adresse Mail" name="compte_creation_mail" value={this.state.compte_creation_mail} onChange={this.handleChange}/>
+                                <input type="password" className="register_input" placeholder="Mot de passe" name="compte_creation_password" value={this.state.compte_creation_password} onChange={this.handleChange}/>
+                                <input type="password" className="register_input" placeholder="Confirmez mot de passe" name="compte_creation_confirm_password" value={this.state.compte_creation_confirm_password} onChange={this.handleChange}/>
+                                <button className="register_button_inscription" onClick={this.creerCompte}>S'inscrire</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
