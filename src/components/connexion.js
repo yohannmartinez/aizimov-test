@@ -63,14 +63,17 @@ class connexion extends React.Component {
         return (
             <div>
                 {/* navbar */}
-                <div className="register_navbar">
-                    <button class="register_button_connexion" onClick={() => { this.props.history.push('/') }}>Inscription</button>
+                <div className="connexion_navbar">
+                    <button class="connexion_button_connexion" onClick={() => { this.props.history.push('/') }}>Inscription</button>
                 </div>
-
-                <p>Connexion</p>
-                <input placeholder="mail" name="compte_connexion_mail" onChange={this.handleChange} value={this.state.compte_connexion_mail} />
-                <input placeholder="mot de passe" name="compte_connexion_password" onChange={this.handleChange} value={this.state.compte_connexion_password} />
-                <button onClick={this.connexion}>connexion</button>
+                <div className="connexion_container">
+                    <div className="connexion_form_container">
+                        <p className="connexion_title">Connexion</p>
+                        <input className="connexion_input" placeholder="mail" name="compte_connexion_mail" onChange={this.handleChange} value={this.state.compte_connexion_mail} />
+                        <input className="connexion_input" placeholder="mot de passe" name="compte_connexion_password" onChange={this.handleChange} value={this.state.compte_connexion_password} />
+                        <button className="connexion_button" onClick={this.connexion}>connexion</button>
+                    </div>
+                </div>
             </div>
         )
     }

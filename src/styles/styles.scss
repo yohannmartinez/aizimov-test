@@ -1,5 +1,7 @@
 @import './base/settings';
-@import './components/accueil'; 
+@import './components/accueil';
+@import './components/connexion.scss' ;
+@import './components/globalSyle.scss' ;
 
 @import "../../node_modules/react-day-picker/lib/style"; 
 
