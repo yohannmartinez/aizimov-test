@@ -60,7 +60,7 @@
     "react-popup": "^0.9.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-select": "^2.0.0",
+    "react-select": "^2.1.0",
     "react-star-rating-component": "^1.4.1",
     "react-table": "^6.8.6",
     "react-textfield": "0.0.6",

@@ -31,10 +31,6 @@ class dashboard extends React.Component {
     }
 
     async componentDidMount() {
-
-        console.log(store.getState());
-
-
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
             let check_connection = checkConnection();
@@ -49,7 +45,7 @@ class dashboard extends React.Component {
         } else {
             console.log('pas de token')
         }
-
+        console.log(this.state.user)
 
 
     }
@@ -95,7 +91,7 @@ class dashboard extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
+                        <span className="navbar_usermail">{this.state.user.email}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
