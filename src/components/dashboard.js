@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.svg'
+import NotVerify from './sous-components/NotVerified'
 
 const token = '';
 
@@ -37,7 +38,7 @@ class dashboard extends React.Component {
             if (check_connection === true) {
                 let userloged = jwt.verify(localStorage.getItem('token'), 'connectToken');
                 this.setState({ userId: userloged.id_utilisateur });
-                axios.get('http://localhost:3000/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
+                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
                     this.setState({ user: user.data[0] })
                 })
@@ -80,6 +81,9 @@ class dashboard extends React.Component {
 
         return (
             <div>
+                {this.state.user.verifie === "true" &&
+                    <NotVerify></NotVerify>
+                }
                 <div className="navbar">
                     {this.state.toggleDeconnexion === true &&
                         <div class="container_deconnexion">
@@ -115,7 +119,7 @@ class dashboard extends React.Component {
                         </div>
                     </div>
                     <div className="contenu_page">
-                        Dashboard
+                        dashboard
                 </div>
                 </div>
             </div>

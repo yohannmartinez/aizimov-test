@@ -41,7 +41,7 @@ class clients extends React.Component {
             if (check_connection === true) {
                 let userloged = jwt.verify(localStorage.getItem('token'), 'connectToken');
                 this.setState({ userId: userloged.id_utilisateur });
-                axios.get('http://localhost:3000/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
+                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
                     this.setState({ user: user.data[0] })
                 })

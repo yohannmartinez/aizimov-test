@@ -44,7 +44,8 @@ class connexion extends React.Component {
 
     connexion() {
         /* --> fonction qui verifie le mot de passe et l'adresse mail */
-        axios.get('http://localhost:3000/checkInfos', { params: { email: this.state.compte_connexion_mail, password: this.state.compte_connexion_password } }).then(response => {
+        
+        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/checkInfos', { params: { email: this.state.compte_connexion_mail, password: this.state.compte_connexion_password } }).then(response => {
             if (response.data.value !== "OK") {
                 /* quand l'adresse mail ou le mot de passe est faux */
                 console.log(response.data.value);

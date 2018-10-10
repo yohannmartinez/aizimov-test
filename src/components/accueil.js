@@ -25,6 +25,7 @@ class accueil extends React.Component {
             compte_creation_password: null,
             compte_creation_confirm_password: '',
             compte_creation_id_compte: null,
+            compte_creation_id_entrepot:null,
             compte_creation_id_utilisateur: null,
             compte_creation_type: 'fournisseur',
             compte_creation_nom: '',
@@ -82,6 +83,9 @@ class accueil extends React.Component {
         /* generer id compte */
         let ramdom_id_account = "A-" + Math.floor((Math.random() * 1000000000) + 1);
         this.setState({ compte_creation_id_compte: ramdom_id_account });
+
+        let ramdom_id_entrepot= "E-" + this.state.compte_creation_code_postal.toString().substring(0, 2) + "-" + Math.floor((Math.random() * 100000) + 1);
+        this.setState({compte_creation_id_entrepot: ramdom_id_entrepot})
 
     }
 
@@ -172,7 +176,7 @@ class accueil extends React.Component {
         let hashedpassword = passwordHash.generate(this.state.compte_creation_password);
         this.setState({ compte_creation_hashedpassword: hashedpassword });
 
-        axios.get('http://localhost:3000/checkCreation', { params: { mail: this.state.compte_creation_mail, siret: this.state.compte_creation_siret } }).then(response => {
+        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/checkCreation', { params: { mail: this.state.compte_creation_mail, siret: this.state.compte_creation_siret } }).then(response => {
             if (response.data.value === "oui") {
                 /* adresse mail et siret dispo */
                 if (this.state.compte_creation_nom.length === 0 || !this.state.compte_creation_nom.match(/[a-z]/) || this.state.compte_creation_nom.match(/[0-9]/)) {
@@ -199,36 +203,6 @@ class accueil extends React.Component {
                     /* si tout est bon, on passe à la deuxieme étape */
                     this.setState({ etape1: true })
                     console.log(this.state.etape1)
-                    /* try {
-                        var response = fetch('http://localhost:3000/envoyerInfosUtilisateur', {
-                            method: 'post',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: body
-                        })
-                        if (response.status >= 200 && response.status < 300) {
-                            this.setState({etape1 : true})
-                        }
-                    } catch (errors) {
-                        alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
-                    }
-            
-            
-                    var body2 = JSON.stringify({
-                        
-                    })
-                    console.log(body2)
-                    try {
-                        var response = fetch('http://localhost:3000/creerComptePassword', {
-                            method: 'post',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: body2
-                        })
-                        if (response.status >= 200 && response.status < 300) {
-                            this.setState({etape1 : true})
-                        }
-                    } catch (errors) {
-                        alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
-                    } */
                 }
             } else {
                 /* adresse mail et siret pas dispo */
@@ -255,7 +229,7 @@ class accueil extends React.Component {
 
     sendInfos() {
         try {
-            var response = fetch('http://localhost:3000/envoyerMotDePasse', {
+            var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/envoyerMotDePasse', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -273,7 +247,7 @@ class accueil extends React.Component {
         }
 
         try {
-            var response = fetch('http://localhost:3000/envoyerInfosUtilisateur', {
+            var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/envoyerInfosUtilisateur', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -297,12 +271,12 @@ class accueil extends React.Component {
         }
 
         try {
-            var response = fetch('http://localhost:3000/envoyerInfosEntrepot', {
+            var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/envoyerInfosEntrepot', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     id_compte: this.state.compte_creation_id_compte,
-                    id_entrepot: "E-" + this.state.compte_creation_code_postal.toString().substring(0, 2) + "-" + Math.floor((Math.random() * 100000) + 1),
+                    id_entrepot: this.state.compte_creation_id_entrepot,
                     siret: this.state.compte_creation_siret,
                     entreprise: this.state.compte_creation_entreprise,
                     adresse: this.state.compte_creation_adresse,
@@ -316,11 +290,30 @@ class accueil extends React.Component {
                 }),
             })
             if (response.status >= 200 && response.status < 300) {
-                console.log('tout est bon')
+                this.props.history.push('/dashboard')
             }
         } catch (errors) {
             alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
         }
+
+        try {
+            var response = fetch('http://localhost:3000/envoyerInfosFacturation', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id_compte: this.state.compte_creation_id_compte,
+                    id_entrepot: this.state.compte_creation_id_entrepot,
+                    siret: this.state.compte_creation_siret,
+                }),
+            })
+            if (response.status >= 200 && response.status < 300) {
+                this.props.history.push('/dashboard')
+            }
+        } catch (errors) {
+            alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
+        }
+
+        
     }
 
     creerCompte() {

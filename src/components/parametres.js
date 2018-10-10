@@ -19,15 +19,24 @@ class parametres extends React.Component {
             fournisseurs: [],
             userId: null,
             user: '',
-            user_infos: '',
+            userCancelInfos: '',
+
+            infosFacturation: '',
+            infosFacturationCancel: '',
 
             toogleCotation: false,
             toggleDeconnexion: false,
+            editUserInfos: false,
+            editFactureInfos: false,
+            confirm_changes: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
+        this.handleChange_user_info = this.handleChange_user_info.bind(this);
+        this.confirmModifications = this.confirmModifications.bind(this);
+        this.cancelModifications = this.cancelModifications.bind(this);
     }
 
     async componentDidMount() {
@@ -41,9 +50,18 @@ class parametres extends React.Component {
             if (check_connection === true) {
                 let userloged = jwt.verify(localStorage.getItem('token'), 'connectToken');
                 this.setState({ userId: userloged.id_utilisateur });
-                axios.get('http://localhost:3000/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
+                /* --> recuperation des infos utilisateur */
+                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
-                    this.setState({ user: user.data[0] })
+                    this.setState({ user: user.data[0], userCancelInfos: user.data[0] })
+                }).then(() => {
+                    console.log(this.state.user.id_compte)
+                    /* --> recuperation des infos de facturation */
+                    axios.get('http://localhost:3000/getFacturationInfos', { params: { id_compte: this.state.user.id_compte } }).then(infos => {
+                        console.log(infos);
+                        this.setState({ infosFacturation: infos.data[0], infosFacturationCancel: infos.data[0] }, () => { console.log(this.state.infosFacturation) })
+
+                    })
                 })
             }
         } else {
@@ -58,6 +76,14 @@ class parametres extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
+    handleChange_user_info(event) {
+        let userCopy = Object.assign({}, this.state.user);
+        userCopy[event.target.name] = event.target.value;
+        this.setState({ user: userCopy, confirm_changes: true }, () => { console.log(this.state.user) });
+
+    }
+
+    /* --> fonction pour afficher les divs en fonction du state */
     toogleCotation() {
         if (this.state.toogleCotation === true) {
             this.setState({ toogleCotation: false });
@@ -73,9 +99,41 @@ class parametres extends React.Component {
         }
     }
 
+    /* -->fonction de déconnexion */
     deconnexion() {
         localStorage.removeItem("token", token);
         this.props.history.push('/')
+    }
+
+    /* -->fonction pour confirmer les changements */
+    confirmModifications() {
+        this.setState({ userCancelInfos: this.state.user, editUserInfos: false, confirm_changes: false }, () => {
+            try {
+                var response = fetch('http://localhost:3000/modifierInfosUtilisateur', {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: this.state.user.email,
+                        nom: this.state.user.nom,
+                        prenom: this.state.user.prenom,
+                        entreprise: this.state.user.entreprise,
+                        telephone_portable: this.state.user.telephone_portable,
+                        telephone_fixe: this.state.user.telephone_fixe,
+                        id_utilisateur: this.state.user.id_utilisateur,
+                    }),
+                })
+                if (response.status >= 200 && response.status < 300) {
+                    console.log('tout est bon')
+                }
+            } catch (errors) {
+                alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
+            }
+        });
+    }
+
+    /*--> fonction pour annuler les changements */
+    cancelModifications() {
+        this.setState({ user: this.state.userCancelInfos, editUserInfos: false, confirm_changes: false });
     }
 
 
@@ -118,9 +176,61 @@ class parametres extends React.Component {
                         </div>
                     </div>
                     <div className="contenu_page">
-                        parametres
+                        <div><p>paramètres</p><button>Modifier mon mot de passe</button></div>
+                        {/* --> partie pour les infos UTILISATEUR */}
+                        <div style={{ "border": "1px solid", padding: "10px" }}>
+                            <p>MES INFORMATIONS UTILISATEUR</p>
+                            {this.state.editUserInfos === false &&
+                                <div style={{ "border": "1px solid", padding: "10px" }}>
+                                    <div style={{ "border": "1px solid", padding: "10px" }}>
+                                        <p>nom : {this.state.user.nom}</p>
+                                        <p>prenom : {this.state.user.prenom} </p>
+                                        <p>nom de l'entreprise : {this.state.user.entreprise}</p>
+                                    </div>
+                                    <div style={{ "border": "1px solid", padding: "10px" }}>
+                                        <p>portable : {this.state.user.telephone_portable}</p>
+                                        <p>fixe : {this.state.user.telephone_fixe}</p>
+                                        <p>email : {this.state.user.email}</p>
+                                    </div>
+                                    <button onClick={() => { this.setState({ editUserInfos: true }) }}>Modifier</button>
+                                </div>
+                            }
+                            {this.state.editUserInfos === true &&
+                                <div>
+                                    <div>
+                                        <input onChange={this.handleChange_user_info} name="nom" placeholder="nom" value={this.state.user.nom} />
+                                        <input onChange={this.handleChange_user_info} name="prenom" placeholder="prenom" value={this.state.user.prenom} />
+                                        <input onChange={this.handleChange_user_info} name="entreprise" placeholder="nom de l'entreprise" value={this.state.user.entreprise} />
+                                    </div>
+                                    <div>
+                                        <input onChange={this.handleChange_user_info} name="telephone_portable" placeholder="portable" value={this.state.user.telephone_portable} />
+                                        <input onChange={this.handleChange_user_info} name="telephone_fixe" placeholder="fixe" value={this.state.user.telephone_fixe} />
+                                        <input onChange={this.handleChange_user_info} name="email" placeholder="email" value={this.state.user.email} />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        {/* --> partie pour les infos de FACTURATION */}
+                        <div>
+                            <p>INFORMATIONS DE FACTURATION</p>
+                                {this.state.editFactureInfos === false &&
+                                    <div>
+                                        <div>
+                                            <p>SIRET : {this.state.infosFacturation.siret}</p>
+                                        </div>
+                                    </div>
+                                }
+                        </div>
+                    </div>
                 </div>
-                </div>
+                {this.state.confirm_changes === true &&
+                    <div class="container_action_modification">
+                        <span>Vous avez effectué des modifications !</span>
+                        <button onClick={this.confirmModifications}>Confirmer les modifications</button>
+                        <button onClick={this.cancelModifications}>Annuler</button>
+                    </div>
+                }
             </div>
 
         )
