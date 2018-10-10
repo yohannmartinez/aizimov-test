@@ -212,12 +212,24 @@ class parametres extends React.Component {
                         </div>
 
                         {/* --> partie pour les infos de FACTURATION */}
-                        <div>
+                        <div style={{"border": "1px solid", "padding" : "10px"}}>
                             <p>INFORMATIONS DE FACTURATION</p>
                                 {this.state.editFactureInfos === false &&
-                                    <div>
-                                        <div>
-                                            <p>SIRET : {this.state.infosFacturation.siret}</p>
+                                    <div style={{"border": "1px solid", "padding" : "10px"}}>
+                                        <div style={{"border": "1px solid", "padding" : "10px"}}>
+                                        <p>SIRET : {this.state.infosFacturation.siret}</p>
+                                        <p>TVA : {this.state.infosFacturation.tva}</p>
+                                        <p>BIC : {this.state.infosFacturation.bic}</p>
+                                        </div>
+                                        <div style={{"border": "1px solid", "padding" : "10px"}}>
+                                        <p>IBAN : {this.state.infosFacturation.iban}</p>
+                                        <p>Banque : {this.state.infosFacturation.banque}</p>
+                                        <p>Adresse de facturation : {this.state.infosFacturation.adresse_facturation}</p>
+                                        </div>
+                                        <div style={{"border": "1px solid", "padding" : "10px"}}>
+                                        <p>Ville : {this.state.infosFacturation.ville}</p>
+                                        <p>Pays : {this.state.infosFacturation.pays}</p>
+                                        <p>Code postal : {this.state.infosFacturation.code_postal}</p>
                                         </div>
                                     </div>
                                 }
