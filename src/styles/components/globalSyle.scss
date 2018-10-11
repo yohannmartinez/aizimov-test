@@ -16,7 +16,7 @@ body{
 .navbar_container_logo{
 	background-color: #16376D;
 	height:60px;
-	width:250px;
+	width:220px;
 	text-align:center;
 	display:inline-block;
 	position:relative;
@@ -97,12 +97,12 @@ body{
 	background-color:#f8f8f8;
 	position:relative;
 	padding-top:60px;
-	padding-left:250px;
+	padding-left:220px;
 	min-height:100vh
 }
 
 .sidebar{
-	width:250px;
+	width:220px;
 	background-color:#16376D;
 	position: fixed;
 	top:60px;
@@ -123,7 +123,7 @@ body{
 .sidebar_elements{
 	font-weight:500;
 	border:none;
-	font-size:18px;
+	font-size:15px;
 	color:white;
 	background-color:#16376D;
 	width:100%;
@@ -138,7 +138,7 @@ body{
 .sidebar_sous_elements{
 	font-weight:500;
 	border:none;
-	font-size:18px;
+	font-size:13px;
 	color:white;
 	background-color:rgb(11, 31, 63);
 	width:100%;
@@ -149,9 +149,9 @@ body{
 }
 
 .sidebar_page_element{
-	font-weight:700;
+	font-weight:800;
 	border:none;
-	font-size:18px;
+	font-size:16px;
 	color:white;
 	background-color:#16376D;
 	width:100%;
@@ -201,7 +201,7 @@ body{
 
 .contenu_page{
 	background-color:#f8f8f8;
-	width:calc(100vw - 250px);
+	width:calc(100vw - 220px);
 	padding:50px
 }
 
