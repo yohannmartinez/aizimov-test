@@ -1,0 +1,51 @@
+.cotations_cours_container_title{
+    display:block;
+    font-family:"Montserrat", sans-serif;
+    position: relative;
+}
+
+.cotations_cours_title_page{
+    font-size:20px;
+    font-weight:700;
+    letter-spacing: 1.5px;
+    display:inline-block;
+    color:rgb(87, 87, 87);
+}
+
+.cotations_cours_button_filter{
+    position:absolute;
+    right:0;
+    top:50%;
+    transform: translate(0,-50%);
+    border:none;
+    background-color:#31aade;
+    color:white;
+    border-radius: 5px;
+    padding:10px 20px 10px 20px;
+    cursor: pointer;
+}
+
+.contenu_page_contations_cours{
+    width:calc(100vw - 700px);
+    background-color:#f8f8f8;
+	padding:50px
+}
+
+.container_infos_supp{
+    width:450px;
+    background-color:#e3e3e3;
+    position:absolute;
+    right:0;
+    top:60px;
+    height:calc(100vh - 60px);
+    padding:20px;
+}
+
+.infos_supp_no_selected{
+    font-weight:500;
+    position: relative;
+    top:50%;
+    text-align:center;
+    transform: translate(0,-50%);
+    color:#6e6e6e
+}

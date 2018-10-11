@@ -37,6 +37,7 @@ class parametres extends React.Component {
         this.handleChange_user_info = this.handleChange_user_info.bind(this);
         this.confirmModifications = this.confirmModifications.bind(this);
         this.cancelModifications = this.cancelModifications.bind(this);
+        this.handleChange_facturation_info = this.handleChange_facturation_info.bind(this)
     }
 
     async componentDidMount() {
@@ -83,6 +84,12 @@ class parametres extends React.Component {
 
     }
 
+    handleChange_facturation_info(event) {
+        let facturationCopy = Object.assign({}, this.state.infosFacturation);
+        facturationCopy[event.target.name] = event.target.value;
+        this.setState({ infosFacturation: facturationCopy, confirm_changes: true }, () => { console.log(this.state.infosFacturation) });
+    }
+
     /* --> fonction pour afficher les divs en fonction du state */
     toogleCotation() {
         if (this.state.toogleCotation === true) {
@@ -107,7 +114,7 @@ class parametres extends React.Component {
 
     /* -->fonction pour confirmer les changements */
     confirmModifications() {
-        this.setState({ userCancelInfos: this.state.user, editUserInfos: false, confirm_changes: false }, () => {
+        this.setState({ userCancelInfos: this.state.user, infosFacturationCancel: this.state.infosFacturation, editFactureInfos: false, editUserInfos: false, confirm_changes: false }, () => {
             try {
                 var response = fetch('http://localhost:3000/modifierInfosUtilisateur', {
                     method: 'post',
@@ -128,12 +135,36 @@ class parametres extends React.Component {
             } catch (errors) {
                 alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
             }
+
+            try {
+                var response = fetch('http://localhost:3000/modifierInfosFacturation', {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        siret: this.state.infosFacturation.siret,
+                        tva: this.state.infosFacturation.tva,
+                        bic: this.state.infosFacturation.bic,
+                        iban: this.state.infosFacturation.iban,
+                        banque: this.state.infosFacturation.banque,
+                        adresse_facturation: this.state.infosFacturation.adresse_facturation,
+                        ville: this.state.infosFacturation.ville,
+                        pays: this.state.infosFacturation.pays,
+                        code_postal: this.state.infosFacturation.code_postal,
+                        id_compte: this.state.user.id_compte,
+                    }),
+                })
+                if (response.status >= 200 && response.status < 300) {
+                    console.log('tout est bon')
+                }
+            } catch (errors) {
+                alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
+            }
         });
     }
 
     /*--> fonction pour annuler les changements */
     cancelModifications() {
-        this.setState({ user: this.state.userCancelInfos, editUserInfos: false, confirm_changes: false });
+        this.setState({ user: this.state.userCancelInfos, infosFacturation: this.state.infosFacturationCancel, editFactureInfos: false, editUserInfos: false, confirm_changes: false });
     }
 
 
@@ -175,72 +206,115 @@ class parametres extends React.Component {
                             <button className="sidebar_page_element" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
                         </div>
                     </div>
+
+
                     <div className="contenu_page">
-                        <div><p>paramètres</p><button>Modifier mon mot de passe</button></div>
+                        <div className="parametres_container_title">
+                            <p className="parametres_title_page">PARAMÈTRES</p>
+                            <button className="parametres_button_change_password">Modifier mon mot de passe</button>
+                        </div>
+
+
                         {/* --> partie pour les infos UTILISATEUR */}
-                        <div style={{ "border": "1px solid", padding: "10px" }}>
-                            <p>MES INFORMATIONS UTILISATEUR</p>
+                        <div className="parametres_container_infos">
+                            <p className="parametres_infos_title">MES INFORMATIONS UTILISATEUR
                             {this.state.editUserInfos === false &&
-                                <div style={{ "border": "1px solid", padding: "10px" }}>
-                                    <div style={{ "border": "1px solid", padding: "10px" }}>
-                                        <p>nom : {this.state.user.nom}</p>
-                                        <p>prenom : {this.state.user.prenom} </p>
-                                        <p>nom de l'entreprise : {this.state.user.entreprise}</p>
+                                    <button className="parametres_modifier_infos" onClick={() => { this.setState({ editUserInfos: true }) }}><i class="fas fa-pen"></i></button>
+                                }
+                                {this.state.editUserInfos === true &&
+                                    <button className="parametres_annuler_modifier_infos" onClick={this.cancelModifications}><i class="fas fa-times"></i></button>
+                                }
+
+                            </p>
+                            {this.state.editUserInfos === false &&
+                                <div className="parametres_infos_sous_container">
+                                    <div className="parametres_infos_column">
+                                        <p>Nom : {this.state.user.nom}</p>
+                                        <p>Prenom : {this.state.user.prenom} </p>
+                                        <p>Nom de l'entreprise : {this.state.user.entreprise}</p>
                                     </div>
-                                    <div style={{ "border": "1px solid", padding: "10px" }}>
-                                        <p>portable : {this.state.user.telephone_portable}</p>
-                                        <p>fixe : {this.state.user.telephone_fixe}</p>
-                                        <p>email : {this.state.user.email}</p>
+                                    <div className="parametres_infos_column">
+                                        <p>Portable : {this.state.user.telephone_portable}</p>
+                                        <p>Fixe : {this.state.user.telephone_fixe}</p>
+                                        <p>Email : {this.state.user.email}</p>
                                     </div>
-                                    <button onClick={() => { this.setState({ editUserInfos: true }) }}>Modifier</button>
                                 </div>
                             }
                             {this.state.editUserInfos === true &&
-                                <div>
-                                    <div>
-                                        <input onChange={this.handleChange_user_info} name="nom" placeholder="nom" value={this.state.user.nom} />
-                                        <input onChange={this.handleChange_user_info} name="prenom" placeholder="prenom" value={this.state.user.prenom} />
-                                        <input onChange={this.handleChange_user_info} name="entreprise" placeholder="nom de l'entreprise" value={this.state.user.entreprise} />
+                                <div className="parametres_infos_sous_container">
+                                    <div className="parametres_infos_column">
+                                        <p>Nom : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="nom" placeholder="nom" value={this.state.user.nom} /></p>
+                                        <p>Prenom : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="prenom" placeholder="prenom" value={this.state.user.prenom} /></p>
+                                        <p>Nom de l'entreprise : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="entreprise" placeholder="nom de l'entreprise" value={this.state.user.entreprise} /></p>
                                     </div>
-                                    <div>
-                                        <input onChange={this.handleChange_user_info} name="telephone_portable" placeholder="portable" value={this.state.user.telephone_portable} />
-                                        <input onChange={this.handleChange_user_info} name="telephone_fixe" placeholder="fixe" value={this.state.user.telephone_fixe} />
-                                        <input onChange={this.handleChange_user_info} name="email" placeholder="email" value={this.state.user.email} />
+                                    <div className="parametres_infos_column">
+                                        <p>Portable : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="telephone_portable" placeholder="portable" value={this.state.user.telephone_portable} /></p>
+                                        <p>Fixe : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="telephone_fixe" placeholder="fixe" value={this.state.user.telephone_fixe} /></p>
+                                        <p>Email : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="email" placeholder="email" value={this.state.user.email} /></p>
                                     </div>
                                 </div>
                             }
                         </div>
 
+
+
                         {/* --> partie pour les infos de FACTURATION */}
-                        <div style={{"border": "1px solid", "padding" : "10px"}}>
-                            <p>INFORMATIONS DE FACTURATION</p>
-                                {this.state.editFactureInfos === false &&
-                                    <div style={{"border": "1px solid", "padding" : "10px"}}>
-                                        <div style={{"border": "1px solid", "padding" : "10px"}}>
+                        <div className="parametres_container_infos">
+                            <p className="parametres_infos_title">INFORMATIONS DE FACTURATION
+                            {this.state.editFactureInfos === false &&
+                                    <button className="parametres_modifier_infos" onClick={() => { this.setState({ editFactureInfos: true }) }}><i class="fas fa-pen"></i></button>
+                                }
+                                {this.state.editFactureInfos === true &&
+                                    <button className="parametres_annuler_modifier_infos" onClick={this.cancelModifications}><i class="fas fa-times"></i></button>
+                                }
+                            </p>
+                            {this.state.editFactureInfos === false &&
+                                <div className="parametres_infos_sous_container">
+                                    <div className="parametres_infos_column">
                                         <p>SIRET : {this.state.infosFacturation.siret}</p>
                                         <p>TVA : {this.state.infosFacturation.tva}</p>
                                         <p>BIC : {this.state.infosFacturation.bic}</p>
-                                        </div>
-                                        <div style={{"border": "1px solid", "padding" : "10px"}}>
                                         <p>IBAN : {this.state.infosFacturation.iban}</p>
                                         <p>Banque : {this.state.infosFacturation.banque}</p>
-                                        <p>Adresse de facturation : {this.state.infosFacturation.adresse_facturation}</p>
-                                        </div>
-                                        <div style={{"border": "1px solid", "padding" : "10px"}}>
+                                    </div>
+                                    <div className="parametres_infos_column">
+                                        <p>Adresse : {this.state.infosFacturation.adresse_facturation}</p>
                                         <p>Ville : {this.state.infosFacturation.ville}</p>
                                         <p>Pays : {this.state.infosFacturation.pays}</p>
                                         <p>Code postal : {this.state.infosFacturation.code_postal}</p>
-                                        </div>
                                     </div>
-                                }
+
+                                </div>
+                            }
+                            {this.state.editFactureInfos === true &&
+                                <div className="parametres_infos_sous_container">
+                                    <div className="parametres_infos_column">
+                                        <p>SIRET : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="siret" placeholder="SIRET" value={this.state.infosFacturation.siret} /></p>
+                                        <p>TVA : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="tva" placeholder="TVA" value={this.state.infosFacturation.tva} /></p>
+                                        <p>BIC : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="bic" placeholder="BIC" value={this.state.infosFacturation.bic} /></p>
+                                        <p>IBAN : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="iban" placeholder="IBAN" value={this.state.infosFacturation.iban} /></p>
+                                        <p> Banque : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="banque" placeholder="banque" value={this.state.infosFacturation.banque} /></p>
+                                    </div>
+                                    <div className="parametres_infos_column">
+                                        <p>Adresse : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="adresse_facturation" placeholder="adresse de facturation" value={this.state.infosFacturation.adresse_facturation} /></p>
+                                        <p>Ville : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="ville" placeholder="ville" value={this.state.infosFacturation.ville} /></p>
+                                        <p>Pays : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="pays" placeholder="pays" value={this.state.infosFacturation.pays} /></p>
+                                        <p>Code postal : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="code_postal" placeholder="code_postal" value={this.state.infosFacturation.code_postal} /></p>
+                                    </div>
+                                </div>
+                            }
                         </div>
+
+
                     </div>
                 </div>
+
+                {/* petite barre en bas de page pour confirmer ou annuler les changements */}
                 {this.state.confirm_changes === true &&
                     <div class="container_action_modification">
                         <span>Vous avez effectué des modifications !</span>
-                        <button onClick={this.confirmModifications}>Confirmer les modifications</button>
-                        <button onClick={this.cancelModifications}>Annuler</button>
+                        <button class="container_action_modification_button" onClick={this.confirmModifications}>Confirmer</button>
+                        <button class="container_action_modification_button" onClick={this.cancelModifications}>Annuler</button>
                     </div>
                 }
             </div>
