@@ -6,10 +6,9 @@ import jwt from 'jsonwebtoken'
 import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.svg'
+import CardFacturesFournisseursList from '../cards/CardFacturesFournisseursList'
 
 const token = '';
-
-
 
 class factures extends React.Component {
     constructor(props) {
@@ -20,7 +19,7 @@ class factures extends React.Component {
             userId: null,
             user: '',
             user_infos: '',
-
+            liste_factures: [], 
             toogleCotation: false,
             toggleDeconnexion: false,
         }
@@ -28,6 +27,7 @@ class factures extends React.Component {
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
+        this.getState = this.getState.bind(this); 
     }
 
     async componentDidMount() {
@@ -41,7 +41,7 @@ class factures extends React.Component {
             if (check_connection === true) {
                 let userloged = jwt.verify(localStorage.getItem('token'), 'connectToken');
                 this.setState({ userId: userloged.id_utilisateur });
-                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
+                await axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
                     this.setState({ user: user.data[0] })
                 })
@@ -49,9 +49,20 @@ class factures extends React.Component {
         } else {
             console.log('pas de token')
         }
+        try {
+            console.log('user '+ this.state.user.id_compte)
+            console.log('on va chercher la liste de clients')            
+            // const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getFacturesforId?id=' + this.state.user.id_compte)
+            const response = await fetch('http://localhost:3000/getFacturesforId?id=' + this.state.user.id_compte)
+            const json = await response.json();     
+            this.setState({ liste_factures: json , loaded: true});
+          } catch (error) {
+            console.log(error);
+          }        
+    }
 
-
-
+    getState() {
+        console.log(this.state)
     }
 
     handleChange(event) {
@@ -118,8 +129,17 @@ class factures extends React.Component {
                         </div>
                     </div>
                     <div className="contenu_page">
-                        factures
-                </div>
+                        <div className = ''>
+                            <h1 className = ''> 
+                                Historique des factures
+                            </h1> 
+                            <CardFacturesFournisseursList liste_factures={this.state.liste_factures} /> 
+                            <Link to = '/ajouter-facture'> 
+                                <button>Ajouter une facture </button> 
+                            </Link> 
+                        </div>
+                        <button onClick = {this.getState}> Get state </button>
+                    </div>
                 </div>
             </div>
 

@@ -6,13 +6,12 @@ import jwt from 'jsonwebtoken'
 import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.svg'
-import CardClientList from '../cards/CardClientList'
 
 const token = '';
 
 
 
-class clients extends React.Component {
+class ajouterFacture extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,11 +20,9 @@ class clients extends React.Component {
             userId: null,
             user: '',
             user_infos: '',
-
+            liste_factures: '', 
             toogleCotation: false,
             toggleDeconnexion: false,
-            liste_clients: [], 
-            loaded: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -37,6 +34,7 @@ class clients extends React.Component {
     async componentDidMount() {
 
         console.log(store.getState());
+
 
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
@@ -52,20 +50,16 @@ class clients extends React.Component {
         } else {
             console.log('pas de token')
         }
-
-        /* on va chercher en BDD la liste de clients pour ce compte */
         try {
             console.log('user '+ this.state.user.id_compte)
             console.log('on va chercher la liste de clients')            
-            const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getClientsPourUnCompte?id=' + this.state.user.id_compte)
-            // const response = await fetch('http://localhost:3000/getClientsPourUnCompte?id=' + this.state.user.id_compte)
+            // const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getFacturesforId?id=' + this.state.user.id_compte)
+            const response = await fetch('http://localhost:3000/getFacturesforId?id=' + this.state.user.id_compte)
             const json = await response.json();     
-            this.setState({ liste_clients: json , loaded: true});
+            this.setState({ liste_factures: json , loaded: true});
           } catch (error) {
             console.log(error);
           }        
-
-
     }
 
     getState() {
@@ -130,18 +124,18 @@ class clients extends React.Component {
                                     <button className="sidebar_sous_elements" onClick={()=>{this.props.history.push('/cotationsPassees')}}>Cotations passées</button>
                                 </div>
                             }
-                            <button className="sidebar_page_element" onClick={()=>{this.props.history.push('/clients')}}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/factures')}}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
+                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/clients')}}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
+                            <button className="sidebar_page_element" onClick={()=>{this.props.history.push('/factures')}}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
                             <button className="sidebar_elements" onClick={()=>{this.props.history.push('/parametres')}}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
                         </div>
                     </div>
                     <div className="contenu_page">
-
-                        <p >
-                            Clients
-                        </p>
-                        <CardClientList liste_clients={this.state.liste_clients} />                                
-                        <button onClick = {this.getState}>Get State</button> 
+                        <div className = ''>
+                            <h1 className = ''> 
+                                Ajouter une facture 
+                            </h1> 
+                        </div>
+                        <button onClick = {this.getState}> Get state </button>
                     </div>
                 </div>
             </div>
@@ -150,6 +144,4 @@ class clients extends React.Component {
     }
 }
 
-export default clients;
-
-                        
+export default ajouterFacture;

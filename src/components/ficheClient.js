@@ -6,26 +6,25 @@ import jwt from 'jsonwebtoken'
 import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.svg'
-import CardClientList from '../cards/CardClientList'
 
 const token = '';
 
 
 
-class clients extends React.Component {
+class ficheClient extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            entrepots: [],
-            fournisseurs: [],
             userId: null,
             user: '',
             user_infos: '',
 
             toogleCotation: false,
             toggleDeconnexion: false,
-            liste_clients: [], 
-            loaded: false
+            id: props.match.params.id,
+            informations_demande: [], 
+            loaded: false, 
+
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -37,6 +36,7 @@ class clients extends React.Component {
     async componentDidMount() {
 
         console.log(store.getState());
+
 
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
@@ -53,17 +53,42 @@ class clients extends React.Component {
             console.log('pas de token')
         }
 
-        /* on va chercher en BDD la liste de clients pour ce compte */
         try {
             console.log('user '+ this.state.user.id_compte)
-            console.log('on va chercher la liste de clients')            
-            const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getClientsPourUnCompte?id=' + this.state.user.id_compte)
-            // const response = await fetch('http://localhost:3000/getClientsPourUnCompte?id=' + this.state.user.id_compte)
-            const json = await response.json();     
-            this.setState({ liste_clients: json , loaded: true});
+            console.log('id_demande' + this.state.id)
+            // var url = new URL("http://localhost:3000/getAccessOrNotToClientInfoByAccount"),
+            var url = new URL("http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getAccessOrNotToClientInfoByAccount"),
+
+            params = {id_compte:this.state.user.id_compte, id_demande:this.state.id}
+            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))      
+            console.log('url: '+ url)
+            const response = await fetch(url)      
+            // const response = await fetch('http://localhost:3000/getAccessOrNotToClientInfoByAccount?id=' + this.state.user.id_compte)
+            const json = await response.json();   
+            var count = json[0].count  
+            console.log('count ': count)
+            if (count == '1') {
+                var acces = 'authorise'
+            }
+            else {
+                var acces = 'refuse'
+            }
+            await this.setState({ acces: acces });
           } catch (error) {
             console.log(error);
-          }        
+          }    
+          
+
+        try {
+            console.log('user '+ this.state.user.id_demande)
+            console.log("on va chercher les infos d'une demande")
+            const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosDemandeCompte?id=' + this.state.id)
+            // const response = await fetch('http://localhost:3000/getInfosDemandeCompte?id=' + this.state.id)
+            const json = await response.json();     
+            this.setState({ informations_demande: json[0] , loaded: true});
+        } catch (error) {
+            console.log(error);
+        }
 
 
     }
@@ -130,19 +155,25 @@ class clients extends React.Component {
                                     <button className="sidebar_sous_elements" onClick={()=>{this.props.history.push('/cotationsPassees')}}>Cotations passées</button>
                                 </div>
                             }
-                            <button className="sidebar_page_element" onClick={()=>{this.props.history.push('/clients')}}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/factures')}}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
+                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/clients')}}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
+                            <button className="sidebar_page_element" onClick={()=>{this.props.history.push('/factures')}}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
                             <button className="sidebar_elements" onClick={()=>{this.props.history.push('/parametres')}}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
                         </div>
                     </div>
-                    <div className="contenu_page">
+                    {this.state.acces == 'authorise' &&
+                        <div className="contenu_page">
+                            <div> 
+                                Fiche client - {this.state.id} - {this.state.informations_demande.entreprise}
+                            </div>
+                            <button onClick = {this.getState}>Get State</button> 
+                        </div> 
+                    }
+                    {this.state.acces != 'authorise' &&
+                        <div> 
+                            Vous n'avez pas accès à cette demande
+                        </div>
+                    }
 
-                        <p >
-                            Clients
-                        </p>
-                        <CardClientList liste_clients={this.state.liste_clients} />                                
-                        <button onClick = {this.getState}>Get State</button> 
-                    </div>
                 </div>
             </div>
 
@@ -150,6 +181,4 @@ class clients extends React.Component {
     }
 }
 
-export default clients;
-
-                        
+export default ficheClient;
