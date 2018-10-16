@@ -205,3 +205,37 @@ body{
 	padding:50px
 }
 
+.menuBurger{
+	display:none;
+}
+
+@media(min-width: 577px) and (max-width: 992px) {
+    .sidebar{
+		transform:translate(-100%);
+	}
+	.navbar_container_logo{
+		width:100%;
+		border:none;
+	}
+	.navbar_usermail{
+		display:none;
+	}
+	.navbar_profile{
+		position:absolute;
+		right:10px;
+		margin:0;
+		top:10px;
+		z-index:21;
+	}
+	.menuBurger{
+		display:inline-block;
+		z-index: 21;
+		position:absolute;
+		left:10px;
+		top:50%;
+		transform: translate(0,-50%);
+		color:white;
+		font-size:30px;
+
+	}
+}

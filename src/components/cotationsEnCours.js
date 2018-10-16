@@ -7,6 +7,7 @@ import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.svg'
 import DemandesList from './sous-components/DemandesList'
+import DemandesAttenteFournisseurList from './sous-components/DemandeAttenteFournisseurList'
 
 const token = '';
 
@@ -22,6 +23,7 @@ class cotationsEnCours extends React.Component {
             user: '',
             user_infos: '',
             demandes: [],
+            demandesAttenteFournisseur: [],
 
             toogleCotation: false,
             toggleDeconnexion: false,
@@ -32,11 +34,12 @@ class cotationsEnCours extends React.Component {
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
+        this.getIdDemande = this.getIdDemande.bind(this);
+        this.closeInfosSupp = this.closeInfosSupp.bind(this);
     }
 
     async componentDidMount() {
 
-        console.log(store.getState());
 
 
         /* fonction pour check si l'user est connecté */
@@ -46,10 +49,16 @@ class cotationsEnCours extends React.Component {
                 let userloged = jwt.verify(localStorage.getItem('token'), 'connectToken');
                 this.setState({ userId: userloged.id_utilisateur });
                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
-                    console.log(user);
                     this.setState({ user: user.data[0] }, () => {
                         axios.get('http://localhost:3000/getDemandes', { params: { id: this.state.user.id_compte } }).then(response => {
-                            this.setState({ demandes: response.data }, () => { console.log(this.state.demandes) });
+                            this.setState({ demandes: response.data });
+                            response.data.forEach(demande => {
+                                if (demande.statut === "Attente-fournisseur" && this.state.demandesAttenteFournisseur.length < 5) {
+                                    this.setState(prevState => ({
+                                        demandesAttenteFournisseur: [...prevState.demandesAttenteFournisseur, demande]
+                                      }))
+                                }
+                            });
                         });
                     })
                 });
@@ -84,7 +93,29 @@ class cotationsEnCours extends React.Component {
 
     deconnexion() {
         localStorage.removeItem("token", token);
-        this.props.history.push('/')
+        this.props.history.push('/');
+    }
+
+    /* --> fonction qui demande au component Demande et DemandeList l'id de la demande selectionnée */
+    getIdDemande(id_demande) {
+        
+        /* --> met la demande en question dans le state selectedCotation pour pouvoir l'afficher dans la div infossupp */
+        this.setState({ selectedCotation: this.state.demandes[id_demande] });
+
+        /* --> faire glisser le container infosSupp sur le coté */
+        if (document.getElementById('container_page_cotations').className === "contenu_page_contations_grand") {
+            document.getElementById('container_page_cotations').className = "contenu_page_contations_petit"
+        } /* else {
+            console.log('non')
+            document.getElementById('container_page_cotations').className = "contenu_page_contations_grand"
+            console.log(document.getElementById('container_page_cotations').className)
+        } */
+    }
+
+    closeInfosSupp() {
+        if (document.getElementById('container_page_cotations').className === "contenu_page_contations_petit") {
+            document.getElementById('container_page_cotations').className = "contenu_page_contations_grand"
+        }
     }
 
 
@@ -98,6 +129,8 @@ class cotationsEnCours extends React.Component {
                             <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
                         </div>
                     }
+                    <div class="menuBurger"><i class="fas fa-bars"></i></div>
+
 
                     <div className="navbar_container_logo">
                         <img src={logo} className="navbar_logo" />
@@ -126,13 +159,52 @@ class cotationsEnCours extends React.Component {
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
                         </div>
                     </div>
-                    <div className="contenu_page_contations_cours">
-                        <div className="cotations_cours_container_title">
-                            <p className="cotations_cours_title_page">COTATIONS EN COURS</p>
-                            <button className="cotations_cours_button_filter">Filtrer</button>
+                    <div id="container_page_cotations" className="contenu_page_contations_grand">
+                        <div className="cotations_container_title">
+                            <p className="cotations_title_page">COTATIONS EN COURS</p>
+                            <button className="cotations_button_filter">Filtrer</button>
                         </div>
+                        {<div>
+                            <p className="cotations_sous_title">Cotations en attente de votre réponse</p>
+                            {this.state.demandesAttenteFournisseur.length > 0 &&
+                                <DemandesAttenteFournisseurList demandes={this.state.demandesAttenteFournisseur} getIdDemande={this.getIdDemande} />
+                            }
+
+                            {this.state.demandesAttenteFournisseur.length === 0 &&
+                                <span>Aucune demande en attente de votre confirmation</span>
+                            }
+                        </div>}
                         <div>
-                            <DemandesList demandes={this.state.demandes}/>
+                            <p className="cotations_sous_title">Toutes vos cotations en attente</p>
+                            <DemandesList demandes={this.state.demandes} getIdDemande={this.getIdDemande} />
+                        </div>
+                        <div class="container_infos_supp">
+                            <button class="button_close_infos_supp" onClick={this.closeInfosSupp}><i class="fas fa-times"></i></button>
+                            {!this.state.selectedCotation &&
+                                <p class="infos_supp_no_selected">Selectionnez une cotation pour voir les détails de celle-ci.</p>
+                            }
+
+                            {this.state.selectedCotation &&
+                                <div className="container_center_infos_supp">
+                                    <p className="infos_supp_title">COTATION</p>
+                                    <p className="infos_supp_ref">Référence : {this.state.selectedCotation.id_demande}</p>
+
+                                    <div className="infos_supp_white_container">
+                                        {this.state.selectedCotation.statut === "Attente-client" &&
+                                            <p className="infos_supp_txt">En attente de la réponse du client</p>
+                                        }
+                                        {this.state.selectedCotation.statut === "Attente-fournisseur" &&
+                                            <p className="infos_supp_txt">En attente de votre réponse</p>
+                                        }
+                                        <p className="infos_supp_txt">{this.state.selectedCotation.volume} {this.state.selectedCotation.volume_unite}</p>
+                                        <p className="infos_supp_txt">Localisation : {this.state.selectedCotation.localisation}</p>
+                                        <p className="infos_supp_txt">Produits : {this.state.selectedCotation.produits}</p>
+                                        <p className="infos_supp_txt">Durée : {this.state.selectedCotation.duree}</p>
+                                        <p className="infos_supp_txt">Début : {this.state.selectedCotation.date_debut}</p>
+                                        <button className="infos_supp_button">Voir plus de détails</button>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -140,11 +212,7 @@ class cotationsEnCours extends React.Component {
 
 
 
-                <div class="container_infos_supp">
-                    {this.state.selectedCotation === null &&
-                        <p class="infos_supp_no_selected">Selectionnez une cotation pour voir les détails de celle-ci.</p>
-                    }
-                </div>
+
             </div>
 
         )

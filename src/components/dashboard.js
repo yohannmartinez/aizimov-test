@@ -90,6 +90,7 @@ class dashboard extends React.Component {
                             <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
                         </div>
                     }
+                    <div class="menuBurger"><i class="fas fa-bars"></i></div>
 
                     <div className="navbar_container_logo">
                         <img src={logo} className="navbar_logo" />
