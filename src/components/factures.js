@@ -133,10 +133,11 @@ class factures extends React.Component {
                             <h1 className = ''> 
                                 Historique des factures
                             </h1> 
-                            <CardFacturesFournisseursList liste_factures={this.state.liste_factures} /> 
                             <Link to = '/ajouter-facture'> 
                                 <button>Ajouter une facture </button> 
                             </Link> 
+                            <CardFacturesFournisseursList liste_factures={this.state.liste_factures} /> 
+
                         </div>
                         <button onClick = {this.getState}> Get state </button>
                     </div>
