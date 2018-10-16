@@ -7,6 +7,7 @@ import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.svg'
 import NotVerify from './sous-components/NotVerified'
+import {triggerMenu} from '../actions/menuburger'
 
 const token = '';
 
@@ -90,7 +91,7 @@ class dashboard extends React.Component {
                             <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
                         </div>
                     }
-                    <div class="menuBurger"><i class="fas fa-bars"></i></div>
+                    <div class="menuBurger" onClick={triggerMenu}><i class="fas fa-bars"></i></div>
 
                     <div className="navbar_container_logo">
                         <img src={logo} className="navbar_logo" />
@@ -103,7 +104,7 @@ class dashboard extends React.Component {
                     </div>
                 </div>
                 <div className="container_page">
-                    <div className="sidebar">
+                    <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
                             <button className="sidebar_page_element" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>

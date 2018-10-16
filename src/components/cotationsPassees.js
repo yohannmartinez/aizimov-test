@@ -7,6 +7,7 @@ import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.svg'
 import DemandesList from './sous-components/DemandesList'
+import { triggerMenu } from '../actions/menuburger';
 
 const token = '';
 
@@ -95,12 +96,20 @@ class cotationsPassees extends React.Component {
         /* --> faire glisser le container infosSupp sur le coté */
         if (document.getElementById('container_page_cotations').className === "contenu_page_contations_grand") {
             document.getElementById('container_page_cotations').className = "contenu_page_contations_petit"
+            document.getElementById('infosSupp').style.transform = "translate(0,0)";
             console.log(document.getElementById('container_page_cotations').className)
         } /* else {
             console.log('non')
             document.getElementById('container_page_cotations').className = "contenu_page_contations_grand"
             console.log(document.getElementById('container_page_cotations').className)
         } */
+    }
+
+    closeInfosSupp() {
+        if (document.getElementById('container_page_cotations').className === "contenu_page_contations_petit") {
+            document.getElementById('container_page_cotations').className = "contenu_page_contations_grand"
+            document.getElementById('infosSupp').style.transform = "translate(100%,0)";
+        }
     }
 
 
@@ -114,20 +123,20 @@ class cotationsPassees extends React.Component {
                             <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
                         </div>
                     }
-                    <div class="menuBurger"><i class="fas fa-bars"></i></div>
+                    <div class="menuBurger" onClick={triggerMenu}><i class="fas fa-bars"></i></div>
 
                     <div className="navbar_container_logo">
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
+                        <span className="navbar_usermail">{this.state.user.email}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
                     </div>
                 </div>
                 <div className="container_page">
-                    <div className="sidebar">
+                    <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
@@ -155,7 +164,7 @@ class cotationsPassees extends React.Component {
                             <p className="cotations_sous_title">Toutes vos cotations passées</p>
                             <DemandesList demandes={this.state.demandes} getIdDemande={this.getIdDemande} />
                         </div>
-                        <div class="container_infos_supp">
+                        <div id="infosSupp" class="container_infos_supp">
                             <button class="button_close_infos_supp" onClick={this.closeInfosSupp}><i class="fas fa-times"></i></button>
                             {!this.state.selectedCotation &&
                                 <p class="infos_supp_no_selected">Selectionnez une cotation pour voir les détails de celle-ci.</p>

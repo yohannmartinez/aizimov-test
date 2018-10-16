@@ -174,14 +174,12 @@ body{
 
 .sidebar_page_element::after{
 	content:"";
-	-webkit-clip-path: polygon(0 50%, 100% 100%, 100% 0);
-	clip-path: polygon(0 50%, 100% 100%, 100% 0);
 	position:absolute;
-	right:0;
 	background-color:#f8f8f8;
-	width:20px;
-	height:40px;
+	width:4px;
+	height:100%;
 	top:50%;
+	left:0;
 	transform: translate(0,-50%);
 
 }
@@ -212,6 +210,8 @@ body{
 @media(min-width: 577px) and (max-width: 992px) {
     .sidebar{
 		transform:translate(-100%);
+		transition: 0.7s;
+		z-index:50;
 	}
 	.navbar_container_logo{
 		width:100%;
@@ -236,6 +236,19 @@ body{
 		transform: translate(0,-50%);
 		color:white;
 		font-size:30px;
+		cursor: pointer;
+	}
+	.container_page{
+		padding:60px 0 0 0;
+	}
+	.contenu_page{
+		width:100vw;
+	}
+}
 
+@media (min-width:993px) {
+	.sidebar{
+		transform:translate(0%,0%)!important;
+		left:0;
 	}
 }

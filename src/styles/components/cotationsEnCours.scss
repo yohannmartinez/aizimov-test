@@ -51,11 +51,11 @@
 }
 
 .container_infos_supp{
-    position:absolute;
+    position:fixed;
     width:400px;
     height:calc(100vh - 60px);
     background-color:#ebebeb;
-    top:0;
+    top:60px;
     right:0;
     transform: translate(calc(100%));
     padding:20px;
@@ -189,5 +189,13 @@
 }
 
 @media(min-width: 577px) and (max-width: 992px) {
-    
+    .contenu_page_contations_grand{
+        width:100vw;
+    }
+    .contenu_page_contations_petit{
+        width:100vw;
+    }
+    .container_infos_supp{
+        width:100vw;
+    }
 }
