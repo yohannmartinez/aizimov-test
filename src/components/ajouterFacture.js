@@ -10,8 +10,6 @@ import Dropzone from 'react-dropzone'
 
 const token = '';
 
-
-
 class ajouterFacture extends React.Component {
     constructor(props) {
         super(props);
