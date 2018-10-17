@@ -62,8 +62,8 @@ class ajouterFacture extends React.Component {
         try {
             console.log('user '+ this.state.user.id_compte)
             console.log('on va chercher la liste de clients')            
-            // const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getFacturesforId?id=' + this.state.user.id_compte)
-            const response = await fetch('http://localhost:3000/getFacturesforId?id=' + this.state.user.id_compte)
+            const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getFacturesforId?id=' + this.state.user.id_compte)
+            // const response = await fetch('http://localhost:3000/getFacturesforId?id=' + this.state.user.id_compte)
             const json = await response.json();     
             this.setState({ liste_factures: json , loaded: true});
           } catch (error) {
@@ -108,8 +108,8 @@ class ajouterFacture extends React.Component {
 
     async submitFacture(){
         try {
-            var response =  await fetch('http://localhost:3000/ajouter_facture', {
-            //   var response = await fetch(url_back_end + '/ajouter_facture', {
+            // var response =  await fetch('http://localhost:3000/ajouter_facture', {
+              var response = await fetch( 'http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/ajouter_facture', {
               method: 'post',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({

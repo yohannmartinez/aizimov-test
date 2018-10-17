@@ -61,7 +61,9 @@ class parametres extends React.Component {
                 }).then(() => {
                     console.log(this.state.user.id_compte)
                     /* --> recuperation des infos de facturation */
-                    axios.get('http://localhost:3000/getFacturationInfos', { params: { id_compte: this.state.user.id_compte } }).then(infos => {
+                                        
+                    axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getFacturationInfos', { params: { id_compte: this.state.user.id_compte } }).then(infos => {
+                    // axios.get('http://localhost:3000/getFacturationInfos', { params: { id_compte: this.state.user.id_compte } }).then(infos => {
                         console.log(infos);
                         this.setState({ infosFacturation: infos.data[0], infosFacturationCancel: infos.data[0] }, () => { console.log(this.state.infosFacturation) })
 
@@ -119,7 +121,9 @@ class parametres extends React.Component {
     confirmModifications() {
         this.setState({ userCancelInfos: this.state.user, infosFacturationCancel: this.state.infosFacturation, editFactureInfos: false, editUserInfos: false, confirm_changes: false }, () => {
             try {
-                var response = fetch('http://localhost:3000/modifierInfosUtilisateur', {
+                // var response = fetch('http://localhost:3000/modifierInfosUtilisateur', {
+                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosUtilisateur', {                    
+                                        
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -140,7 +144,9 @@ class parametres extends React.Component {
             }
 
             try {
-                var response = fetch('http://localhost:3000/modifierInfosFacturation', {
+                
+                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosFacturation', {
+                // var response = fetch('http://localhost:3000/modifierInfosFacturation', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

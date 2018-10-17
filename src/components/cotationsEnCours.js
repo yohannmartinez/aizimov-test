@@ -51,7 +51,9 @@ class cotationsEnCours extends React.Component {
                 this.setState({ userId: userloged.id_utilisateur });
                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     this.setState({ user: user.data[0] }, () => {
-                        axios.get('http://localhost:3000/getDemandes', { params: { id: this.state.user.id_compte } }).then(response => {
+                                                
+                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getDemandes', { params: { id: this.state.user.id_compte } }).then(response => {
+                        // axios.get('http://localhost:3000/getDemandes', { params: { id: this.state.user.id_compte } }).then(response => {
                             this.setState({ demandes: response.data });
                             response.data.forEach(demande => {
                                 if (demande.statut === "Attente-fournisseur" && this.state.demandesAttenteFournisseur.length < 5) {

@@ -47,8 +47,9 @@ class cotationsPassees extends React.Component {
                 this.setState({ userId: userloged.id_utilisateur });
                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
-                    this.setState({ user: user.data[0] }, () => {
-                        axios.get('http://localhost:3000/getDemandesPassees', { params: { id: this.state.user.id_compte } }).then(response => {
+                    this.setState({ user: user.data[0] }, () => {                    
+                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getDemandesPassees', { params: { id: this.state.user.id_compte } }).then(response => {
+                        // axios.get('http://localhost:3000/getDemandesPassees', { params: { id: this.state.user.id_compte } }).then(response => {
                             this.setState({ demandes: response.data }, () => { console.log(this.state.demandes) });
                         });
                     })
