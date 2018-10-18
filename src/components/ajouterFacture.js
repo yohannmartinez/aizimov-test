@@ -8,8 +8,9 @@ import axios from 'axios'
 import logo from '../img/logo.svg'
 import { triggerMenu } from '../actions/menuburger';
 import Dropzone from 'react-dropzone'
+const upload = require('superagent')
+const uuidv4 = require('uuid/v4');
 
-const token = '';
 
 class ajouterFacture extends React.Component {
     constructor(props) {
@@ -30,7 +31,8 @@ class ajouterFacture extends React.Component {
             montant: '', 
             date_a_payer: '', 
             pdf_ajoute: '', 
-            files: []
+            files: [], 
+            image: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -76,10 +78,14 @@ class ajouterFacture extends React.Component {
     }
 
     onDrop(files) {
+        var files_with_id = files
+        files_with_id[0]['id'] = 'facture-' + String(uuidv4()) + '.png'
         this.setState({
-          files
+            files: files_with_id
         });
         this.setState({'pdf_ajoute': true})
+        var image = URL.createObjectURL(files[0])
+        this.setState({image: image})
     }    
 
     handleChange(event) {
@@ -107,9 +113,21 @@ class ajouterFacture extends React.Component {
     }
 
     async submitFacture(){
+        console.log(this.state.files[0])
+        try{
+            upload.post('http://localhost:3000/upload')
+            .attach('file', this.state.files[0])            
+            .field({ id :  this.state.files[0].id }) // sends a JSON post body
+            .end((err, res) => {
+              alert('File uploaded!');
+            })                           
+        }
+        catch(err) {
+            console.log(err)
+        }
         try {
-            // var response =  await fetch('http://localhost:3000/ajouter_facture', {
-              var response = await fetch( 'http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/ajouter_facture', {
+            var response =  await fetch('http://localhost:3000/ajouter_facture', {
+            //   var response = await fetch( 'http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/ajouter_facture', {
               method: 'post',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -117,7 +135,8 @@ class ajouterFacture extends React.Component {
                 date_a_payer: this.state.date_a_payer,
                 entreprise: this.state.entreprise, 
                 nom_facture: this.state.nom_facture, 
-                id_compte: this.state.user.id_compte,             
+                id_compte: this.state.user.id_compte,         
+                s3_name: this.state.files[0].id     
               })
             })
             if (response.status >= 200 && response.status < 300) {
@@ -126,8 +145,7 @@ class ajouterFacture extends React.Component {
             }
           } catch (errors) {
             alert("Ca n'a pas marché pour l'ajout de l'entrepot ", errors);
-            this.setState({ valider_envoi: false, loading_envoi: false })
-      
+            this.setState({ valider_envoi: false, loading_envoi: false })      
           }
         }
 
@@ -195,6 +213,9 @@ class ajouterFacture extends React.Component {
                                     </div>
 
                                 </div> 
+                            }
+                            {this.state.pdf_ajoute === true &&
+                                <img src={this.state.image} alt="SpaceFill est présent partout en France"/>                                
                             }
                             {this.state.valider_envoi == true &&
                                 <div>
