@@ -23,6 +23,8 @@ class factures extends React.Component {
             liste_factures: [], 
             toogleCotation: false,
             toggleDeconnexion: false,
+            image: '', 
+            image2: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -59,11 +61,27 @@ class factures extends React.Component {
             this.setState({ liste_factures: json , loaded: true});
           } catch (error) {
             console.log(error);
-          }        
+          }   
+          try{
+            var image = await fetch('http://localhost:3000/getImageFromS3?fileKey=facture-345a7314-78ba-41d6-b473-b24d0da884d2.png')
+
+            this.setState({
+                image: image
+            })
+            this.setState({
+                url: String(image.url) 
+            })
+          } catch(err){
+              console.log(err)
+          }
+          
+
     }
 
     getState() {
         console.log(this.state)
+        console.log(this.state.image.body)
+        console.log(this.state.image.url)
     }
 
     handleChange(event) {
@@ -143,6 +161,11 @@ class factures extends React.Component {
                         </div>
                         <button onClick = {this.getState}> Get state </button>
                     </div>
+                    {this.state.image!= '' && 
+                        <div> 
+                            <img src={this.state.url} alt="SpaceFill est présent partout en France"/>
+                        </div> 
+                    }
                 </div>
             </div>
 
