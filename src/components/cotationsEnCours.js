@@ -41,7 +41,8 @@ class cotationsEnCours extends React.Component {
 
     async componentDidMount() {
 
-
+        
+        
 
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
@@ -51,7 +52,7 @@ class cotationsEnCours extends React.Component {
                 this.setState({ userId: userloged.id_utilisateur });
                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     this.setState({ user: user.data[0] }, () => {
-                        axios.get('http://localhost:3000/getDemandes', { params: { id: this.state.user.id_compte } }).then(response => {
+                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getDemandes', { params: { id: this.state.user.id_compte } }).then(response => {
                             this.setState({ demandes: response.data });
                             response.data.forEach(demande => {
                                 if (demande.statut === "Attente-fournisseur" && this.state.demandesAttenteFournisseur.length < 5) {
@@ -204,7 +205,7 @@ class cotationsEnCours extends React.Component {
                                         <p className="infos_supp_txt">Produits : {this.state.selectedCotation.produits}</p>
                                         <p className="infos_supp_txt">Durée : {this.state.selectedCotation.duree}</p>
                                         <p className="infos_supp_txt">Début : {this.state.selectedCotation.date_debut}</p>
-                                        <button className="infos_supp_button">Voir plus de détails</button>
+                                        <button className="infos_supp_button" onClick={()=> {this.props.history.push(`/fiche-demande/${this.state.selectedCotation.id_demande}`)}}>Voir plus de détails</button>
                                     </div>
                                 </div>
                             }

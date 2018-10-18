@@ -6,10 +6,12 @@ const windowWidth = window.innerWidth;
 
 export const triggerMenu = () => {
     
-    if (windowWidth < 992 && document.getElementById('sidebar').style.transform !== 'translate(0%)') {
-        document.getElementById('sidebar').style.transform = "translate(0%)"
+    if(windowWidth < 993 && document.getElementById('sidebar').style.left < "0px" ){
+        document.getElementById('sidebar').style.left = "0px"
+        console.log(document.getElementById('sidebar').style.left)
     } else {
-        document.getElementById('sidebar').style.transform = "translate(-100%)"
+        document.getElementById('sidebar').style.left = "-250px"   
+        console.log(document.getElementById('sidebar').style.left)
     }
 }
 

@@ -33,6 +33,8 @@ class dashboard extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(document.getElementById('sidebar').style.transform)
+
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
             let check_connection = checkConnection();

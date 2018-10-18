@@ -12,7 +12,8 @@ import factures from '../components/factures';
 import parametres from '../components/parametres';
 import presentation from '../components/presentation';
 import ficheClient from  '../components/ficheClient'; 
-import ajouterFacture from '../components/ajouterFacture'
+import ajouterFacture from '../components/ajouterFacture';
+import ficheDemande from '../components/ficheDemande'
 
 const AppRouter = () => (
   <BrowserRouter >
@@ -31,6 +32,7 @@ const AppRouter = () => (
         <Route path="/parametres" component={parametres} exact={true} />   
         <Route path="/presentation" component={presentation} exact={true} />   
         <Route path="/fiche-client/:id" component={ficheClient} exact={true} />   
+        <Route path="/fiche-demande/:id" component={ficheDemande} exact={true} />   
         <Route path="/ajouter-facture" component={ajouterFacture} exact={true} />   
         </Switch>
       </ScrollToTop>
