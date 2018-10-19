@@ -199,3 +199,13 @@
         width:100vw;
     }
 }
+
+@media(max-width:1200px){
+    .cotations_sous_title{
+        font-size:15px;
+    }
+    .container_demande_attente_fournisseur, .container_cotation, .container_cotation_title,.cotations_button_filter,.infos_supp_txt,.infos_supp_button{
+        font-size:12px;
+    }
+
+}

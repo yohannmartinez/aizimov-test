@@ -297,9 +297,7 @@ class accueil extends React.Component {
         }
 
         try {
-            // var response = fetch('http://localhost:3000/envoyerInfosFacturation', {
             var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/envoyerInfosFacturation', {
-
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

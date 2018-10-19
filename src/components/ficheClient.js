@@ -57,14 +57,14 @@ class ficheClient extends React.Component {
         try {
             console.log('user '+ this.state.user.id_compte)
             console.log('id_demande' + this.state.id)
-            // var url = new URL("http://localhost:3000/getAccessOrNotToClientInfoByAccount"),
+            // var url = new URL("http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getAccessOrNotToClientInfoByAccount"),
             var url = new URL("http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getAccessOrNotToClientInfoByAccount"),
 
             params = {id_compte:this.state.user.id_compte, id_demande:this.state.id}
             Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))      
             console.log('url: '+ url)
             const response = await fetch(url)      
-            // const response = await fetch('http://localhost:3000/getAccessOrNotToClientInfoByAccount?id=' + this.state.user.id_compte)
+            // const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getAccessOrNotToClientInfoByAccount?id=' + this.state.user.id_compte)
             const json = await response.json();   
             var count = json[0].count  
             if (count == '1') {
@@ -83,7 +83,7 @@ class ficheClient extends React.Component {
             console.log('user '+ this.state.user.id_demande)
             console.log("on va chercher les infos d'une demande")
             const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosDemandeCompte?id=' + this.state.id)
-            // const response = await fetch('http://localhost:3000/getInfosDemandeCompte?id=' + this.state.id)
+            // const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosDemandeCompte?id=' + this.state.id)
             const json = await response.json();     
             this.setState({ informations_demande: json[0] , loaded: true});
         } catch (error) {

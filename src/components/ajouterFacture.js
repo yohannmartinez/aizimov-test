@@ -138,8 +138,8 @@ class ajouterFacture extends React.Component {
             console.log(err)
         }
         try {
-            var response =  await fetch('http://localhost:3000/ajouter_facture', {
-            //   var response = await fetch( 'http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/ajouter_facture', {
+            var response =  await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/ajouter_facture', {
+            //   var response = await fetch(url_back_end + '/ajouter_facture', {
               method: 'post',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
