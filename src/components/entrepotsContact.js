@@ -12,7 +12,7 @@ const token = '';
 
 
 
-class entrepots extends React.Component {
+class entrepotsContact extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -120,16 +120,16 @@ class entrepots extends React.Component {
                     </div>
                     <div className="contenu_page_full_width">
                         <div className = 'entrepot_onglets_container'>
-                            <div className = 'entrepot_onglet_selectionne'>
+                            <div onClick={() => { this.props.history.push('/entrepots') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Informations principales
                             </div> 
                             <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Stockage et services logistiques
                             </div>    
-                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
+                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className = 'entrepot_onglet_non_selectionne '>
                                 Sécurité et informations bâtiment
                             </div>   
-                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne '>
+                            <div  className = 'entrepot_onglet_selectionne '>
                                 Personnes à contacter
                             </div>                                                                        
                         </div>
@@ -156,4 +156,4 @@ class entrepots extends React.Component {
     }
 }
 
-export default entrepots;
+export default entrepotsContact;

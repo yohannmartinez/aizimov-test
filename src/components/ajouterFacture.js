@@ -10,6 +10,7 @@ import { triggerMenu } from '../actions/menuburger';
 import Dropzone from 'react-dropzone'
 const upload = require('superagent')
 const uuidv4 = require('uuid/v4');
+import Check from '../img/checked.png'
 
 
 class ajouterFacture extends React.Component {
@@ -30,9 +31,10 @@ class ajouterFacture extends React.Component {
             nom_facture: '', 
             montant: '', 
             date_a_payer: '', 
-            pdf_ajoute: '', 
+            pdf_ajoute: false, 
             files: [], 
-            image: ''
+            image: '', 
+            tous_inputs_remplis: false, 
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -40,6 +42,16 @@ class ajouterFacture extends React.Component {
         this.deconnexion = this.deconnexion.bind(this);
         this.getState = this.getState.bind(this); 
         this.submitFacture = this.submitFacture.bind(this); 
+        this.tousInputsRemplis = this.tousInputsRemplis.bind(this); 
+    }
+
+    tousInputsRemplis(){
+        if (this.state.nom_facture != '' && this.state.montant != '' && this.state.date_a_payer!= '' && this.state.entreprise != ''){
+            this.setState({tous_inputs_remplis : true})
+        }
+        else {
+            this.setState({tous_inputs_remplis: false})
+        }
     }
 
     async componentDidMount() {
@@ -89,7 +101,7 @@ class ajouterFacture extends React.Component {
     }    
 
     handleChange(event) {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ [event.target.name]: event.target.value }, this.tousInputsRemplis);
     }
 
     toogleCotation() {
@@ -195,27 +207,97 @@ class ajouterFacture extends React.Component {
                                 Ajouter une facture 
                             </h1> 
                             {this.state.valider_envoi != true &&
-                                <div>
-                                    <p>Nom de l'entreprise <input className="parametres_infos_column_input" onChange={this.handleChange} name="entreprise" placeholder="Demande" value={this.state.entreprise} /></p>
-                                    <p>Nom de la facture <input className="parametres_infos_column_input" onChange={this.handleChange} name="nom_facture" placeholder="1er mois de stockage" value={this.state.nom_facture} /></p>
-                                    <p>Montant <input className="parametres_infos_column_input" onChange={this.handleChange} name="montant" placeholder="1000€" value={this.state.montant} /></p>
-                                    <p>Date à payer <input className="parametres_infos_column_input" onChange={this.handleChange} name="date_a_payer" placeholder="" value={this.state.date_a_payer} /></p>
-                                    <button onClick = {this.submitFacture}> Soumettre </button>
-                                    <div >
-                                        {this.state.pdf_ajoute != true &&
-                                            <Dropzone onDrop={this.onDrop.bind(this)}>
-                                                <p>Dropper ici :) </p>
-                                            </Dropzone>
-                                        }
-                                        {this.state.pdf_ajoute == true &&
-                                            this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
-                                        }
-                                    </div>
+                                <div className = 'ajout_facture_main_container'> 
+                                    <div className = 'ajout_facture_inputs_container'>
+                                        <div className = 'ajout_facture_inputes_sub_container'> 
+                                            <div className = 'ajout_facture_single_input_container'> 
+                                                <p>Nom de l'entreprise </p>
+                                                <input className="ajout_facture_input" onChange={this.handleChange} name="entreprise" placeholder="Demande" value={this.state.entreprise} />
+                                            </div> 
+                                            <div className = 'ajout_facture_single_input_container'>                                         
+                                                <p>Nom de la facture</p> 
+                                                <input className="ajout_facture_input" onChange={this.handleChange} name="nom_facture" placeholder="1er mois de stockage" value={this.state.nom_facture} />
+                                            </div> 
+                                        </div> 
+                                        <div className = 'ajout_facture_inputes_sub_container'> 
+                                            <div className = 'ajout_facture_single_input_container'> 
+                                                <p>Montant </p>
+                                                <input className="ajout_facture_input" onChange={this.handleChange} name="montant" placeholder="1000€" value={this.state.montant} />
+                                            </div> 
+                                            <div className = 'ajout_facture_single_input_container'>                                         
+                                                <p>Date à payer </p> 
+                                                <input className="ajout_facture_input" onChange={this.handleChange} name="date_a_payer" placeholder="" value={this.state.date_a_payer} />
+                                            </div> 
+                                        </div>                                         
 
+                                        <div className = 'ajout_facture_dropzone_container'>
+                                            {this.state.pdf_ajoute != true &&
+                                                <Dropzone onDrop={this.onDrop.bind(this)} className = 'ajout_facture_dropzone'             accept="image/jpeg, image/png application/pdf">
+                                                    <p className ='ajout_facture_dropzone_text_small'>Ajouter le pdf de la facture ici </p>
+                                                    <p className ='ajout_facture_dropzone_text_big'> + </p>
+                                                </Dropzone>
+                                            }
+                                            {this.state.pdf_ajoute == true &&
+                                                this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
+                                            }
+                                        </div>
+                                        <button onClick = {this.submitFacture} className = 'ajout_facture_boutton'> Soumettre </button>
+
+
+                                    </div>
+                                    <div className = 'ajout_facture_state_container'> 
+                                        <div className = 'ajout_facture_state_box'> 
+                                            <div className = 'ajout_facture_state_line'> 
+                                                <div className = 'ajout_facture_state_check_container'>
+                                                    {this.state.tous_inputs_remplis === true &&
+                                                        <img  className = 'ajout_facture_check_img' src = {Check} />
+                                                    }
+                                                </div> 
+                                                <div className = 'ajout_facture_state_text_container'> 
+                                                    {this.state.tous_inputs_remplis === true &&
+                                                        <p  className = 'ajout_facture_state_text_done' > Informations sur la facture </p>
+                                                    }
+                                                    {this.state.tous_inputs_remplis === false &&
+                                                        <p  className = 'ajout_facture_state_text_not_done' > Informations sur la facture </p> 
+                                                    }                                                                                                    
+                                                </div> 
+                                            </div> 
+                                            <div className = 'ajout_facture_state_line'> 
+                                                <div className = 'ajout_facture_state_check_container'>
+                                                    {this.state.pdf_ajoute === true &&
+                                                        <img  className = 'ajout_facture_check_img' src = {Check} />
+                                                    }
+                                                </div> 
+                                                <div className = 'ajout_facture_state_text_container'> 
+                                                    {this.state.pdf_ajoute === true &&
+                                                        <p  className = 'ajout_facture_state_text_done' > Pdf ajouté </p>
+                                                    }
+                                                    {this.state.pdf_ajoute != true &&
+                                                        <p  className = 'ajout_facture_state_text_not_done' > Pdf ajouté </p> 
+                                                    }                                                                                                    
+                                                </div> 
+                                            </div> 
+                                            <div className = 'ajout_facture_state_line'> 
+                                                <div className = 'ajout_facture_state_check_container'>
+                                                    {this.state.valider_envoi === true &&
+                                                        <img  className = 'ajout_facture_check_img' src = {Check} />
+                                                    }
+                                                </div> 
+                                                <div className = 'ajout_facture_state_text_container'> 
+                                                    {this.state.valider_envoi === true &&
+                                                        <p  className = 'ajout_facture_state_text_done' > Facture envoyée </p>
+                                                    }
+                                                    {this.state.valider_envoi === false &&
+                                                        <p  className = 'ajout_facture_state_text_not_done' > Facture envoyée </p> 
+                                                    }                                                                                                    
+                                                </div> 
+                                            </div>                                                                                         
+                                        </div> 
+                                    </div>  
                                 </div> 
                             }
                             {this.state.pdf_ajoute === true &&
-                                <img src={this.state.image} alt="SpaceFill est présent partout en France"/>                                
+                                <img src={this.state.image} style ={{height: '1rem'}} alt="SpaceFill est présent partout en France"/>                                
                             }
                             {this.state.valider_envoi == true &&
                                 <div>

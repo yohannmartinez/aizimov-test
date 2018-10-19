@@ -1,26 +1,47 @@
 import React from 'react';
 import CardFactureFournisseur from './CardFactureFournisseur';
 
-const CardFacturesFournisseursList = ({ liste_factures }) => {
-  return (
-    <div >
-      {
-        liste_factures.map((user, i) => {
-          return (
-              <CardFactureFournisseur
-                reference={liste_factures[i].reference}
-                montant={liste_factures[i].montant}
-                entreprise={liste_factures[i].entreprise}
-                nom_facture={liste_factures[i].nom_facture}
-                date_creation={liste_factures[i].date_creation}
-                />
-          );
-        })
-      }
-    </div>
+class CardFacturesFournisseursList extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+    }
+  }
+  render() {
+    return (
 
-  );
+      <table className='table_cotations'>
+        <thead>
+          <tr className="container_cotation_title">
+            <td className="infos_cotations_txt">Statut</td>
+            <td className="infos_cotations_txt">Entreprise</td>
+            <td className="infos_cotations_txt">Montant</td>
+            <td className="infos_cotations_txt">Date de création</td>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            this.props.factures.map((facture , i) => {
+              return (
+                <CardFactureFournisseur
+                number={i}
+                statut={facture.statut}
+                montant={facture.montant}
+                entreprise={facture.entreprise}
+                nom_facture={facture.nom_facture}
+                date_creation={facture.date_creation}
+                reference={facture.reference}
+                getIdFacture={this.props.getIdFacture}
+
+                />
+              );
+            })
+          }
+        </tbody>
+      </table>
+        );
+        }        
 }
 
-
 export default CardFacturesFournisseursList;
+

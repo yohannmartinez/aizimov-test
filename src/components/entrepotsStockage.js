@@ -12,7 +12,7 @@ const token = '';
 
 
 
-class entrepots extends React.Component {
+class entrepotsStockage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -120,10 +120,10 @@ class entrepots extends React.Component {
                     </div>
                     <div className="contenu_page_full_width">
                         <div className = 'entrepot_onglets_container'>
-                            <div className = 'entrepot_onglet_selectionne'>
+                            <div onClick={() => { this.props.history.push('/entrepots') }} className = 'entrepot_onglet_non_selectionne'>
                                 Informations principales
                             </div> 
-                            <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
+                            <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className = 'entrepot_onglet_selectionne '>
                                 Stockage et services logistiques
                             </div>    
                             <div onClick={() => { this.props.history.push('/entrepots-securite') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
@@ -134,6 +134,7 @@ class entrepots extends React.Component {
                             </div>                                                                        
                         </div>
                         <div className = 'contenu_page'>
+                            Informations principales
                             <div className = 'entrepot_infos_main_container'>                         
                                 <div className = 'entrepot_infos_container_gauche'> 
                                     Resumé
@@ -156,4 +157,4 @@ class entrepots extends React.Component {
     }
 }
 
-export default entrepots;
+export default entrepotsStockage;

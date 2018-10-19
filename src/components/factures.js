@@ -8,6 +8,9 @@ import axios from 'axios'
 import logo from '../img/logo.svg'
 import CardFacturesFournisseursList from '../cards/CardFacturesFournisseursList'
 import { triggerMenu } from '../actions/menuburger';
+// import { Document, Page } from 'react-pdf';
+var fileDownload = require('js-file-download');
+
 
 const token = '';
 
@@ -24,13 +27,17 @@ class factures extends React.Component {
             toogleCotation: false,
             toggleDeconnexion: false,
             image: '', 
-            image2: ''
+            image2: '', 
+            factureSelectionnee: null, 
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
         this.getState = this.getState.bind(this); 
+        this.closeInfosSupp = this.closeInfosSupp.bind(this);
+        this.getIdFacture  = this.getIdFacture.bind(this); 
+        this.download = this.download.bind(this); 
     }
 
     async componentDidMount() {
@@ -73,16 +80,36 @@ class factures extends React.Component {
             })
           } catch(err){
               console.log(err)
-          }
-          
-
+          }        
     }
 
     getState() {
         console.log(this.state)
-        console.log(this.state.image.body)
-        console.log(this.state.image.url)
     }
+
+    closeInfosSupp() {
+        if (document.getElementById('container_page_liste_factures').className === "contenu_page_contations_petit") {
+            document.getElementById('container_page_liste_factures').className = "contenu_page_contations_grand"
+            document.getElementById('infosSupp').style.transform = "translate(100%,0)";
+        }
+    }    
+
+    getIdFacture(id_facture) {
+        
+        /* --> met la demande en question dans le state selectedCotation pour pouvoir l'afficher dans la div infossupp */
+        this.setState({ factureSelectionnee: this.state.liste_factures[id_facture] });
+
+        /* --> faire glisser le container infosSupp sur le coté */
+        if (document.getElementById('container_page_liste_factures').className === "contenu_page_contations_grand") {
+            document.getElementById('container_page_liste_factures').className = "contenu_page_contations_petit";
+            document.getElementById('infosSupp').style.transform = "translate(0,0)";
+        } /* else {
+            console.log('non')
+            document.getElementById('container_page_cotations').className = "contenu_page_contations_grand"
+            console.log(document.getElementById('container_page_cotations').className)
+        } */
+    }
+
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
@@ -108,6 +135,9 @@ class factures extends React.Component {
         this.props.history.push('/')
     }
 
+    download(){
+        fileDownload(this.state.url, 'filename.png');
+    }
 
     render() {
 
@@ -148,24 +178,62 @@ class factures extends React.Component {
                             <button className="sidebar_elements" onClick={()=>{this.props.history.push('/parametres')}}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
                         </div>
                     </div>
-                    <div className="contenu_page">
+                    <div className="contenu_page_contations_grand" id="container_page_liste_factures">
                         <div className = ''>
-                            <h1 className = ''> 
-                                Historique des factures
-                            </h1> 
-                            <Link to = '/ajouter-facture'> 
-                                <button>Ajouter une facture </button> 
-                            </Link> 
-                            <CardFacturesFournisseursList liste_factures={this.state.liste_factures} /> 
+                            <div className="cotations_container_title">
+                                <p className="cotations_title_page">Mes factures</p>
+                                <Link to = '/ajouter-facture'> 
+                                    <button className="cotations_button_filter">Ajouter une facture</button>
+                                </Link>                                 
+                            </div> 
+
+                            {<div>
+                            <p className="cotations_sous_title">Voici la liste de vos factures</p>
+                            {this.state.liste_factures.length > 0 &&
+                                <CardFacturesFournisseursList factures={this.state.liste_factures}  getIdFacture={this.getIdFacture}/>
+                            }
+
+                            </div>}
 
                         </div>
+
+
                         <button onClick = {this.getState}> Get state </button>
                     </div>
-                    {this.state.image!= '' && 
-                        <div> 
-                            <img src={this.state.url} alt="SpaceFill est présent partout en France"/>
-                        </div> 
-                    }
+                    <div id="infosSupp" class="container_infos_supp">
+                            <button class="button_close_infos_supp" onClick={this.closeInfosSupp}><i class="fas fa-times"></i></button>
+                            {!this.state.factureSelectionnee &&
+                                <p class="infos_supp_no_selected">Selectionnez une cotation pour voir les détails de celle-ci.</p>
+                            }
+
+                            {this.state.factureSelectionnee &&
+                                <div className="container_center_infos_supp">
+                                    <p className="infos_supp_title">COTATION</p>
+                                    <p className="infos_supp_ref">Référence : {this.state.factureSelectionnee.id_demande}</p>
+
+                                    <div className="infos_supp_white_container">
+                                        {this.state.factureSelectionnee.statut === "Attente-client" &&
+                                            <p className="infos_supp_txt">En attente de la réponse du client</p>
+                                        }
+                                        {this.state.factureSelectionnee.statut === "Attente-fournisseur" &&
+                                            <p className="infos_supp_txt">En attente de votre réponse</p>
+                                        }
+                                        <p className="infos_supp_txt">{this.state.factureSelectionnee.volume} {this.state.factureSelectionnee.volume_unite}</p>
+                                        <p className="infos_supp_txt">Localisation : {this.state.factureSelectionnee.localisation}</p>
+                                        <p className="infos_supp_txt">Produits : {this.state.factureSelectionnee.produits}</p>
+                                        <p className="infos_supp_txt">Durée : {this.state.factureSelectionnee.duree}</p>
+                                        <p className="infos_supp_txt">Début : {this.state.factureSelectionnee.date_debut}</p>
+                                        <a href={this.state.url} download>                            
+                                            <button className="infos_supp_button">Voir la facture</button>
+                                        </a> 
+                                    </div>
+
+
+                                </div>
+                            }
+                        </div>
+
+
                 </div>
             </div>
 

@@ -309,7 +309,7 @@ class accueil extends React.Component {
                 }),
             })
             if (response.status >= 200 && response.status < 300) {
-                this.props.history.push('/dashboard')
+                this.props.history.push('/ajouter-facture')
             }
         } catch (errors) {
             alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
