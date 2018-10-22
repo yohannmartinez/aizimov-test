@@ -7,6 +7,9 @@ import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.svg'
 import { triggerMenu } from '../actions/menuburger';
+import Dropzone from 'react-dropzone'
+const uuidv4 = require('uuid/v4');
+const upload = require('superagent')
 
 const token = '';
 
@@ -19,13 +22,23 @@ class ficheDemande extends React.Component {
             userId: null,
             user: '',
             user_infos: '',
+
+            /* --> infos globales de la demande */
             informations_demande: null,
             toogleCotation: false,
             toggleDeconnexion: false,
             id: props.match.params.id,
             statutDemande: '',
+
+            /* --> statut de la demande récupèré depuis la base de données */
             infosDemandeStatut: '',
             id_entrepot: '',
+
+            /* --> state avec toutes les infos concernant le devis, le statut etc */
+            infosDemandeSupp:'',
+
+            /* --> faire apparaitre la div pour proposer un devis */
+            divPropositionDevis:false,
 
         }
         this.handleChange = this.handleChange.bind(this);
@@ -35,6 +48,8 @@ class ficheDemande extends React.Component {
         this.getState = this.getState.bind(this);
         this.accepterDemande = this.accepterDemande.bind(this);
         this.refuserDemande = this.refuserDemande.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+        this.submitDevis = this.submitDevis.bind(this);
     }
 
     async componentDidMount() {
@@ -64,7 +79,8 @@ class ficheDemande extends React.Component {
                         axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
                                 axios.get('http://localhost:3000/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {
-                                    this.setState({ infosDemandeStatut: response.data[0].statut });
+                                    this.setState({ infosDemandeStatut: response.data[0].statut , infosDemandeSupp : response.data[0]});
+                                    
                                 });
                             });
                         });
@@ -125,7 +141,8 @@ class ficheDemande extends React.Component {
                     } catch (errors) {
                         alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
                     }
-                    console.log("fonction pour dire qu'il à accepté la demande")
+                    console.log("fonction pour dire qu'il à accepté la demande");
+                    this.setState({infosDemandeStatut : "Attente-client " , divPropositionDevis: true})
                 });
             })
         });
@@ -152,11 +169,39 @@ class ficheDemande extends React.Component {
                     } catch (errors) {
                         alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
                     }
-                    console.log("fonction pour dire qu'il à accepté la demande")
+                    console.log("fonction pour dire qu'il à refuser la demande")
+                    this.setState({infosDemandeStatut : "passee-refusee"})
                 });
             })
         });
 
+    }
+
+    /* --> fonction pour le drop */
+    onDrop(files) {
+        var files_with_id = files
+        files_with_id[0]['id'] = 'devis-' + String(uuidv4()) + '.pdf'
+        this.setState({
+            files: files_with_id
+        });
+        this.setState({'pdf_ajoute': true})
+        var image = URL.createObjectURL(files[0])
+        this.setState({image: image})
+    }
+
+    /* -->envoyer les infos du devis */
+   async submitDevis() {
+        try{
+            upload.post('http://localhost:3000/upload')
+            .attach('file', this.state.files[0])            
+            .field({ id :  this.state.files[0].id }) // sends a JSON post body
+            .end((err, res) => {
+              alert('File uploaded!');
+            })                        
+        }
+        catch(err) {
+            console.log(err)
+        }
     }
 
 
@@ -190,24 +235,36 @@ class ficheDemande extends React.Component {
                             <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
-                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>Cotations en cours</button>
+                                    <button className="sidebar_page_element" onClick={() => { this.props.history.push('/cotationsEnCours') }}>Cotations en cours</button>
                                     <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>Cotations passées</button>
                                 </div>
                             }
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_page_element" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
                         </div>
                     </div>
 
                     <div className="contenu_page">
                         <button onClick={this.getState}>getstate</button>
+                        {this.state.divPropositionDevis !== true &&
+                            <div className="proposition_devis_container">
+                                <span>Proposer un devis</span>
+                                <Dropzone onDrop={this.onDrop}>
+                                    mettez vos fichier ici (pdf)
+                                </Dropzone>
+                                ou
+                                <span>Ecrivez vos propositions ici</span>
+                                <textarea style={{"resize" : "none"}} placeholder="informations" class="fich_demande_textarea" />
+                                <button onClick={this.submitDevis}>Envoyer les informations</button>
+                            </div>
+                        }
                         {this.state.informations_demande !== null &&
                             <div>
                                 <span>
                                     Pour la demande dont l'id est {this.state.informations_demande.id_demande}, nous recherchons un entrepot à {this.state.informations_demande.localisation}, pour une durée de {this.state.informations_demande.duree} à partir
-                                de {this.state.informations_demande.date_debut}. Nous voulons reserver un espace de {this.state.informations_demande.volume} {this.state.informations_demande.volume_unite}.
-                            </span>
+                                    de {this.state.informations_demande.date_debut}. Nous voulons reserver un espace de {this.state.informations_demande.volume} {this.state.informations_demande.volume_unite}.
+                                </span>
 
 
                                 {this.state.infosDemandeStatut === "Attente-fournisseur" &&
@@ -223,7 +280,7 @@ class ficheDemande extends React.Component {
                                 }
                                 {this.state.infosDemandeStatut === "passee-refusee" &&
                                     <div>
-                                        Vous avez refusé cette demande, appelez l'assistance spacefill si vous voulez changer de descision .
+                                        Vous avez refusé cette demande.
                                 </div>
                                 }
                                 {this.state.infosDemandeStatut === "passee-perdue" &&
@@ -236,6 +293,13 @@ class ficheDemande extends React.Component {
                                         Vous avez proposé un devis à cette demande et l'entreprise l'a accepté.
                                     </div>
                                 }
+                                {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.date_ajout_devis === null && 
+                                    <div>
+                                        <span>Vous n'avez pas ajouté de devis</span>
+                                        <button onClick={()=> {this.setState({divPropositionDevis : true})}}>Ajouter un devis</button>
+                                    </div>
+                                }
+                                
                             </div>
                         }
                     </div>

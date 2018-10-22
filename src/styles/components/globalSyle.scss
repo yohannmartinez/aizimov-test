@@ -200,7 +200,8 @@ body{
 .contenu_page{
 	background-color:#f8f8f8;
 	width:calc(100vw - 220px);
-	padding:50px
+	padding:50px;
+	position: relative;
 }
 
 .menuBurger{

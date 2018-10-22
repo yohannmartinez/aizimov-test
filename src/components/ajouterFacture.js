@@ -79,13 +79,13 @@ class ajouterFacture extends React.Component {
 
     onDrop(files) {
         var files_with_id = files
-        files_with_id[0]['id'] = 'facture-' + String(uuidv4()) + '.png'
+        files_with_id[0]['id'] = 'devis-' + String(uuidv4()) + '.pdf'
         this.setState({
             files: files_with_id
         });
         this.setState({'pdf_ajoute': true})
-        var image = URL.createObjectURL(files[0])
-        this.setState({image: image})
+        var devisURL = URL.createObjectURL(files[0])
+        this.setState({devis: devisURL})
     }    
 
     handleChange(event) {
