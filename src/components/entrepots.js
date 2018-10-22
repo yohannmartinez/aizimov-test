@@ -5,7 +5,7 @@ import { Route, Link } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
-import logo from '../img/logo.svg'
+import logo from '../img/logo.png'
 import { triggerMenu } from '../actions/menuburger';
 
 const token = '';
@@ -24,11 +24,17 @@ class entrepots extends React.Component {
 
             toogleCotation: false,
             toggleDeconnexion : false,
+            liste_images : []
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
+        this.getState = this.getState.bind(this); 
+    }
+
+    getState() {
+        console.log(this.state)
     }
 
     async componentDidMount() {
@@ -44,15 +50,33 @@ class entrepots extends React.Component {
                 this.setState({ userId: userloged.id_utilisateur });
                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
-                    this.setState({ user: user.data[0] })
-                })
+                    this.setState({ user: user.data[0] }, () => {
+                        console.log('aaaa')
+
+                        axios.get('http://localhost:3000/getInfosEntrepot', {params: {id_compte: this.state.user.id_compte } }).then(response => {
+                            console.log(response.data)
+                            this.setState({
+                                informations_entrepots: response.data                      
+                            }, () => {
+                                if (this.state.informations_entrepots.image_1_reference != '') {
+                                    var images = this.state.liste_images
+                                    images.push(this.state.informations_entrepots.image_1_reference)
+                                    this.setState(prevState => ({
+                                        liste_images: [...prevState.liste_demandes, images]
+                                      }))
+                                } 
+
+                            })                  
+                        })
+                    }
+                    )                    
+                }
+                )
             }
-        } else {
-            console.log('pas de token')
+            else {
+                console.log('pas de token')
+            }
         }
-
-
-
     }
 
     handleChange(event) {
@@ -138,12 +162,25 @@ class entrepots extends React.Component {
                                 <div className = 'entrepot_infos_container_gauche'> 
                                     Resumé
                                     <div className = 'entrepot_infos_resume_box'> 
-                                        
+                                        <div className = 'entrepot_infos_resume_ligne'> 
+                                            <div className = 'entrepots_infos_resume_input_div'>
+                                                <div className = 'entrepots_infos_label'> Entreprise </div> 
+                                                <input className = 'entrepots_infos_input' /> 
+                                            </div>
+                                            <div className = 'entrepots_infos_resume_input_div'>
+                                                <div className = 'entrepots_infos_label'> Lalala </div> 
+                                                <input className = 'entrepots_infos_input' /> 
+                                            </div>                                            
+                                        </div> 
                                     </div> 
                                 </div> 
                                 <div className = 'entrepot_infos_container_droite'> 
-
+                                    {this.state.liste_images === '' &&
+                                        <div> Aucune image uploadée </div> 
+                                    }
+                                    
                                 </div>                     
+                                <button onClick = {this.getState}> Get State </button> 
                             </div>                         
                         </div>                        
                     </div> 

@@ -5,7 +5,7 @@ import { Route, Link } from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
-import logo from '../img/logo.svg'
+import logo from '../img/logo.png'
 import { triggerMenu } from '../actions/menuburger';
 import Dropzone from 'react-dropzone'
 const uuidv4 = require('uuid/v4');

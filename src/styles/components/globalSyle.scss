@@ -25,9 +25,11 @@ body{
 }
 
 .navbar_logo{
-	top:50%;
-	transform: translate(0,-50%);
 	position:relative;
+	margin: auto; 
+	margin-top: 0.5rem; 
+	padding: auto; 
+	height: 2rem; 
 }
 
 .navbar_container_droite{

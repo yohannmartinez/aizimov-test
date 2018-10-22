@@ -9,9 +9,14 @@
     flex: 1.15
 }
 .entrepot_infos_resume_box{
-    border: 1.5px solid $middle-grey; 
-    border-radius: 5px; 
-    min-height: 8rem; 
+    border-radius:8px;
+    overflow:hidden;
+    margin-top: 0.6rem; 
+    background-color: white;
+    padding:none;
+    position: relative;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    min-height: 12rem; 
     width: 100%; 
 }
 
@@ -43,4 +48,26 @@
 }
 .entrepot_onglet_border_right{
     border-right: 1px solid $middle-grey; 
+}
+
+.entrepot_infos_resume_ligne{
+    display: flex; 
+    margin: 0.5rem 5%; 
+}
+.entrepots_infos_resume_input_div{
+    flex:1; 
+    display: flex;
+}
+.entrepots_infos_label{
+    flex: 1.2; 
+}
+.entrepots_infos_input{
+    flex: 2;
+    background-color:#f8f8f8;
+    border:none; 
+    padding:none;
+    position: relative;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);  
+    border-radius: 5px; 
+    height: 1.5rem;    
 }
