@@ -1,0 +1,111 @@
+.ajout_facture_main_container{
+    display: flex
+}
+
+.ajout_facture_inputs_container{
+    flex: 2; 
+    display: inline-block; 
+    margin-top: 1rem; 
+}
+
+.ajout_facture_state_container{
+    flex: 1.2
+}
+.ajout_facture_single_input_container{
+    display: inline-block; 
+    flex: 1; 
+}
+.ajout_facture_inputes_sub_container{
+    display: flex
+}
+
+.ajout_facture_dropzone_container{
+    margin-top: 2rem; 
+    margin-bottom: 2rem; 
+}
+
+.ajout_facture_dropzone{
+    width: 90%; 
+    border: 1.8px solid $dark-blue; 
+    border-radius: 6px; 
+    height: 7.5rem; 
+    background: white; 
+}
+
+.ajout_facture_dropzone_text_small{
+    font-size: 0.8rem; 
+    font-weight: 450; 
+    text-align: center; 
+    padding-top: 1rem; 
+    color: $dark-blue; 
+}
+
+.ajout_facture_dropzone_text_big{
+    font-size: 1.6rem; 
+    font-weight: 700; 
+    text-align: center; 
+    color: $dark-blue
+}
+
+.ajout_facture_boutton{
+    width: 40%; 
+    background: $dark-blue; 
+    font-size: 0.9rem; 
+    color: white; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    height: 2.5rem; 
+}
+
+.ajout_facture_input{
+    width:80%;
+    height: 2rem; 
+    border:none; 
+    background-color: white;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+    border-radius:5px;
+    font-size: 0.8rem; 
+    padding-left: 10px; 
+}
+
+.ajout_facture_state_box{
+    margin-top: 2rem; 
+    width: 80%; 
+    border: none; 
+    margin-left: 10%; 
+    margin-right: 10%; 
+    background-color: white;
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+    border-radius:5px;
+    height: 17rem; 
+}
+
+.ajout_facture_state_line{
+    display: flex; 
+    padding-top: 2.4rem; 
+    
+}
+.ajout_facture_state_check_container{
+    flex: 1; 
+    text-align: center; 
+}
+
+.ajout_facture_state_text_container{
+    flex: 3; 
+    text-align: left;
+    padding-left: 5%;  
+}
+
+.ajout_facture_check_img{
+    height: 2rem; 
+}
+.ajout_facture_state_text_done{
+    font-size: 0.8rem; 
+    font-weight: 500; 
+    color: $dark-grey; 
+}
+.ajout_facture_state_text_not_done{
+    font-size: 0.8rem; 
+    font-weight: 300;     
+    color: $dark-grey; 
+}

@@ -5,6 +5,10 @@ import ScrollToTop from './ScrollToTop'
 import dashboard from '../components/dashboard';
 import connexion from '../components/connexion';
 import entrepots from '../components/entrepots';
+import entrepotsStockage from '../components/entrepotsStockage';
+import entrepotsSecurite from '../components/entrepotsSecurite';
+import entrepotsContact from '../components/entrepotsContact';
+
 import cotationsPassees from '../components/cotationsPassees';
 import cotationsEnCours from '../components/cotationsEnCours';
 import clients from '../components/clients';
@@ -25,6 +29,10 @@ const AppRouter = () => (
         <Route path="/dashboard" component={dashboard} exact={true} />   
         <Route path="/connexion" component={connexion} exact={true} />   
         <Route path="/entrepots" component={entrepots} exact={true} />   
+        <Route path="/entrepots-stockage" component={entrepotsStockage} exact={true} />   
+        <Route path="/entrepots-securite" component={entrepotsSecurite} exact={true} />   
+        <Route path="/entrepots-contact" component={entrepotsContact} exact={true} />   
+
         <Route path="/clients" component={clients} exact={true} />   
         <Route path="/cotationsPassees" component={cotationsPassees} exact={true} />   
         <Route path="/cotationsEnCours" component={cotationsEnCours} exact={true} />   

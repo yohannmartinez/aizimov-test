@@ -203,6 +203,11 @@ body{
 	padding:50px;
 	position: relative;
 }
+.contenu_page_full_width{
+	background-color:#f8f8f8;
+	width:calc(100vw - 220px);
+	padding:0px	
+}
 
 .menuBurger{
 	display:none;

@@ -1,0 +1,46 @@
+.entrepot_infos_main_container{
+    display: flex; 
+}
+
+.entrepot_infos_container_gauche{
+    flex: 2
+}
+.entrepot_infos_container_droite{
+    flex: 1.15
+}
+.entrepot_infos_resume_box{
+    border: 1.5px solid $middle-grey; 
+    border-radius: 5px; 
+    min-height: 8rem; 
+    width: 100%; 
+}
+
+.entrepot_onglets_container{
+    display: flex; 
+    background: #DCDCDC;     
+    min-height: 2.2rem; 
+    color: $dark-grey; 
+    text-align: center; 
+    font-size: 0.8rem; 
+    cursor:pointer    
+}
+
+.entrepot_onglet_selectionne{
+    flex: 1; 
+    background: #f8f8f8; 
+    padding-top: 0.5rem; 
+    border-radius: 5px; 
+    border: 1px solid #f8f8f8; 
+    font-weight: 500
+}
+.entrepot_onglet_non_selectionne{
+    flex: 1; 
+    padding-top: 0.5rem; 
+    font-weight: 350
+}
+.entrepot_onglet_border_left{
+    border-left: 1px solid $middle-grey; 
+}
+.entrepot_onglet_border_right{
+    border-right: 1px solid $middle-grey; 
+}
