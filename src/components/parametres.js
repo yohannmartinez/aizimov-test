@@ -41,6 +41,11 @@ class parametres extends React.Component {
         this.confirmModifications = this.confirmModifications.bind(this);
         this.cancelModifications = this.cancelModifications.bind(this);
         this.handleChange_facturation_info = this.handleChange_facturation_info.bind(this)
+        this.getState = this.getState.bind(this); 
+    }
+
+    getState() {
+        console.log(this.state)
     }
 
     async componentDidMount() {
@@ -84,7 +89,6 @@ class parametres extends React.Component {
         let userCopy = Object.assign({}, this.state.user);
         userCopy[event.target.name] = event.target.value;
         this.setState({ user: userCopy, confirm_changes: true }, () => { console.log(this.state.user) });
-
     }
 
     handleChange_facturation_info(event) {
@@ -308,6 +312,7 @@ class parametres extends React.Component {
                                 </div>
                             }
                         </div>
+                        <button onClick= {this.getState}> Get State </button>
 
 
                     </div>

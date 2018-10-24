@@ -3,7 +3,8 @@
 }
 
 .entrepot_infos_container_gauche{
-    flex: 2
+    flex: 2; 
+    text-align: center; 
 }
 .entrepot_infos_container_droite{
     flex: 1.15
@@ -69,5 +70,104 @@
     position: relative;
     box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);  
     border-radius: 5px; 
-    height: 1.5rem;    
+    height: 1.5em;    
+}
+
+.entrepot_infos_container_images{
+    max-width: 16em; 
+    margin: auto; 
+    border: 1px solid grey; 
+    border-radius: 5px; 
+    display: flex;     
+}
+.entrepot_infos_image{
+    max-height: 3em;     
+    height: auto; 
+
+}
+.fiche_entrepot_ajout_image_dropzone{
+    height: 2em; 
+    width: 50%; 
+    background-color: white; 
+    color: $dark-blue; 
+    font-size: 0.9rem; 
+    border: $dark-blue solid 2px; 
+    margin: 1rem auto; 
+}
+.entrepots_infos_container_droite_divise_deux{
+    display: flex; 
+    margin-top: 2em; 
+}
+
+.entrepots_infos_droite_small_box_left{
+    flex: 1; 
+    margin-right: 5%; 
+    border-radius:8px;
+    overflow:hidden;
+    margin-top: 0.6em; 
+    background-color: white;
+    position: relative;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    min-height: 10em; 
+}
+
+.entrepots_infos_droite_small_box_right{
+    flex: 1; 
+    margin-left: 5%; 
+    border-radius:8px;
+    overflow:hidden;
+    margin-top: 0.6rem; 
+    background-color: white;
+    position: relative;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    min-height: 10em;     
+}
+.entrepot_infos_title_box{
+    margin-top: 2em; 
+    text-align: left; 
+    font-size: 1em; 
+    color: $dark-grey; 
+}
+
+.entrepot_infos_temperature_lign{
+    display: flex; 
+    margin-top: 0.8rem; 
+}
+
+.entrepot_infos_temperature_sublign{
+    display: flex; 
+}
+
+.entrepot_infos_temperature_label{
+    flex: 3; 
+    font-size: 0.9em; 
+    padding-top: 0.6em
+}
+.entrepot_infos_temperature_select{
+    flex: 1;
+    margin: 0 5%; 
+    border:none;
+    background-color: white;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    padding:10px;
+    border-radius:5px;
+    height: 1.8em; 
+    font-size: 0.9em;     
+}
+.entrepot_infos_temperature_detail_taille{
+    display: inline-block; 
+    flex: 3; 
+}
+
+.entrepot_infos_input_temperature{
+    margin: 0 5%; 
+    border:none;
+    background-color: white;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    padding:10px;
+    border-radius:5px;
+    height: 0.6rem; 
+    font-size: 0.9em; 
+    flex: 3; 
+    max-width: 6rem; 
 }
