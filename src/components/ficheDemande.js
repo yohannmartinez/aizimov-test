@@ -81,7 +81,6 @@ class ficheDemande extends React.Component {
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
                                 axios.get('http://localhost:3000/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {
                                     this.setState({ infosDemandeStatut: response.data[0].statut, infosDemandeSupp: response.data[0], dateDevis: new Date(response.data[0].date_ajout_devis * 1000).toString() });
-
                                 });
                             });
                         });
