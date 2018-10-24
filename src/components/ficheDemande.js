@@ -78,8 +78,10 @@ class ficheDemande extends React.Component {
                     console.log(user);
                     this.setState({ user: user.data[0] }, () => {
                         axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                            console.log(response)
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
                                 axios.get('http://localhost:3000/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {
+                                    console.log('get statut demande : ' + response.data[0])
                                     this.setState({ infosDemandeStatut: response.data[0].statut, infosDemandeSupp: response.data[0], dateDevis: new Date(response.data[0].date_ajout_devis * 1000).toString() });
                                 });
                             });
@@ -123,7 +125,7 @@ class ficheDemande extends React.Component {
     /* --> fonction pour gérer la demande */
     async accepterDemande() {
         this.setState({ statutDemande: "Attente-client" }, () => {
-            axios.get('http://localhost:3000/getEntrepotWithAccountId', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+            axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                 this.setState({ user_infos: response.data[0].id_entrepot }, () => {
                     try {
                         var response = fetch('http://localhost:3000/changerStatutDemande', {
@@ -151,7 +153,7 @@ class ficheDemande extends React.Component {
 
     refuserDemande() {
         this.setState({ statutDemande: "passee-refusee" }, () => {
-            axios.get('http://localhost:3000/getEntrepotWithAccountId', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+            axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                 this.setState({ user_infos: response.data[0].id_entrepot }, () => {
                     try {
                         var response = fetch('http://localhost:3000/changerStatutDemande', {
@@ -368,7 +370,7 @@ class ficheDemande extends React.Component {
                             </div>
                         }
                     </div>
-
+                    <button onClick = {this.getState}> Get State </button> 
 
 
                 </div>
