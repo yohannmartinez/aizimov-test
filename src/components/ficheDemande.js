@@ -35,11 +35,12 @@ class ficheDemande extends React.Component {
             id_entrepot: '',
 
             /* --> state avec toutes les infos concernant le devis, le statut etc */
-            infosDemandeSupp:'',
+            infosDemandeSupp: '',
 
             /* --> faire apparaitre la div pour proposer un devis */
-            divPropositionDevis:false,
-
+            divPropositionDevis: false,
+            fileName: null,
+            devis_texte: '',
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -79,8 +80,8 @@ class ficheDemande extends React.Component {
                         axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
                                 axios.get('http://localhost:3000/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {
-                                    this.setState({ infosDemandeStatut: response.data[0].statut , infosDemandeSupp : response.data[0]});
-                                    
+                                    this.setState({ infosDemandeStatut: response.data[0].statut, infosDemandeSupp: response.data[0], dateDevis: new Date(response.data[0].date_ajout_devis * 1000).toString() });
+
                                 });
                             });
                         });
@@ -142,7 +143,7 @@ class ficheDemande extends React.Component {
                         alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
                     }
                     console.log("fonction pour dire qu'il à accepté la demande");
-                    this.setState({infosDemandeStatut : "Attente-client " , divPropositionDevis: true})
+                    this.setState({ infosDemandeStatut: "Attente-client ", divPropositionDevis: true })
                 });
             })
         });
@@ -158,9 +159,10 @@ class ficheDemande extends React.Component {
                             method: 'post',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                id_entrepot: this.state.user_infos,
+                                id_entrepot: this.state.id_entrepot,
                                 statut: this.state.statutDemande,
                                 id_demande: this.state.informations_demande.id_demande,
+
                             }),
                         })
                         if (response.status >= 200 && response.status < 300) {
@@ -170,7 +172,7 @@ class ficheDemande extends React.Component {
                         alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
                     }
                     console.log("fonction pour dire qu'il à refuser la demande")
-                    this.setState({infosDemandeStatut : "passee-refusee"})
+                    this.setState({ infosDemandeStatut: "passee-refusee" })
                 });
             })
         });
@@ -182,26 +184,72 @@ class ficheDemande extends React.Component {
         var files_with_id = files
         files_with_id[0]['id'] = 'devis-' + String(uuidv4()) + '.pdf'
         this.setState({
-            files: files_with_id
+            files: files_with_id,
+            fileName: files_with_id[0].name
         });
-        this.setState({'pdf_ajoute': true})
+        this.setState({ 'pdf_ajoute': true })
         var image = URL.createObjectURL(files[0])
-        this.setState({image: image})
+        this.setState({ image: image })
+        console.log(files_with_id)
     }
 
     /* -->envoyer les infos du devis */
-   async submitDevis() {
-        try{
-            upload.post('http://localhost:3000/upload')
-            .attach('file', this.state.files[0])            
-            .field({ id :  this.state.files[0].id }) // sends a JSON post body
-            .end((err, res) => {
-              alert('File uploaded!');
-            })                        
+    async submitDevis() {
+        this.setState({ divPropositionDevis: false });
+        /* --> Si l'user à écrit un devis dans le textarea */
+        if (this.state.devis_texte !== '') {
+            try {
+                var response = fetch('http://localhost:3000/changerStatutDemande', {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id_demande: this.state.informations_demande.id_demande,
+                        id_entrepot: this.state.id_entrepot,
+                        date_ajout_devis: Math.floor(Date.now() / 1000),
+                        devis_texte: this.state.devis_texte,
+                    }),
+                })
+                if (response.status >= 200 && response.status < 300) {
+                    console.log("reussi pour l'envoie en bdd ")
+                }
+            } catch (errors) {
+                console.log(errors)
+            }
         }
-        catch(err) {
-            console.log(err)
+
+        /* --> Si l'user à upload un devis */
+        if (this.state.files) {
+            try {
+                var response = fetch('http://localhost:3000/changerStatutDemande', {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        id_demande: this.state.informations_demande.id_demande,
+                        id_entrepot: this.state.id_entrepot,
+                        date_ajout_devis: Math.floor(Date.now() / 1000),
+                        reference_devis: this.state.files[0].id,
+                    }),
+                })
+                if (response.status >= 200 && response.status < 300) {
+                    console.log("reussi pour l'envoie en bdd ")
+                }
+            } catch (errors) {
+                console.log(errors)
+            }
+
+            try {
+                upload.post('http://localhost:3000/upload')
+                    .attach('file', this.state.files[0])
+                    .field({ id: this.state.files[0].id }) // sends a JSON post body
+                    .end((err, res) => {
+                        this.props.history.push('/cotationsEnCours')
+                    })
+            }
+            catch (err) {
+                console.log("upload raté")
+            }
         }
+
     }
 
 
@@ -221,7 +269,7 @@ class ficheDemande extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
+                        <span className="navbar_usermail">{this.state.user.email}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
@@ -246,19 +294,25 @@ class ficheDemande extends React.Component {
                     </div>
 
                     <div className="contenu_page">
-                        <button onClick={this.getState}>getstate</button>
-                        {this.state.divPropositionDevis !== true &&
+
+                        {/* --> div pour ajouter un devis */}
+                        {this.state.divPropositionDevis === true &&
                             <div className="proposition_devis_container">
-                                <span>Proposer un devis</span>
-                                <Dropzone onDrop={this.onDrop}>
-                                    mettez vos fichier ici (pdf)
+                                <button class="button_close_div_devis" onClick={()=>{this.setState({divPropositionDevis : false})}}><i class="fas fa-times"></i></button>
+                                <p className="cotations_title_page">Proposer un devis</p>
+                                <p className="fiche demande_sous_title">Possibilité 1 - Choisissez un fichier (pdf)</p>
+                                <Dropzone onDrop={this.onDrop} className="fiche_demande_dropzone">
+                                    {!this.state.fileName && <span>Aucun fichier selectionné</span>}
+                                    {this.state.fileName}
                                 </Dropzone>
-                                ou
-                                <span>Ecrivez vos propositions ici</span>
-                                <textarea style={{"resize" : "none"}} placeholder="informations" class="fich_demande_textarea" />
-                                <button onClick={this.submitDevis}>Envoyer les informations</button>
+
+                                <p className="fiche_demande_sous_title">Possibilité 2 - Écrivez vos propositions ici</p>
+                                <textarea style={{ "resize": "none" }} placeholder="informations" class="fiche_demande_textarea" name="devis_texte" value={this.state.devis_texte} onChange={this.handleChange} />
+                                <button onClick={this.submitDevis} className="fihe_demande_submit_devis">Envoyer les informations</button>
                             </div>
                         }
+
+
                         {this.state.informations_demande !== null &&
                             <div>
                                 <span>
@@ -288,18 +342,30 @@ class ficheDemande extends React.Component {
                                         Un autre entrepot à accepté la demande, soyez plus rapide la prochaine fois ! :(
                                     </div>
                                 }
-                                {this.state.infosDemandeStatut === "passee-perdue" &&
+                                {this.state.infosDemandeStatut === "passee-gagnee" &&
                                     <div>
                                         Vous avez proposé un devis à cette demande et l'entreprise l'a accepté.
                                     </div>
                                 }
-                                {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.date_ajout_devis === null && 
+                                {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.date_ajout_devis === null &&
                                     <div>
                                         <span>Vous n'avez pas ajouté de devis</span>
-                                        <button onClick={()=> {this.setState({divPropositionDevis : true})}}>Ajouter un devis</button>
+                                        <button onClick={() => { this.setState({ divPropositionDevis: true }) }}>Ajouter un devis</button>
                                     </div>
                                 }
-                                
+                                {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.reference_devis &&
+                                    <div>
+                                        <span>Vous avez ajouté un devis le {this.state.dateDevis}</span>
+                                        <a href={"https://s3.eu-west-3.amazonaws.com/spf-fournisseur-container/" + this.state.infosDemandeSupp.reference_devis}><button>Voir le devis</button></a>
+                                    </div>
+                                }
+                                {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.devis_texte &&
+                                    <div>
+                                        <span>Vous avez ajouté un devis le {this.state.dateDevis} sous forme de texte :</span>
+                                        <span>{this.state.infosDemandeSupp.devis_texte}</span>
+                                    </div>
+                                }
+
                             </div>
                         }
                     </div>
