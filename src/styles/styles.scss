@@ -7,7 +7,13 @@
 @import './components/cotationsEnCours.scss';
 @import './components/ficheDemande.scss';
 @import './components/ajoutFacture.scss';
+@import './components/ficheEntrepot/entrepotContact.scss'; 
+@import './components/ficheEntrepot/entrepotGlobal.scss'; 
+@import './components/ficheEntrepot/entrepotSecurite.scss'; 
+@import './components/ficheEntrepot/entrepotStockage.scss'; 
+@import './components/ficheEntrepot/entrepotInfos'; 
 @import './components/entrepot.scss'; 
+
 
 @import "../../node_modules/react-day-picker/lib/style"; 
 

@@ -74,6 +74,7 @@
     background-color:transparent;
     cursor:pointer;
     position: relative;
+    text-align: right; 
     font-size:20px;
 }
 
@@ -187,21 +188,39 @@
     position:fixed;
     bottom:0;
     left:0;
-    background-color:rgb(255, 214, 100);
+    background-color: #EBEBEB;
+    border: 2px solid $orange; 
     width:100vw;
-    padding:15px 50px 15px 50px;
+    padding:1.2em 3em 1.2em 3em;
     color:#4d4d4d;
-    font-weight:600;
+    font-weight:450;
     text-align: center;
+    z-index: 100; 
+    font-size: 1em; 
 }
 
 .container_action_modification_button{
     border:none;
     border-radius:5px;
-    padding:10px 20px 10px 20px;
-    margin-left:20px;
+    padding:1.2em 3em 1.2em 3em;
+    margin-left:1.5em;
     color:#4d4d4d;
-    background-color:white;
+    background-color:$orange;
+    color: white; 
     cursor:pointer;
-    font-weight:600;
+    font-weight:500;
+    height: 1.3em; 
+}
+
+
+.container_action_modification_button_annuler{
+    border:none;
+    border-radius:5px;
+    padding:1.2em 3em 1.2em 3em;
+    margin-left:20px;
+    background-color: white;
+    color: $orange; 
+    cursor:pointer;
+    font-weight:500;
+    height: 1.5em;
 }

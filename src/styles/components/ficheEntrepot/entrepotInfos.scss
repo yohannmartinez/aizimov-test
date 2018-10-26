@@ -1,0 +1,129 @@
+// Main Containers: 
+
+.entrepot_infos_main_container{
+    display: flex; 
+}
+
+.entrepot_infos_container_gauche{
+    flex: 2; 
+    text-align: center; 
+}
+.entrepot_infos_container_droite{
+    flex: 1.15; 
+    text-align: center; 
+}
+
+
+// Resume: 
+.entrepot_infos_resume_subcontainer{
+    display: flex; 
+    padding:0.5em 1em 0em 2em;
+}
+
+.entrepot_infos_resume_column{
+    flex: 1; 
+    text-align: left; 
+}
+.entrepot_infos_resume_label{
+    font-size: 0.8em; 
+    font-weight: 500; 
+    height: 1.7em; 
+    flex: 2; 
+}
+.entrepot_infos_resume_label_edit{
+    flex: 2; 
+    font-size: 0.8rem; 
+    font-weight: 500; 
+    height: 1.7em;     
+}
+.entrepot_infos_resume_text{
+    font-size: 0.8em; 
+    font-weight: 400; 
+    height: 1.7em; 
+    flex: 2;     
+}
+.entrepot_infos_resume_column_edit{
+    display: inline-block; 
+    flex: 1; 
+    text-align: left; 
+}
+
+.entrepot_infos_input_resume{
+    flex: 1.5; 
+    height: 1.5rem; 
+    padding-top: 0.5em; 
+}
+.entrepot_infos_resume_lign{
+    display: flex; 
+}
+
+
+// Description
+.entrepot_infos_description_box{
+    flex: 1; 
+    margin-left: 4%; 
+    overflow:hidden;
+    position: relative;
+    min-height: 6rem; 
+}
+.entrepot_input_description{
+    min-height: 5em; 
+    margin: 1em ; 
+    width: 90%; 
+}
+.entrepot_infos_description_label{
+    font-size: 0.8rem; 
+    font-weight: 400; 
+    min-height: 1.6em;       
+    text-align: left; 
+    padding:1em 3em 1em 1em ;
+    margin-left: 1em; 
+}
+
+// Disponibilité: 
+.entrepot_infos_dispo_box{
+    flex: 1; 
+    margin-right: 4%; 
+    overflow:hidden;
+    position: relative;
+    min-height: 6rem; 
+}
+
+
+// Images: 
+.entrepot_infos_title_images{
+    font-size: 0.9rem; 
+    color: $dark-grey;
+    font-weight: 500;  
+    margin-top: 1.5em; 
+    margin-bottom: 0.5em
+}
+
+.entrepot_infos_container_images{
+    max-width: 16em; 
+    margin: auto; 
+    border-radius: 5px; 
+    display: flex;     
+    height: 10rem; 
+    border: 1.5px solid $main-blue; 
+}
+
+.entrepot_infos_images{
+    height: auto; 
+    width: 100%; 
+}
+
+.fiche_entrepot_ajout_image_dropzone{
+    height: 3em; 
+    width: 50%; 
+    color: white; 
+    background-color: $dark-blue; 
+    font-size: 0.9rem; 
+    margin: 1rem auto; 
+    border-radius: 5px; 
+}
+
+.fiche_entrepot_ajout_image_dropzone_text{
+    font-size: 1em; 
+    padding-top: 1em ; 
+}

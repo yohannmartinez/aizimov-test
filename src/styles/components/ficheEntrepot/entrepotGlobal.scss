@@ -1,0 +1,86 @@
+// Onglets:
+
+// Partie ONGLETS: 
+.entrepot_onglets_container{
+    display: flex; 
+    background: #DCDCDC;     
+    min-height: 2.2rem; 
+    color: $dark-grey; 
+    text-align: center; 
+    font-size: 0.8rem; 
+    cursor:pointer    
+}
+.entrepot_onglet_selectionne{
+    flex: 1; 
+    background: #f8f8f8; 
+    padding-top: 0.6rem; 
+    border-radius: 5px; 
+    border: 1px solid #f8f8f8; 
+    font-weight: 650
+}
+.entrepot_onglet_non_selectionne{
+    flex: 1; 
+    padding-top: 0.6rem; 
+    font-weight: 400
+}
+.entrepot_onglet_border_left{
+    border-left: 1px solid $middle-grey; 
+}
+.entrepot_onglet_border_right{
+    border-right: 1px solid $middle-grey; 
+}
+
+// BOXES pour les informations - styling global
+.entrepot_box{
+    border-radius:5px;
+    overflow:hidden;
+    margin-top: 1rem; 
+    background-color:white; 
+    color: $dark-grey; 
+    padding:none;
+    position: relative;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    width: 100%; 
+    border: 2px solid $main-blue; 
+    display: inline-block; 
+    overflow: visible;
+}
+
+.entrepot_box_title{
+    width:100%;
+    margin:0;
+    padding:10px;
+    text-align:left;
+    color:$dark-grey;
+    font-weight:500;
+    padding:1.2em 1em 0em 2em;    
+}
+
+.entrepot_input{
+    background-color:#f8f8f8;
+    border:none; 
+    padding:none;
+    position: relative;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);  
+    border-radius: 5px; 
+    font-size: 0.8rem; 
+    padding-left: 0.5em; 
+    margin-right: 0.8em; 
+}
+.entrepot_input ::placeholder{
+    padding-left: 0.3em; 
+}
+
+.entrepot_modifier_infos{
+
+}
+
+.entrepot_annuler_modifier_infos{
+    margin-left:20px;
+    color:#7a7a7a;
+    border:none;
+    background-color:transparent;
+    cursor:pointer;
+    position: relative;
+    font-size:20px;    
+}
