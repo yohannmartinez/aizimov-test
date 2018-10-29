@@ -306,7 +306,7 @@ class ficheDemande extends React.Component {
                     <div className="contenu_page">
 
                         {/* --> div pour ajouter un devis */}
-                        {this.state.divPropositionDevis !== true &&
+                        {this.state.divPropositionDevis === true &&
                             <div className="proposition_devis_container">
 
                                 <button class="button_close_div_devis" onClick={() => { this.setState({ divPropositionDevis: false }) }}><i class="fas fa-times"></i></button>
