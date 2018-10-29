@@ -7,6 +7,7 @@ import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.png'
 import { triggerMenu } from '../actions/menuburger';
+import ContactList from './sous-components/ContactList'
 
 const token = '';
 
@@ -23,12 +24,16 @@ class entrepotsContact extends React.Component {
             user_infos: '',
 
             toogleCotation: false,
-            toggleDeconnexion : false,
+            toggleDeconnexion: false,
+            id_entrepot: '',
+            infosContact: null,
+            divAjouterContact: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
+        this.getIdDemande = this.getIdDemande.bind(this);
     }
 
     async componentDidMount() {
@@ -44,7 +49,16 @@ class entrepotsContact extends React.Component {
                 this.setState({ userId: userloged.id_utilisateur });
                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
-                    this.setState({ user: user.data[0] })
+                    this.setState({ user: user.data[0] }, () => {
+                        console.log(userloged)
+                        axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                            this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
+                                axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                    this.setState({ infosContact: response.data });
+                                });
+                            });
+                        });
+                    })
                 })
             }
         } else {
@@ -79,6 +93,12 @@ class entrepotsContact extends React.Component {
         this.props.history.push('/')
     }
 
+    getIdDemande(id_contact) {
+        
+        /* --> met la demande en question dans le state selectedCotation pour pouvoir l'afficher dans la div infossupp */
+        this.setState({ selectedContact: this.state.infosContact[id_contact] });
+    }
+
 
     render() {
 
@@ -104,49 +124,60 @@ class entrepotsContact extends React.Component {
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/dashboard')}}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_page_element" onClick={()=>{this.props.history.push('/entrepots')}}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
+                            <button className="sidebar_page_element" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
                             <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
-                                    <button className="sidebar_sous_elements" onClick={()=>{this.props.history.push('/cotationsEnCours')}}>Cotations en cours</button>
-                                    <button className="sidebar_sous_elements" onClick={()=>{this.props.history.push('/cotationsPassees')}}>Cotations passées</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>Cotations en cours</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>Cotations passées</button>
                                 </div>
                             }
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/clients')}}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/factures')}}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/parametres')}}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
                         </div>
                     </div>
                     <div className="contenu_page_full_width">
-                        <div className = 'entrepot_onglets_container'>
-                            <div onClick={() => { this.props.history.push('/entrepots') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
+                        <div className='entrepot_onglets_container'>
+                            <div onClick={() => { this.props.history.push('/entrepots') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Informations principales
-                            </div> 
-                            <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Stockage et services logistiques
-                            </div>    
-                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className = 'entrepot_onglet_non_selectionne '>
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className='entrepot_onglet_non_selectionne '>
                                 Sécurité et informations bâtiment
-                            </div>   
-                            <div  className = 'entrepot_onglet_selectionne '>
+                            </div>
+                            <div className='entrepot_onglet_selectionne '>
                                 Personnes à contacter
-                            </div>                                                                        
+                            </div>
                         </div>
-                        <div className = 'contenu_page'>
-                            <div className = 'entrepot_infos_main_container'>                         
-                                <div className = 'entrepot_infos_container_gauche'> 
-                                    Resumé
-                                    <div className = 'entrepot_infos_resume_box'> 
-                                        
-                                    </div> 
-                                </div> 
-                                <div className = 'entrepot_infos_container_droite'> 
-
-                                </div>                     
-                            </div>                         
-                        </div>                        
-                    </div> 
+                        <div className='contenu_page'>
+                            <p>Personnes à contacter</p>
+                            <p>Renseignez ici les responsables de l'entrepot à contacter</p>
+                            {this.state.infosContact === null &&
+                                <div>
+                                    <span>Vous n'avez ajouté aucun contact</span>
+                                </div>
+                            }
+                            {this.state.infosContact !== null &&
+                                <div>
+                                    <ContactList contacts={this.state.infosContact} getIdDemande={this.getIdDemande} />
+                                </div>
+                            }
+                            {this.state.divAjouterContact !== true &&
+                                <button onClick={() => { this.setState({ divAjouterContact: true }) }}>Ajouter un contact</button>
+                            }
+                            {this.state.divAjouterContact === true &&
+                                <div>
+                                    <input />
+                                    <button>Ajouter le contact</button>
+                                </div>
+                            }
+                            <button onClick={() => { console.log(this.state) }}>getstate</button>
+                        </div>
+                    </div>
 
 
                 </div>
