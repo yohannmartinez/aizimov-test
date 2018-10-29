@@ -8,6 +8,7 @@ import axios from 'axios'
 import logo from '../img/logo.png'
 import { triggerMenu } from '../actions/menuburger';
 import ContactList from './sous-components/ContactList'
+import { copy } from 'gl-matrix/src/gl-matrix/mat2';
 
 const token = '';
 
@@ -28,12 +29,23 @@ class entrepotsContact extends React.Component {
             id_entrepot: '',
             infosContact: null,
             divAjouterContact: false,
+            infos_ajout_contact: {
+                prenom: "",
+                nom: "",
+                mail: "",
+                telephone_fixe: "",
+                telephone_portable: "",
+                poste: "",
+                contact_principal: "",
+            }
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
         this.getIdDemande = this.getIdDemande.bind(this);
+        this.handleChangeAddContact = this.handleChangeAddContact.bind(this);
+        this.ajouterContact = this.ajouterContact.bind(this);
     }
 
     async componentDidMount() {
@@ -73,6 +85,12 @@ class entrepotsContact extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
+    handleChangeAddContact(event) {
+        let stateCopy = Object.assign({}, this.state.infos_ajout_contact);
+        stateCopy[event.target.name] = event.target.value;
+        this.setState({ infos_ajout_contact: stateCopy });
+    }
+
     toogleCotation() {
         if (this.state.toogleCotation === true) {
             this.setState({ toogleCotation: false });
@@ -94,9 +112,34 @@ class entrepotsContact extends React.Component {
     }
 
     getIdDemande(id_contact) {
-        
+
         /* --> met la demande en question dans le state selectedCotation pour pouvoir l'afficher dans la div infossupp */
         this.setState({ selectedContact: this.state.infosContact[id_contact] });
+    }
+
+    ajouterContact() {
+        this.setState({ divAjouterContact: false })
+        try {
+            var response = fetch('http://localhost:3000/addContact', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id_entrepot: this.state.id_entrepot,
+                    prenom: this.state.infos_ajout_contact.prenom,
+                    nom: this.state.infos_ajout_contact.nom,
+                    mail: this.state.infos_ajout_contact.mail,
+                    telephone_fixe: this.state.infos_ajout_contact.telephone_fixe,
+                    telephone_portable: this.state.infos_ajout_contact.telephone_portable,
+                    poste: this.state.infos_ajout_contact.poste,
+                    contact_principal: this.state.infos_ajout_contact.contact_principal,
+                }),
+            })
+            if (response.status >= 200 && response.status < 300) {
+                console.log('tout est bon')
+            }
+        } catch (errors) {
+            alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
+        }
     }
 
 
@@ -115,7 +158,7 @@ class entrepotsContact extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
+                        <span className="navbar_usermail">{this.state.user.email}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
@@ -154,7 +197,7 @@ class entrepotsContact extends React.Component {
                             </div>
                         </div>
                         <div className='contenu_page'>
-                            <p>Personnes à contacter</p>
+                            <p className="parametres_title_page ">Personnes à contacter</p>
                             <p>Renseignez ici les responsables de l'entrepot à contacter</p>
                             {this.state.infosContact === null &&
                                 <div>
@@ -171,11 +214,23 @@ class entrepotsContact extends React.Component {
                             }
                             {this.state.divAjouterContact === true &&
                                 <div>
-                                    <input />
-                                    <button>Ajouter le contact</button>
+                                    <p>Prénom : <input placeholder="prenom" name="prenom" value={this.state.infos_ajout_contact.prenom} onChange={this.handleChangeAddContact} /></p>
+                                    <p>Nom : <input placeholder="nom" name="nom" value={this.state.infos_ajout_contact.nom} onChange={this.handleChangeAddContact} /></p>
+                                    <p>Mail : <input placeholder="mail" name="mail" value={this.state.infos_ajout_contact.mail} onChange={this.handleChangeAddContact} /></p>
+                                    <p>Poste : <input placeholder="poste" name="poste" value={this.state.infos_ajout_contact.poste} onChange={this.handleChangeAddContact} /></p>
+                                    <p>Tel. fixe : <input placeholder="telephone fixe" name="telephone_fixe" value={this.state.infos_ajout_contact.telephone_fixe} onChange={this.handleChangeAddContact} /></p>
+                                    <p>Tel. portable : <input placeholder="telephone portable" name="telephone_portable" value={this.state.infos_ajout_contact.telephone_portable} onChange={this.handleChangeAddContact} /></p>
+                                    <p>Contact Principal :
+                                        <select name="contact_principal" value={this.state.infos_ajout_contact.contact_principal} onChange={this.handleChangeAddContact}>
+                                            <option></option>
+                                            <option>Oui</option>
+                                            <option>Non</option>
+                                        </select>
+                                    </p>
+                                    <button onClick={this.ajouterContact}>Ajouter le contact</button>
+                                    <button onClick={() => { this.setState({ divAjouterContact: false }) }}>Annuler</button>
                                 </div>
                             }
-                            <button onClick={() => { console.log(this.state) }}>getstate</button>
                         </div>
                     </div>
 

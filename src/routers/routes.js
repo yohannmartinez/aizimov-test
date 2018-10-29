@@ -34,7 +34,7 @@ const AppRouter = () => (
         <Route path="/entrepots-stockage" component={entrepotsStockage} exact={true} />   
         <Route path="/entrepots-securite" component={entrepotsSecurite} exact={true} />   
         <Route path="/entrepots-clients-conditions" component={entrepotsClientsConditions} exact={true} />           
-        <Route path="/clients-contact" component={entrepotsContact} exact={true} />           
+        <Route path="/entrepots-contact" component={entrepotsContact} exact={true} />           
               
         <Route path="/clients" component={clients} exact={true} />   
         <Route path="/cotationsPassees" component={cotationsPassees} exact={true} />   
