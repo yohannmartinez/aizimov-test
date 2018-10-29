@@ -14,14 +14,12 @@ import Textarea from 'react-expanding-textarea'
 const token = '';
 
 const options_services_logistiques = [
-    { value: 'picking', label: 'picking' },
-    { value: 'packing', label: 'packing' },
-    { value: 'plv', label: 'plv' },
-    { value: 'expedition', label: 'expedition' },
-    { value: 'cross_docking', label: 'cross_docking' },
-    { value: 'palettisation', label: 'palettisation' },
-    { value: 'transport', label: 'transport' },
-    { value: 'kitting', label: 'kitting' }
+    { value: 'picking', label: 'Picking' },
+    { value: 'packing', label: 'Packing' },
+    { value: 'plv', label: 'Plv' },
+    { value: 'empotage_depotage', label: 'Empotage' },
+    { value: 'palettisation', label: 'Palettisation' },
+    { value: 'kitting', label: 'Kitting' }
   ]
   const options_certifications = [
     { value: 'certif1510', label: '1510' },
@@ -33,6 +31,33 @@ const options_services_logistiques = [
     { value: 'certif2663', label: '2663' },
     { value: 'sousdouanebool', label: 'sous douane' }
   ];
+  const options_types_produits = [
+    { value: 'produits_bois_carton_papier', label: 'Bois Carton Papier' },
+    { value: 'produits_plastique', label: 'Plastique' },
+    { value: 'produits_electronique_electrique', label: 'Electronique Electrique' },
+    { value: 'produits_consommation_perissable', label: 'Consommation Perissable' },
+    { value: 'produits_consommation_non_perissable', label: 'Consommation Non Perissable' },
+    { value: 'produits_materiaux_construction_outillage', label: 'Materiaux Construction Outillage' },
+    { value: 'produits_textile', label: 'Textile' },
+    { value: 'produits_dangereux', label: 'Produits Dangereux' }
+  ];
+  const options_services_transports = [
+    { value: 'messagerie', label: 'Messagerie' },
+    { value: 'affretement', label: 'Affretement' },
+    { value: 'commissionnaire_de_transport', label: 'Commissionnaire de transport' }, 
+  ]
+  const options_autres_certifications = [
+    { value: 'certification_oea', label: 'OEA' },
+    { value: 'certification_sous_douane', label: 'Sous douane' },
+    { value: 'certification_iso_9001', label: 'ISO 9001' }, 
+    { value: 'certification_iso_22000', label: 'ISO 22000' },
+    { value: 'certification_iso_14001', label: 'ISO 14001' },
+    { value: 'certification_seveso_seuil_haut', label: 'Seveso seuil haut' }, 
+    { value: 'certification_seveso_seuil_bas', label: 'Seveso seuil bas' }, 
+    { value: 'certification_alcool', label: 'Agrémenté alcool' }, 
+
+  ]
+
 
 class entrepotsStockage extends React.Component {
     constructor(props) {
@@ -55,6 +80,10 @@ class entrepotsStockage extends React.Component {
             editProduits: false, 
             frais_range: 1, 
             surgele_range: 1,
+            types_de_produits: [], 
+            services_logistiques: [], 
+            services_transports: [], 
+            autres_certifications: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -65,11 +94,15 @@ class entrepotsStockage extends React.Component {
         this.confirmModifications = this.confirmModifications.bind(this); 
         this.cancelModifications = this.cancelModifications.bind(this); 
         this.handleChangeServicesLogistiques = this.handleChangeServicesLogistiques.bind(this); 
+        this.handleChangeServicesTransports = this.handleChangeServicesTransports.bind(this); 
         this.handleChangeCertifications = this.handleChangeCertifications.bind(this); 
+        this.handleChangeAutresCertifications = this.handleChangeAutresCertifications.bind(this); 
         this.addFraisRange = this.addFraisRange.bind(this); 
         this.removeFraisRange = this.removeFraisRange.bind(this)
         this.addSurgeleRange = this.addSurgeleRange.bind(this); 
-        this.removeSurgeleRange = this.removeSurgeleRange.bind(this); 
+        this.removeSurgeleRange = this.removeSurgeleRange.bind(this);
+        this.handleChangeTypesProduits = this.handleChangeTypesProduits.bind(this); 
+        this.handleChangeInformationsEntrepotCheckbox = this.handleChangeInformationsEntrepotCheckbox.bind(this)
     }
 
     getState() {
@@ -101,6 +134,15 @@ class entrepotsStockage extends React.Component {
     handleChangeServicesLogistiques(selectedOption) {
         this.setState({ services_logistiques: selectedOption });
       }
+    handleChangeTypesProduits(selectedOption) {
+    this.setState({ types_de_produits: selectedOption });
+    }      
+    handleChangeServicesTransports(selectedOption) {
+        this.setState({ services_transports: selectedOption });
+        }      
+    handleChangeAutresCertifications(selectedOption) {
+        this.setState({ autres_certifications: selectedOption });
+        }              
     
     handleChangeCertifications(selectedOption){
         this.setState({ certifications: selectedOption });
@@ -142,16 +184,6 @@ class entrepotsStockage extends React.Component {
                                   services_logistiques: [...prevState.services_logistiques, { value: 'plv', label: 'plv' }]
                                 }))
                               }
-                              if (response.data[0].expedition) {
-                                this.setState(prevState => ({
-                                  services_logistiques: [...prevState.services_logistiques, { value: 'expedition', label: 'expedition' }]
-                                }))
-                              }
-                              if (response.data[0].cross_docking) {
-                                this.setState(prevState => ({
-                                  services_logistiques: [...prevState.services_logistiques, { value: 'cross_docking', label: 'cross_docking' }]
-                                }))
-                              }
                               if (response.data[0].palettisation) {
                                 this.setState(prevState => ({
                                   services_logistiques: [...prevState.services_logistiques, { value: 'palettisation', label: 'palettisation' }]
@@ -167,6 +199,21 @@ class entrepotsStockage extends React.Component {
                                   services_logistiques: [...prevState.services_logistiques, { value: 'kitting', label: 'kitting' }]
                                 }))
                               }
+                              if (response.data[0].messagerie) {
+                                this.setState(prevState => ({
+                                  services_transports: [...prevState.services_logistiques, { value: 'messagerie', label: 'Messagerie' }]
+                                }))
+                              }
+                              if (response.data[0].affretement) {
+                                this.setState(prevState => ({
+                                    services_transports: [...prevState.services_logistiques, { value: 'affretement', label: 'Affretement' }]
+                                }))
+                              }
+                              if (response.data[0].commissionnaire_de_transport) {
+                                this.setState(prevState => ({
+                                    services_transports: [...prevState.services_logistiques, { value: 'commissionnaire_de_transport', label: 'Commissionnaire de transport' }]
+                                }))
+                              }                                                                                          
                               if (response.data.certif1511) {
                                 this.setState(prevState => ({
                                   certifications: [...prevState.certifications, { value: "certif1511", label: "1511" }]
@@ -198,7 +245,6 @@ class entrepotsStockage extends React.Component {
                                 }))
                               }
                       
-                      
 
                         })
                     })
@@ -216,6 +262,19 @@ class entrepotsStockage extends React.Component {
         informationsCopy[event.target.name] = event.target.value;
         let informationsNewCopy = Object.assign({}, this.state.informations_entrepot_nouveau);
         informationsNewCopy[event.target.name] = event.target.value;        
+        this.setState({ informations_entrepot: informationsCopy, informations_entrepot_nouveau: informationsNewCopy, confirm_changes: true });
+    }
+    handleChangeInformationsEntrepotCheckbox(event) {
+        if (event.target.checked) {
+            var checked = true
+        } else {
+            var checked = false
+        }
+
+        let informationsCopy = Object.assign({}, this.state.informations_entrepot);
+        informationsCopy[event.target.name] = checked;
+        let informationsNewCopy = Object.assign({}, this.state.informations_entrepot_nouveau);
+        informationsNewCopy[event.target.name] = checked;        
         this.setState({ informations_entrepot: informationsCopy, informations_entrepot_nouveau: informationsNewCopy, confirm_changes: true });
     }
 
@@ -241,7 +300,7 @@ class entrepotsStockage extends React.Component {
 
     /*--> fonction pour annuler les changements */
     cancelModifications() {
-        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, confirm_changes: false, editTemperature: false });
+        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, confirm_changes: false, editTemperature: false, editServicesLog: false, editProduits: false });
     }
 
     toogleCotation() {
@@ -314,9 +373,12 @@ class entrepotsStockage extends React.Component {
                             <div onClick={() => { this.props.history.push('/entrepots-securite') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Sécurité et informations bâtiment
                             </div>   
-                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne '>
+                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Personnes à contacter
-                            </div>                                                                        
+                            </div>   
+                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className = 'entrepot_onglet_non_selectionne '>
+                                Clients SpaceFill
+                            </div>                                                                                                  
                         </div>
                         {this.state.informations_entrepot != 'nada' &&
                         <div className = 'contenu_page'>
@@ -331,7 +393,7 @@ class entrepotsStockage extends React.Component {
                                         {this.state.editTemperature === true &&
                                             <button className="parametres_annuler_modifier_infos" onClick={this.cancelModifications}><i class="fas fa-times"></i></button>
                                         }
-                                        </p>      
+                                    </p>      
                                         {this.state.editTemperature === true && 
                                         <div>                                        
                                             <div className='entrepot_stockage_temperature_lign'>
@@ -366,7 +428,7 @@ class entrepotsStockage extends React.Component {
                                                     }
                                                 </div>
                                             </div> 
-                                            <div className='entrepot_infos_temperature_lign'>
+                                            <div className='entrepot_infos_temperature_lign' >
                                                 <div className = 'entrepot_stockage_temperature_partie_gauche'>
                                                     <div className = 'entrepot_stockage_temperature_label_main'> Ambiant exterieur </div> 
                                                     <select className='entrepot_stockage_select' value={this.state.informations_entrepot.ambiant_exterieur} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_exterieur'>
@@ -405,6 +467,7 @@ class entrepotsStockage extends React.Component {
                                                     </select>                                                
                                                 </div> 
                                                 <div className = 'entrepot_stockage_temperature_partie_droite'>
+
                                                 </div>
                                             </div>    
                                             {this.state.informations_entrepot.frais === 'Oui' &&
@@ -518,19 +581,19 @@ class entrepotsStockage extends React.Component {
                                                         <div className = 'entrepot_stockage_temperature_block'> 
                                                             <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
                                                                 <div className = 'entrepot_stockage_temperature_label'> Racks </div> 
-                                                                <p className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.rack_nb_palettes}</p>
+                                                                <div className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.rack_nb_palettes}</div>
                                                             </div> 
                                                             <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
                                                                 <div className = 'entrepot_stockage_temperature_label '> Hauteur racks </div> 
-                                                                <p className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.ambiant_couvert_hauteur_racks}</p>
+                                                                <div className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.ambiant_couvert_hauteur_racks}</div>
                                                             </div>                                                             
                                                             <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
                                                                 <div className = 'entrepot_stockage_temperature_label '> Stockage de masse </div> 
-                                                                <p className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.vrac_m2}</p>
+                                                                <div className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.vrac_m2}</div>
                                                             </div>       
                                                             <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
                                                                 <div className = 'entrepot_stockage_temperature_label '> Hauteur possible (masse) </div> 
-                                                                <p className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.ambiant_couvert_vrac_hauteur}</p>
+                                                                <div className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.ambiant_couvert_vrac_hauteur}</div>
                                                             </div>                                                                                                               
                                                         </div>                                                   
                                                     }
@@ -653,57 +716,79 @@ class entrepotsStockage extends React.Component {
                                     </div> 
 
                                     <div className = 'entrepot_box entrepot_box_temperature_stockage'> 
-                                    <p className="entrepot_box_title"> PRODUITS STOCKÉS
-                                        {this.state.editProduits === false &&
-                                            <button className="parametres_modifier_infos" onClick={() => { this.setState({ editProduits: true }) }}><i class="fas fa-pen"></i></button>
-                                        }
-                                        {this.state.editProduits === true &&
-                                            <button className="parametres_annuler_modifier_infos" onClick={this.lalaland}><i class="fas fa-times"></i></button>
-                                        }
-                                    </p>      
+                                        <p className="entrepot_box_title"> PRODUITS ET CLIENTS
+                                        </p>      
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                            Produits stockés
+                                        </div>  
+                                        <Select
+                                            value={this.state.types_de_produits}
+                                            onChange={this.handleChangeTypesProduits}
+                                            options={options_types_produits}
+                                            className='entrepots_stockage_services_logistiques_select'
+                                            isMulti={true}
+                                        />      
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                            Exemples de clients (facultatif)
+                                        </div>      
+                                        <textarea style={{ "resize": "none" }} className = 'entrepot_input entrepot_input_clients' placeholder="" name="clients" value={this.state.informations_entrepot.autres_securite} onChange={this.handleChangeInformationsEntrepot} />
+                                    </div>                                     
+
+                                    <div className = 'entrepot_box entrepot_box_small'> 
+                                        <p className="entrepot_box_title"> IT et E-commerce
+                                        </p>      
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                            IT
+                                        </div> 
+                                        <div className = 'entrepot_lign_checkbox_it'>
+                                            <div className = 'entrepot_lign_checkbox_it_gauche'>
+                                                <input type="checkbox" className = 'entrepot_checkbox' name="wms_bool" value={this.state.informations_entrepot.wms_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                                <p className = 'entrepot_checkbox_input'> WMS </p>
+                                            </div>                                       
+                                            {this.state.informations_entrepot.wms_bool &&
+                                            <div className = 'entrepot_lign_checkbox_it_droite'>
+                                                <p className = 'entrepot_checkbox_input'> Nom du WMS: </p>
+                                                <input className = 'entrepot_input ' value={this.state.informations_entrepot.wms_detail} onChange={this.handleChangeInformationsEntrepot}  name = 'wms_detail'/>                                                 
+                                            </div>                                               
+                                            }
+                                            {!this.state.informations_entrepot.wms_bool &&                                            
+                                            <div className = 'entrepot_lign_checkbox_it_droite'>                                                
+                                            </div>                                                
+                                            }
+                                        </div>
+
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                            ECommerce
+                                        </div>                                         
+                                        <div className = 'entrepot_lign_checkbox_it'>
+                                            <div className = 'entrepot_lign_checkbox_it_gauche'>
+                                                <input type="checkbox" className = 'entrepot_checkbox' name="ecommerce_bool" value={this.state.informations_entrepot.ecommerce_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                                <p className = 'entrepot_checkbox_input'> Ecommerce </p>
+                                            </div>                                       
+                                            {this.state.informations_entrepot.ecommerce_bool &&
+                                            <div className = 'entrepot_lign_checkbox_it_droite'>
+                                                <p className = 'entrepot_checkbox_input'> Logiciels d'intégration: </p>
+                                                <input className = 'entrepot_input ' value={this.state.informations_entrepot.ecommerce_integration} onChange={this.handleChangeInformationsEntrepot}  name = 'ecommerce_integration'/>                                                 
+                                            </div>                                               
+                                            }
+                                            {!this.state.informations_entrepot.ecommerce_bool &&                                            
+                                            <div className = 'entrepot_lign_checkbox_it_droite'>                                                
+                                            </div>                                                
+                                            }
+                                        </div>                                        
+
                                     </div> 
-                                    
 
-                                    <div className = 'entrepot_infos_title_box'> 
-                                        Produits stockés et clients
-                                    </div> 
-
-                                    {/*
-                                        <div className='entrepot_infos_produits_lign'>
-                                            <div className = 'entrepot_infos_produits_label'> 
-                                                Types de produits
-                                            </div>
-                                            <textarea style={{ "resize": "none" }} className = 'entrepots_infos_input entrepot_infos_produits_stockes_input' placeholder="Produits que vous stockez" name="types_produits" value={this.state.informations_entrepot.types_produits} onChange={this.handleChangeInformationsEntrepot} />
-                                             
-                                        </div>
-                                        <div className='entrepot_infos_produits_lign'>
-                                            <div className = 'entrepot_infos_produits_label'> 
-                                            Exemples de clients
-                                            </div>
-                                            <textarea style={{ "resize": "none" }} className = 'entrepots_infos_input entrepot_infos_produits_stockes_input' placeholder="Exemples de clients que vous aidez (facultatif)" name="clients" value={this.state.informations_entrepot.clients} onChange={this.handleChangeInformationsEntrepot} />
-                                        </div>
-                                        <div className='entrepot_infos_produits_lign'>
-                                            <div className = 'entrepot_infos_produits_label'> 
-                                                Certifications
-                                            </div>
-                                            <Select
-                                                value={this.state.certifications}
-                                                onChange={this.handleChangeCertifications}
-                                                options={options_certifications}
-                                                className='entrepots_stockage_certifications_select'
-                                                isMulti={true}
-                                            />   
-
-                                        </div>
-                                      */}
                                 </div> 
                                 <div style = {{flex: '0.12'}}>
                                 </div> 
                                 <div className = 'entrepot_stockage_container_droite'> 
-                                    <div className = 'entrepot_infos_title_box'> 
-                                        Services logistiques 
-                                    </div> 
-                                    <div className = 'entrepot_box '> 
+                                    <div className = 'entrepot_box entrepot_box_temperature_stockage'> 
+                                        <p className="entrepot_box_title"> SERVICES LOGISTIQUES 
+                                        </p>    
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                        Services logistiques en entrepôt
+                                        </div>  
                                         <Select
                                             value={this.state.services_logistiques}
                                             onChange={this.handleChangeServicesLogistiques}
@@ -711,45 +796,53 @@ class entrepotsStockage extends React.Component {
                                             className='entrepots_stockage_services_logistiques_select'
                                             isMulti={true}
                                         />   
-                                        <div className = 'entrepot_stockage_autres_services_log'> 
-                                            <div className = 'entrepot_conditions_min_label'> 
-                                                Autres services logistiques 
-                                            </div> 
-                                            <textarea style={{ "resize": "none" }} className = 'entrepots_infos_input entrepot_infos_produits_stockes_input' placeholder="Autres services logistiques" name="autres_services_log" value={this.state.informations_entrepot.autres_services_log} onChange={this.handleChangeInformationsEntrepot} />                                                                                      
-                                        </div>                                     
-                                    </div> 
-
-                                    <div className = 'entrepot_infos_title_box'> 
-                                        Conditions minimales
-                                    </div> 
-                                    <div className = 'entrepot_box '> 
-                                        <div className='entrepot_infos_produits_lign'>
-                                            <div className = 'entrepot_conditions_min_label'> 
-                                                Minimum en volume
-                                            </div>              
-                                            <input className = 'entrepots_infos_input entrepot_min_commande_input' value={this.state.informations_entrepot.commande_min_taille} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_taille'/> 
-                                        </div> 
-                                        <div className='entrepot_infos_produits_lign'>
-                                            <div className = 'entrepot_conditions_min_label'> 
-                                                Minimum en durée
-                                            </div>              
-                                            <input className = 'entrepots_infos_input entrepot_min_commande_input' value={this.state.informations_entrepot.commande_min_duree} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_duree'/> 
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                        Services de transport
                                         </div>  
-                                        <div className='entrepot_infos_produits_lign'>
-                                            <div className = 'entrepot_conditions_min_label'> 
-                                                Minimum en valeur
-                                            </div>              
-                                            <input className = 'entrepots_infos_input entrepot_min_commande_input' value={this.state.informations_entrepot.commande_min_valeur} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_valeur'/> 
-                                        </div>  
-                                        <div className='entrepot_infos_produits_lign'>
-                                            <div className = 'entrepot_conditions_min_label'> 
-                                                Autres contraintes
-                                            </div>              
-                                            <input className = 'entrepots_infos_input entrepot_min_commande_input' value={this.state.informations_entrepot.commande_min_autre_contrainte} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_autre_contrainte'/> 
-                                        </div>                                                                                     
-
-
+                                        <Select
+                                            value={this.state.services_transports}
+                                            onChange={this.handleChangeServicesTransports}
+                                            options={options_services_transports}
+                                            className='entrepots_stockage_services_logistiques_select'
+                                            isMulti={true}
+                                        />                                                                                   
                                     </div> 
+                                    <div className = 'entrepot_box entrepot_box_temperature_stockage'> 
+                                        <p className="entrepot_box_title"> CERTIFICATIONS ET ASSURANCES
+                                        </p>    
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                        Certifications ICPE
+                                        </div>  
+                                        <Select
+                                            value={this.state.certifications}
+                                            onChange={this.handleChangeCertifications}
+                                            options={options_certifications}
+                                            className='entrepots_stockage_services_logistiques_select'
+                                            isMulti={true}
+                                        />   
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                        Autres Certifications
+                                        </div>  
+                                        <Select
+                                            value={this.state.autres_certifications}
+                                            onChange={this.handleChangeAutresCertifications}
+                                            options={options_autres_certifications}
+                                            className='entrepots_stockage_services_logistiques_select'
+                                            isMulti={true}
+                                        />
+                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                            Assurances: 
+                                        </div>                                        
+                                        <div className = 'entrepot_lign_checkbox'>
+                                            <input type="checkbox" className = 'entrepot_checkbox' name="assurance_batiment" value={this.state.informations_entrepot.assurance_batiment} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                            <p className = 'entrepot_checkbox_input'> Assurance bâtiment </p>
+                                        </div>  
+                                        <div className = 'entrepot_lign_checkbox'>
+                                            <input type="checkbox" className = 'entrepot_checkbox' name="assurance_rc_pro" value={this.state.informations_entrepot.assurance_rc_pro} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                            <p className = 'entrepot_checkbox_input'> Assurance Responsabilité Civile </p>
+                                        </div>                                                                                    
+                                    </div>
+
                                 </div>                     
                             </div>                         
                         </div>     

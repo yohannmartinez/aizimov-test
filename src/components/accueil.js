@@ -352,7 +352,7 @@ class accueil extends React.Component {
                     {/* div contenant le texte */}
                     <div class="register_div_gauche">
                         <div class="register_container_texte">
-                            <p className="register_title">Connectez vous ou Inscrivez-vous pour commencer à utiliser l'espace fournisseur de Space<span className="register_bluetxt">Fill</span> !</p>
+                            <p className="register_title">Inscrivez-vous à l'espace fournisseur de Space<span className="register_bluetxt">Fill</span> !</p>
                             <span className="register_texte">• Suivez toute votre activité et gérez les demandes en ligne</span>
                             <span className="register_texte">• Rentabilisez vos actifs simplement avec une solution sécurisée</span>
                             <span className="register_texte">• Confidentialité de vos espaces et de votre vide assurée</span>
@@ -371,7 +371,7 @@ class accueil extends React.Component {
                                     <input className="register_input" placeholder="Adresse Mail" name="compte_creation_mail" value={this.state.compte_creation_mail} onChange={this.handleChange_mail} />
                                     <input className="register_input" placeholder="Téléphone" name="compte_creation_telephone" value={this.state.compte_creation_telephone} onChange={this.handleChange_telephone} />
                                     <input type="password" className="register_input" placeholder="Mot de passe" name="compte_creation_password" value={this.state.compte_creation_password} onChange={this.handleChange_password} />
-                                    <p>Votre mot de passe doit être composé d'au moins 1 majuscule, 1 minuscule, 1 chiffre et 7 caractères</p>
+                                    <p className = 'register_text_mdp'>Votre mot de passe doit être composé d'au moins 1 majuscule, 1 minuscule, 1 chiffre et 7 caractères</p>
                                     <input type="password" className="register_input" placeholder="Confirmez mot de passe" name="compte_creation_confirm_password" value={this.state.compte_creation_confirm_password} onChange={this.handleChange_passwordConfirm} />
                                     <button className="register_button_inscription" onClick={this.etape2}>Suivant</button>
                                 </div>

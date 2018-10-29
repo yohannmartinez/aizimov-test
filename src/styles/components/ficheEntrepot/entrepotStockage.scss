@@ -14,7 +14,7 @@
 
 // Stockage: 
 .entrepot_box_temperature_stockage{
-    min-height: 16em; 
+    min-height: 14em; 
 }
 .entrepot_stockage_temperature_lign{
     display: flex; 
@@ -55,10 +55,10 @@
     padding-top: 0.5em;  
 }
 .entrepot_stockage_temperature_partie_droite{
-    flex: 1.5; 
+    flex: 1.6; 
 }
 .entrepot_stockage_temperature_partie_gauche{
-    flex: 1; 
+    flex: 1.2; 
     display: flex; 
 }
 .entrepot_stockage_temperature_block{
@@ -99,6 +99,10 @@
     font-size: 0.8em; 
     margin-left: 1.5em; 
     padding-top: 0.8em; 
+}
+.entrepot_infos_temperature_lign{
+    display: flex; 
+    margin-top: 0.6em; 
 }
 
 .entrepot_infos_temperature_lign_range{
@@ -142,7 +146,74 @@
 }
 
 .entrepot_stockage_temperature_non_edit_small_line_space{
-    margin-bottom: -0.8em; 
+    margin-bottom: -0.1em; 
     margin-top: 0em; 
 
+}
+
+
+// Produits et clients: 
+
+.entrepot_services_log_et_clients_label{
+    font-size: 0.8em; 
+    padding-top: 1.2em; 
+    text-align: left; 
+    padding-left: 1.1rem;
+    font-weight: 450; 
+    min-width: 93%
+}
+.entrepot_input_clients{
+    min-height: 4em; 
+    background-color: white; 
+    margin-top: 0.5em; 
+    text-align: left; 
+    padding-left: 1.1em; 
+    margin-left: 1.1em; 
+    margin-right:1.1em; 
+    min-width: 93%; 
+    width: auto; 
+}
+
+.entrepot_services_log_et_clients_label{
+    font-size: 0.8rem; 
+    color: $dark-grey; 
+    
+}
+
+.entrepots_stockage_elements_securite_select{
+    margin-top: 1em; 
+    height: 3em
+}
+
+
+// IT et Certifications
+.entrepot_lign_checkbox{
+    display: flex; 
+}
+.entrepot_checkbox{
+    flex: 1; 
+    margin-left: 1.1em; 
+    margin-top: 0.5em; 
+}
+.entrepot_checkbox_input{
+    flex: 10; 
+    text-align: left; 
+    font-size: 0.8rem; 
+    color: $dark-grey;     
+}
+
+.entrepot_box_small{
+    min-height: 5em; 
+}
+
+.entrepot_lign_checkbox_it_gauche{
+    flex: 2; 
+    display: flex; 
+}
+.entrepot_lign_checkbox_it_droite{
+    flex: 2; 
+    display: flex; 
+}
+.entrepot_lign_checkbox_it{
+    display: flex; 
 }
