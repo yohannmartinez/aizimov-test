@@ -7,7 +7,7 @@
 }
 
 .connexion_button_connexion{
-	background-color:#64c1f0;
+	background-color:$main-blue;
 	border:none;
 	border-radius:5px;
 	color:white;
@@ -75,7 +75,7 @@
 }
 
 .connexion_button{
-	background-color:#64c1f0;
+	background-color:$main-blue;
 	border:none;
 	border-radius:5px;
 	color:white;
@@ -90,7 +90,7 @@
 }
 
 .connexion_button:hover, .connexion_button_connexion:hover {
-	background-color:#3398ca;
+	background-color:$main-blue;
 }
 
 .connexion_input::placeholder{

@@ -46,7 +46,8 @@ class entrepotsStockage extends React.Component {
             toogleCotation: false,
             toggleDeconnexion : false,
             confirm_changes: false, 
-            elements_securite: []
+            elements_securite: [], 
+            jours_ouverture: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -65,10 +66,10 @@ class entrepotsStockage extends React.Component {
     }
 
     handleChangeElementsSecurite(selectedOption) {
-        this.setState({ elements_securite: selectedOption });
+        this.setState({ elements_securite: selectedOption, confirm_changes: true });
       }
     handleChangeJoursOuverture(selectedOption) {
-        this.setState({ jours_ouverture: selectedOption });
+        this.setState({ jours_ouverture: selectedOption, confirm_changes: true });
       }
     
 
@@ -272,58 +273,111 @@ class entrepotsStockage extends React.Component {
                             <div className = 'entrepot_onglet_selectionne '>
                                 Sécurité et informations bâtiment
                             </div>   
-                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne '>
+                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Personnes à contacter
-                            </div>                                                                        
+                            </div>       
+                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className = 'entrepot_onglet_non_selectionne '>
+                                Clients SpaceFill
+                            </div>                                                                                                
                         </div>
                         {this.state.informations_entrepot != 'nada' &&
                         <div className = 'contenu_page'>
-                            Sécurité et informations bâtiment
-                            <div className = 'entrepot_stockage_main_container'>                         
-                                <div className = 'entrepot_stockage_container_droite'> 
-                                    <div className = 'entrepot_infos_title_box'> 
-                                        Élements de sécurité
-                                    </div> 
-                                    <div className = 'entrepot_box entrepot_box_small'> 
-                                        <Select
-                                            value={this.state.elements_securite}
-                                            onChange={this.handleChangeElementsSecurite}
-                                            options={options_elements_securite}
-                                            className='entrepots_stockage_elements_securite_select'
-                                            isMulti={true}
-                                        />     
-                                        <div className = ''> 
-                                                Autres éléments de sécurité 
-                                        </div>                                         
-                                        <textarea style={{ "resize": "none" }} className = 'entrepots_infos_input ' placeholder="Produits que vous stockez" name="autres_securite" value={this.state.informations_entrepot.autres_securite} onChange={this.handleChangeInformationsEntrepot} />
+                            <div className = 'entrepot_securite_main_container'>    
+                                <div className = 'entrepot_securite_container_gauche'> 
 
-                                    </div> 
-                                    <div className = 'entrepot_infos_title_box'> 
-                                        Assurance
-                                    </div> 
-                                    <div className = 'entrepot_box entrepot_box_very_small '> 
-                                        Ajouter le pdf de votre assurance                                        
-                                    </div>                                     
-
-                                </div> 
-                                <div style = {{flex: '0.12'}}>
-                                </div> 
-                                <div className = 'entrepot_stockage_container_droite'> 
-                                    <div className = 'entrepot_infos_title_box'> 
-                                        Informations bâtiment
-                                    </div> 
-                                    <div className = 'entrepot_box entrepot_box_big '> 
-                                        <div className='entrepot_infos_produits_lign'>
-                                            <div className = 'entrepot_conditions_min_label'> 
+                                    <div className = 'entrepot_box entrepot_box_temperature_stockage'> 
+                                        <p className="entrepot_box_title"> INFORMATIONS BÂTIMENT
+                                        </p>  
+                                        <div className='entrepot_securite_lign'>                                        
+                                            <div className = 'entrepot_securite_label'> 
                                                     Classe du bâtiment
                                             </div>    
-                                            <select className='entrepot_infos_temperature_select entrepot_min_commande_input' value={this.state.informations_entrepot.classe_batiment} onChange={this.handleChangeInformationsEntrepot}  name = 'classe_batiment'>
+                                            <select className='entrepot_input entrepot_securite_select ' value={this.state.informations_entrepot.classe_batiment} onChange={this.handleChangeInformationsEntrepot}  name = 'classe_batiment'>
                                                 <option>  </option>
                                                 <option> Classe A </option>
                                                 <option> Classe B </option>
                                                 <option> Classe C </option>
-                                            </select>                                                        
+                                            </select>     
+                                                   
+                                        </div>
+                                        <div className='entrepot_securite_lign'> 
+                                            <div className = 'entrepot_securite_label'> 
+                                                    Horaires
+                                            </div>      
+                                            <div className = 'entrepot_securite_horaire_div'> 
+                                                <p className = 'entrepot_horaire_label'> Début </p>
+                                                <input className = 'entrepot_input entrepot_horaire_input' value={this.state.informations_entrepot.heure_ouverture_1_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'heure_ouverture_1_debut'/>                                                       
+                                            </div>                                            
+                                            <div className = 'entrepot_securite_horaire_div'> 
+                                                <p className = 'entrepot_horaire_label'> Fin </p>
+                                                <input className = 'entrepot_input entrepot_horaire_input' value={this.state.informations_entrepot.heure_fermeture_1_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'heure_fermeture_1_debut'/>                                                       
+                                      
+                                            </div>  
+                                        
                                         </div> 
+                                        <div className='entrepot_securite_lign'> 
+                                            <div className = 'entrepot_securite_label'> 
+                                                    Nombre de quais de chargement
+                                            </div>  
+                                            <input className = 'entrepot_input entrepot_securite_medium' value={this.state.informations_entrepot.quais_de_chargement} onChange={this.handleChangeInformationsEntrepot}  name = 'quais_de_chargement'/>                                                       
+                                        </div>    
+                                        <div className='entrepot_securite_lign'> 
+                                            <div className = 'entrepot_securite_label'> 
+                                                    Hauteur sous poutre
+                                            </div>  
+                                            <input className = 'entrepot_input entrepot_securite_medium' value={this.state.informations_entrepot.hauteur_sous_poutre} onChange={this.handleChangeInformationsEntrepot}  name = 'hauteur_sous_poutre'/>                                                       
+                                        </div>   
+                                        <div className='entrepot_securite_lign'> 
+                                            <div className = 'entrepot_securite_label'> 
+                                                    Accès routier
+                                            </div>  
+                                            <input className = 'entrepot_input entrepot_securite_medium' value={this.state.informations_entrepot.acces_routier} onChange={this.handleChangeInformationsEntrepot}  name = 'acces_routier'/>                                                       
+                                        </div>    
+                                        <div className='entrepot_securite_lign entrepot_margin_end_box'> 
+                                            <div className = 'entrepot_securite_label'> 
+                                                    Engins
+                                            </div>                                              
+                                            <textarea className = 'entrepot_input entrepot_securite_engins_input' value={this.state.informations_entrepot.engins} onChange={this.handleChangeInformationsEntrepot}  name = 'engins'/>                                                                                                                                                                    
+                                        </div> 
+                                    </div>    
+                                </div>   
+                                <div style = {{flex: '0.12'}}>
+                                </div>                                 
+                                <div className = 'entrepot_securite_container_droite'> 
+                                    <div className = 'entrepot_box '> 
+                                        <p className="entrepot_box_title"> ÉLÉMENTS DE SÉCURITÉ
+                                        </p>  
+                                        <Select
+                                            value={this.state.elements_securite}
+                                            onChange={this.handleChangeElementsSecurite}
+                                            options={options_elements_securite}
+                                            className='entrepots_stockage_services_logistiques_select'
+                                            isMulti={true}
+                                        />  
+                                        <div className = 'entrepot_margin_end_box'> </div>                                             
+                                    </div> 
+                                    <div className = 'entrepot_box '> 
+                                        <p className="entrepot_box_title"> JOURS D'OUVERTURE
+                                        </p>  
+                                        <Select
+                                            value={this.state.jours_ouverture}
+                                            onChange={this.handleChangeJoursOuverture}
+                                            options={options_jours_ouverture}
+                                            className='entrepots_stockage_services_logistiques_select'
+                                            isMulti={true}
+                                        />  
+                                        <div className = 'entrepot_margin_end_box'> </div>                                             
+                                    </div> 
+
+
+                                </div> 
+
+                                {/* <div className = 'entrepot_stockage_container_droite'> 
+                                    <div className = 'entrepot_infos_title_box'> 
+                                        Informations bâtiment
+                                    </div> 
+                                    <div className = 'entrepot_box entrepot_box_big '> 
+                                        
                                         <div className='entrepot_infos_produits_lign'>
                                             <div className = 'entrepot_conditions_min_label'> 
                                                     Accès routier
@@ -361,7 +415,7 @@ class entrepotsStockage extends React.Component {
                                    
                                     </div> 
                                     
-                                </div>                     
+                                </div>                      */}
                             </div>                         
                         </div>     
                         }       

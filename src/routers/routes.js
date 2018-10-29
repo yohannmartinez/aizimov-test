@@ -8,6 +8,7 @@ import entrepots from '../components/entrepots';
 import entrepotsStockage from '../components/entrepotsStockage';
 import entrepotsSecurite from '../components/entrepotsSecurite';
 import entrepotsContact from '../components/entrepotsContact';
+import entrepotsClientsConditions from '../components/entrepotsClientsConditions';
 
 import cotationsPassees from '../components/cotationsPassees';
 import cotationsEnCours from '../components/cotationsEnCours';
@@ -18,6 +19,7 @@ import presentation from '../components/presentation';
 import ficheClient from  '../components/ficheClient'; 
 import ajouterFacture from '../components/ajouterFacture';
 import ficheDemande from '../components/ficheDemande'
+
 
 const AppRouter = () => (
   <BrowserRouter >
@@ -31,8 +33,9 @@ const AppRouter = () => (
         <Route path="/entrepots" component={entrepots} exact={true} />   
         <Route path="/entrepots-stockage" component={entrepotsStockage} exact={true} />   
         <Route path="/entrepots-securite" component={entrepotsSecurite} exact={true} />   
-        <Route path="/entrepots-contact" component={entrepotsContact} exact={true} />   
-
+        <Route path="/entrepots-clients-conditions" component={entrepotsClientsConditions} exact={true} />           
+        <Route path="/clients-contact" component={entrepotsContact} exact={true} />           
+              
         <Route path="/clients" component={clients} exact={true} />   
         <Route path="/cotationsPassees" component={cotationsPassees} exact={true} />   
         <Route path="/cotationsEnCours" component={cotationsEnCours} exact={true} />   

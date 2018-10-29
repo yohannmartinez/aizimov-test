@@ -57,6 +57,7 @@
 }
 
 .entrepot_input{
+    flex: 2; 
     background-color:#f8f8f8;
     border:none; 
     padding:none;
@@ -83,4 +84,8 @@
     cursor:pointer;
     position: relative;
     font-size:20px;    
+}
+
+.entrepot_margin_end_box{
+    margin-bottom: 1em; 
 }

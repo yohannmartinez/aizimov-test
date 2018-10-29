@@ -368,8 +368,11 @@ class entrepots extends React.Component {
                             <div onClick={() => { this.props.history.push('/entrepots-securite') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Sécurité et informations bâtiment
                             </div>   
-                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne '>
+                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Personnes à contacter
+                            </div> 
+                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className = 'entrepot_onglet_non_selectionne '>
+                                Clients SpaceFill
                             </div>                                                                        
                         </div>
                         {this.state.informations_entrepots != [] &&
