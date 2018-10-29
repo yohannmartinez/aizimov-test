@@ -81,15 +81,11 @@ class entrepotsClientsConditions extends React.Component {
     }
 
     handleChangeInformationsEntrepotCheckbox(event) {
-        console.log(event)
-        console.log(event.target)
-        console.log(event.target.value)
-        if (event.target.value) {
+        if (event.target.checked) {
             var checked = true
         } else {
             var checked = false
         }
-
         let informationsCopy = Object.assign({}, this.state.informations_entrepot);
         informationsCopy[event.target.name] = checked;
         let informationsNewCopy = Object.assign({}, this.state.informations_entrepot_nouveau);
@@ -241,23 +237,23 @@ class entrepotsClientsConditions extends React.Component {
                                         <p className="entrepot_box_title"> TYPES DE DEMANDES ACCEPTEES
                                         </p>  
                                         <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox' name="stock_mort_possible" value={this.state.informations_entrepot.stock_mort_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.stock_mort_possible}/>  
+                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="stock_mort_possible" value={this.state.informations_entrepot.stock_mort_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.stock_mort_possible}/>  
                                             <p className = 'entrepot_checkbox_input'> Stock mort </p>
                                         </div> 
                                         <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox' name="fort_taux_rotation_possible" value={this.state.informations_entrepot.fort_taux_rotation_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.fort_taux_rotation_possible}/>  
+                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="fort_taux_rotation_possible" value={this.state.informations_entrepot.fort_taux_rotation_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.fort_taux_rotation_possible}/>  
                                             <p className = 'entrepot_checkbox_input'> Fort taux de rotation </p>
                                         </div> 
                                         <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox' name="preparation_commande_possible" value={this.state.informations_entrepot.preparation_commande_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.preparation_commande_possible}/>  
+                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="preparation_commande_possible" value={this.state.informations_entrepot.preparation_commande_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.preparation_commande_possible}/>  
                                             <p className = 'entrepot_checkbox_input'> Stockage avec préparation de commande </p>
                                         </div> 
                                         <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox' name="acces_ponctuel" value={this.state.informations_entrepot.acces_ponctuel} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="acces_ponctuel" value={this.state.informations_entrepot.acces_ponctuel} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
                                             <p className = 'entrepot_checkbox_input'> Accès ponctuel à l'entrepôt pour le client </p>
                                         </div> 
                                         <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox' name="sous_loc_possible" value={this.state.informations_entrepot.sous_loc_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="sous_loc_possible" value={this.state.informations_entrepot.sous_loc_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
                                             <p className = 'entrepot_checkbox_input'> Sous-location d'une partie de l'entrepôt </p>
                                         </div>                                                                                                                                                                                                            
                                     </div> 
@@ -302,9 +298,9 @@ class entrepotsClientsConditions extends React.Component {
                     </div> 
                     {this.state.confirm_changes === true &&
                         <div class="container_action_modification">
-                            <span>Vous avez effectué des modifications !</span>
+                            <span className = 'container_action_modification_text'>Vous avez effectué des modifications !</span>
                             <button class="container_action_modification_button" onClick={this.confirmModifications}>Confirmer</button>
-                            <button class="container_action_modification_button" onClick={this.cancelModifications}>Annuler</button>
+                            <button class="container_action_modification_button_annuler" onClick={this.cancelModifications}>Annuler</button>
                         </div>
                     }
 
