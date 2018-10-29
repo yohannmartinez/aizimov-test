@@ -55,7 +55,6 @@ const options_services_logistiques = [
     { value: 'certification_seveso_seuil_haut', label: 'Seveso seuil haut' }, 
     { value: 'certification_seveso_seuil_bas', label: 'Seveso seuil bas' }, 
     { value: 'certification_alcool', label: 'Agrémenté alcool' }, 
-
   ]
 
 
@@ -70,20 +69,23 @@ class entrepotsStockage extends React.Component {
             user_infos: '',
             informations_entrepot: 'nada', 
             informations_entrepot_initial: 'nada',
-            informations_entrepot_nouveau: '',  
+            informations_entrepot_nouveau: {}, 
             toogleCotation: false,
             toggleDeconnexion : false,
             confirm_changes: false, 
-            services_logistiques: [],    
-            certifications: [],         
             editTemperature: false, 
             editProduits: false, 
             frais_range: 1, 
             surgele_range: 1,
             types_de_produits: [], 
             services_logistiques: [], 
+            services_logistiques_initial: [], 
+            certifications: [],   
+            certifications_initial: [],      
             services_transports: [], 
-            autres_certifications: []
+            services_transports_initial: [], 
+            autres_certifications: [], 
+            autres_certifications_initial: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -131,20 +133,62 @@ class entrepotsStockage extends React.Component {
 
     }
 
-    handleChangeServicesLogistiques(selectedOption) {
+    handleChangeServicesLogistiques(selectedOption, action) {
+        let informationsCopyNew = Object.assign({}, this.state.informations_entrepot_nouveau);  
+        if (action.action === 'remove-value'){
+            informationsCopyNew[action.removedValue.value] = false
+        }
+        if (action.action === 'select-option'){
+            informationsCopyNew[action.option.value] = true        
+        }    
+        this.setState({informations_entrepot_nouveau: informationsCopyNew, confirm_changes: true})    
         this.setState({ services_logistiques: selectedOption });
       }
-    handleChangeTypesProduits(selectedOption) {
-    this.setState({ types_de_produits: selectedOption });
+    handleChangeTypesProduits(selectedOption, action) {
+    // let informationsCopyNew = Object.assign({}, this.state.informations_entrepot_nouveau);  
+    // if (action.action === 'remove-value'){
+    //     informationsCopyNew[action.removedValue.value] = false
+    // }
+    // if (action.action === 'select-option'){
+    //     informationsCopyNew[action.option.value] = true        
+    // }    
+    // this.setState({informations_entrepot_nouveau: informationsCopyNew, confirm_changes: true})    
+    this.setState({ types_de_produits: selectedOption });    
     }      
-    handleChangeServicesTransports(selectedOption) {
+
+    handleChangeServicesTransports(selectedOption, action) {
+        let informationsCopyNew = Object.assign({}, this.state.informations_entrepot_nouveau);  
+        if (action.action === 'remove-value'){
+            informationsCopyNew[action.removedValue.value] = false
+        }
+        if (action.action === 'select-option'){
+            informationsCopyNew[action.option.value] = true        
+        }    
+        this.setState({informations_entrepot_nouveau: informationsCopyNew, confirm_changes: true})    
         this.setState({ services_transports: selectedOption });
-        }      
-    handleChangeAutresCertifications(selectedOption) {
+        }   
+
+    handleChangeAutresCertifications(selectedOption, action) {
+        let informationsCopyNew = Object.assign({}, this.state.informations_entrepot_nouveau);  
+        if (action.action === 'remove-value'){
+            informationsCopyNew[action.removedValue.value] = false
+        }
+        if (action.action === 'select-option'){
+            informationsCopyNew[action.option.value] = true        
+        }    
+        this.setState({informations_entrepot_nouveau: informationsCopyNew, confirm_changes: true})    
         this.setState({ autres_certifications: selectedOption });
         }              
     
-    handleChangeCertifications(selectedOption){
+    handleChangeCertifications(selectedOption, action){
+        let informationsCopyNew = Object.assign({}, this.state.informations_entrepot_nouveau);  
+        if (action.action === 'remove-value'){
+            informationsCopyNew[action.removedValue.value] = false
+        }
+        if (action.action === 'select-option'){
+            informationsCopyNew[action.option.value] = true        
+        }    
+        this.setState({informations_entrepot_nouveau: informationsCopyNew, confirm_changes: true})    
         this.setState({ certifications: selectedOption });
     }
 
@@ -171,81 +215,145 @@ class entrepotsStockage extends React.Component {
 
                             if (response.data[0].picking) {
                                 this.setState(prevState => ({
-                                  services_logistiques: [...prevState.services_logistiques, { value: 'picking', label: 'picking' }]
+                                  services_logistiques: [...prevState.services_logistiques, { value: 'picking', label: 'picking' }], 
+                                  services_logistiques_initial: [...prevState.services_logistiques_initial, { value: 'picking', label: 'picking' }]
+
                                 }))
                               }
                               if (response.data[0].packing) {
                                 this.setState(prevState => ({
-                                  services_logistiques: [...prevState.services_logistiques, { value: 'packing', label: 'packing' }]
+                                  services_logistiques: [...prevState.services_logistiques, { value: 'packing', label: 'packing' }], 
+                                  services_logistiques_initial: [...prevState.services_logistiques_initial, { value: 'packing', label: 'packing' }]
                                 }))
                               }
                               if (response.data[0].plv) {
                                 this.setState(prevState => ({
-                                  services_logistiques: [...prevState.services_logistiques, { value: 'plv', label: 'plv' }]
+                                  services_logistiques: [...prevState.services_logistiques, { value: 'plv', label: 'plv' }], 
+                                  services_logistiques_initial: [...prevState.services_logistiques_initial, { value: 'plv', label: 'plv' }]
                                 }))
                               }
                               if (response.data[0].palettisation) {
                                 this.setState(prevState => ({
-                                  services_logistiques: [...prevState.services_logistiques, { value: 'palettisation', label: 'palettisation' }]
+                                  services_logistiques: [...prevState.services_logistiques, { value: 'palettisation', label: 'palettisation' }], 
+                                  services_logistiques_initial: [...prevState.services_logistiques_initial, { value: 'palettisation', label: 'palettisation' }]
                                 }))
                               }
                               if (response.data[0].transport) {
                                 this.setState(prevState => ({
-                                  services_logistiques: [...prevState.services_logistiques, { value: 'transport', label: 'transport' }]
+                                  services_logistiques: [...prevState.services_logistiques, { value: 'transport', label: 'transport' }], 
+                                  services_logistiques_initial: [...prevState.services_logistiques_initial, { value: 'transport', label: 'transport' }]
                                 }))
                               }
                               if (response.data[0].kitting) {
                                 this.setState(prevState => ({
-                                  services_logistiques: [...prevState.services_logistiques, { value: 'kitting', label: 'kitting' }]
+                                  services_logistiques: [...prevState.services_logistiques, { value: 'kitting', label: 'kitting' }],
+                                  services_logistiques_initial: [...prevState.services_logistiques_initial, { value: 'kitting', label: 'kitting' }]
                                 }))
                               }
                               if (response.data[0].messagerie) {
                                 this.setState(prevState => ({
-                                  services_transports: [...prevState.services_logistiques, { value: 'messagerie', label: 'Messagerie' }]
+                                  services_transports: [...prevState.services_transports, { value: 'messagerie', label: 'Messagerie' }], 
+                                  services_transports_initial: [...prevState.services_transports_initial, { value: 'messagerie', label: 'Messagerie' }]
                                 }))
                               }
                               if (response.data[0].affretement) {
                                 this.setState(prevState => ({
-                                    services_transports: [...prevState.services_logistiques, { value: 'affretement', label: 'Affretement' }]
+                                    services_transports: [...prevState.services_transports, { value: 'affretement', label: 'Affretement' }], 
+                                    services_transports_initial: [...prevState.services_transports_initial, { value: 'affretement', label: 'Affretement' }]
                                 }))
                               }
                               if (response.data[0].commissionnaire_de_transport) {
                                 this.setState(prevState => ({
-                                    services_transports: [...prevState.services_logistiques, { value: 'commissionnaire_de_transport', label: 'Commissionnaire de transport' }]
+                                    services_transports: [...prevState.services_transports, { value: 'commissionnaire_de_transport', label: 'Commissionnaire de transport' }], 
+                                    services_transports_initial: [...prevState.services_transports_initial, { value: 'commissionnaire_de_transport', label: 'Commissionnaire de transport' }]
                                 }))
                               }                                                                                          
-                              if (response.data.certif1511) {
+                              if (response.data[0].certif1511) {
                                 this.setState(prevState => ({
-                                  certifications: [...prevState.certifications, { value: "certif1511", label: "1511" }]
-                                }))
-                              }
-                              if (response.data.certif1530) {
-                                this.setState(prevState => ({
-                                  certifications: [...prevState.certifications, { value: "certif1530", label: "1530" }]
-                                }))
-                              }
-                              if (response.data.certif1532) {
-                                this.setState(prevState => ({
-                                  certifications: [...prevState.certifications, { value: "certif1532", label: "1532" }]
-                                }))
-                              }
-                              if (response.data.certif2160) {
-                                this.setState(prevState => ({
-                                  certifications: [...prevState.certifications, { value: "certif2160", label: "2160" }]
-                                }))
-                              }
-                              if (response.data.certif2662) {
-                                this.setState(prevState => ({
-                                  certifications: [...prevState.certifications, { value: "certif2662", label: "2662" }]
-                                }))
-                              }
-                              if (response.data.certif2663) {
-                                this.setState(prevState => ({
-                                  certifications: [...prevState.certifications, { value: "certif2663", label: "2663" }]
-                                }))
-                              }
-                      
+                                  certifications: [...prevState.certifications, { value: "certif1511", label: "1511" }], 
+                                  certifications_initial: [...prevState.certifications_initial, { value: 'certif1511', label: '1511' }]
 
+                                }))
+                              }
+                              if (response.data[0].certif1530) {
+                                this.setState(prevState => ({
+                                  certifications: [...prevState.certifications, { value: "certif1530", label: "1530" }], 
+                                  certifications_initial: [...prevState.certifications_initial, { value: "certif1530", label: "1530" }]
+                                }))
+                              }
+                              if (response.data[0].certif1532) {
+                                this.setState(prevState => ({
+                                  certifications: [...prevState.certifications, { value: "certif1532", label: "1532" }], 
+                                  certifications_initial: [...prevState.certifications_initial, { value: "certif1532", label: "1532" }]
+                                }))
+                              }
+                              if (response.data[0].certif2160) {
+                                this.setState(prevState => ({
+                                  certifications: [...prevState.certifications, { value: "certif2160", label: "2160" }], 
+                                  certifications_initial: [...prevState.certifications_initial, { value: "certif2160", label: "2160" }]
+                                }))
+                              }
+                              if (response.data[0].certif2662) {
+                                this.setState(prevState => ({
+                                  certifications: [...prevState.certifications, { value: "certif2662", label: "2662" }], 
+                                  certifications_initial: [...prevState.certifications_initial, { value: "certif2662", label: "2662" }]
+                                }))
+                              }
+                              if (response.data[0].certif2663) {
+                                this.setState(prevState => ({
+                                  certifications: [...prevState.certifications, { value: "certif2663", label: "2663" }], 
+                                  certifications_initial: [...prevState.certifications_initial, { value: "certif2663", label: "2663" }]
+                                }))
+                              }
+
+                              if (response.data[0].certification_oea) {
+                                this.setState(prevState => ({
+                                  autres_certifications: [...prevState.autres_certifications, { value: "certification_oea", label: "OEA" }], 
+                                  autres_certifications_initial: [...prevState.autres_certifications_initial, { value: "certification_oea", label: "OEA" }]
+                                }))
+                              }
+                              if (response.data[0].certification_sous_douane) {
+                                this.setState(prevState => ({
+                                  autres_certifications: [...prevState.autres_certifications, { value: "certification_sous_douane", label: "Sous douane" }], 
+                                  autres_certifications_initial: [...prevState.autres_certifications_initial, { value: "certification_sous_douane", label: "Sous douane" }]
+                                }))
+                              }
+                              if (response.data[0].certification_iso_9001) {
+                                this.setState(prevState => ({
+                                  autres_certifications: [...prevState.autres_certifications, { value: "certification_iso_9001", label: "ISO 9001" }], 
+                                  autres_certifications_initial: [...prevState.autres_certifications_initial, { value: "certification_iso_9001", label: "ISO 9001" }]
+                                }))
+                              }
+                              if (response.data[0].certification_iso_22000) {
+                                this.setState(prevState => ({
+                                  autres_certifications: [...prevState.autres_certifications, { value: "certification_iso_22000", label: "ISO 22000" }], 
+                                  autres_certifications_initial: [...prevState.autres_certifications_initial, { value: "certification_iso_22000", label: "ISO 22000" }]
+                                }))
+                              }
+                              if (response.data[0].certification_iso_14001) {
+                                this.setState(prevState => ({
+                                  autres_certifications: [...prevState.autres_certifications, { value: "certification_iso_14001", label: "ISO 14001" }], 
+                                  autres_certifications_initial: [...prevState.autres_certifications_initial, { value: "certification_iso_14001", label: "ISO 14001" }]
+                                }))
+                              }
+                              if (response.data[0].certification_seveso_seuil_haut) {
+                                this.setState(prevState => ({
+                                  autres_certifications: [...prevState.autres_certifications, { value: "certification_seveso_seuil_haut", label: "Seveso seuil haut" }], 
+                                  autres_certifications_initial: [...prevState.autres_certifications_initial, { value: "certification_seveso_seuil_haut", label: "Seveso seuil haut" }]
+                                }))
+                              }
+                              if (response.data[0].certification_seveso_seuil_bas) {
+                                this.setState(prevState => ({
+                                  autres_certifications: [...prevState.autres_certifications, { value: "certification_seveso_seuil_bas", label: "Seveso seuil bas" }], 
+                                  autres_certifications_initial: [...prevState.autres_certifications_initial, { value: "certification_seveso_seuil_bas", label: "Seveso seuil bas" }]
+                                }))
+                              }       
+                              if (response.data[0].certification_alcool) {
+                                this.setState(prevState => ({
+                                  autres_certifications: [...prevState.autres_certifications, { value: "certification_alcool", label: "Agrémenté alcool" }], 
+                                  autres_certifications_initial: [...prevState.autres_certifications_initial, { value: "certification_alcool", label: "Agrémenté alcool" }]
+                                }))
+                              }                                                                           
                         })
                     })
                 })
@@ -269,7 +377,7 @@ class entrepotsStockage extends React.Component {
             var checked = true
         } else {
             var checked = false
-        }
+        }        
 
         let informationsCopy = Object.assign({}, this.state.informations_entrepot);
         informationsCopy[event.target.name] = checked;
@@ -284,7 +392,9 @@ class entrepotsStockage extends React.Component {
             data_to_send['id_entrepot'] = this.state.informations_entrepot_initial.id_entrepot
             console.log('data to send: ' + data_to_send)
             try {
-                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosEntrepot', {
+                // var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosEntrepot', {
+                var response = fetch('http://localhost:3000/modifierInfosEntrepot', {
+
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data_to_send),
@@ -300,7 +410,17 @@ class entrepotsStockage extends React.Component {
 
     /*--> fonction pour annuler les changements */
     cancelModifications() {
-        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, confirm_changes: false, editTemperature: false, editServicesLog: false, editProduits: false });
+        this.setState({ 
+            informations_entrepot: this.state.informations_entrepot_initial, 
+            confirm_changes: false, 
+            editTemperature: false, 
+            editServicesLog: false, 
+            editProduits: false, 
+            certifications: this.state.certifications_initial, 
+            services_logistiques: this.state.services_logistiques_initial, 
+            services_transports: this.state.services_transports_initial, 
+            autres_certifications: this.state.autres_certifications_initial
+         });
     }
 
     toogleCotation() {
@@ -734,7 +854,7 @@ class entrepotsStockage extends React.Component {
                                         <textarea style={{ "resize": "none" }} className = 'entrepot_input entrepot_input_clients' placeholder="" name="clients" value={this.state.informations_entrepot.autres_securite} onChange={this.handleChangeInformationsEntrepot} />
                                     </div>                                     
 
-                                    <div className = 'entrepot_box entrepot_box_small'> 
+                                    <div className = 'entrepot_box entrepot_box_small '> 
                                         <p className="entrepot_box_title"> IT et E-commerce
                                         </p>      
                                         <div className = 'entrepot_services_log_et_clients_label'>
@@ -742,13 +862,13 @@ class entrepotsStockage extends React.Component {
                                         </div> 
                                         <div className = 'entrepot_lign_checkbox_it'>
                                             <div className = 'entrepot_lign_checkbox_it_gauche'>
-                                                <input type="checkbox" className = 'entrepot_checkbox' name="wms_bool" value={this.state.informations_entrepot.wms_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                                <input type="checkbox" className = 'entrepot_checkbox' name="wms_bool" value={this.state.informations_entrepot.wms_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.wms_bool}/>  
                                                 <p className = 'entrepot_checkbox_input'> WMS </p>
                                             </div>                                       
                                             {this.state.informations_entrepot.wms_bool &&
                                             <div className = 'entrepot_lign_checkbox_it_droite'>
                                                 <p className = 'entrepot_checkbox_input'> Nom du WMS: </p>
-                                                <input className = 'entrepot_input ' value={this.state.informations_entrepot.wms_detail} onChange={this.handleChangeInformationsEntrepot}  name = 'wms_detail'/>                                                 
+                                                <input className = 'entrepot_input ' value={this.state.informations_entrepot.wms_detail} onChange={this.handleChangeInformationsEntrepot}  name = 'wms_detail' />                                                 
                                             </div>                                               
                                             }
                                             {!this.state.informations_entrepot.wms_bool &&                                            
@@ -762,7 +882,7 @@ class entrepotsStockage extends React.Component {
                                         </div>                                         
                                         <div className = 'entrepot_lign_checkbox_it'>
                                             <div className = 'entrepot_lign_checkbox_it_gauche'>
-                                                <input type="checkbox" className = 'entrepot_checkbox' name="ecommerce_bool" value={this.state.informations_entrepot.ecommerce_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                                <input type="checkbox" className = 'entrepot_checkbox' name="ecommerce_bool" value={this.state.informations_entrepot.ecommerce_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.ecommerce_bool}/>  
                                                 <p className = 'entrepot_checkbox_input'> Ecommerce </p>
                                             </div>                                       
                                             {this.state.informations_entrepot.ecommerce_bool &&
@@ -777,6 +897,8 @@ class entrepotsStockage extends React.Component {
                                             }
                                         </div>                                        
 
+                                    </div> 
+                                    <div className = 'div_with_big_bottom_padding'>
                                     </div> 
 
                                 </div> 
@@ -834,11 +956,11 @@ class entrepotsStockage extends React.Component {
                                             Assurances: 
                                         </div>                                        
                                         <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox' name="assurance_batiment" value={this.state.informations_entrepot.assurance_batiment} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                            <input type="checkbox" className = 'entrepot_checkbox' name="assurance_batiment" value={this.state.informations_entrepot.assurance_batiment} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.assurance_batiment}/>  
                                             <p className = 'entrepot_checkbox_input'> Assurance bâtiment </p>
                                         </div>  
                                         <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox' name="assurance_rc_pro" value={this.state.informations_entrepot.assurance_rc_pro} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                            <input type="checkbox" className = 'entrepot_checkbox' name="assurance_rc_pro" value={this.state.informations_entrepot.assurance_rc_pro} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.assurance_rc_pro}/>  
                                             <p className = 'entrepot_checkbox_input'> Assurance Responsabilité Civile </p>
                                         </div>                                                                                    
                                     </div>
@@ -852,9 +974,9 @@ class entrepotsStockage extends React.Component {
                     </div> 
                     {this.state.confirm_changes === true &&
                         <div class="container_action_modification">
-                            <span>Vous avez effectué des modifications !</span>
+                            <span className = 'container_action_modification_text'>Vous avez effectué des modifications !</span>
                             <button class="container_action_modification_button" onClick={this.confirmModifications}>Confirmer</button>
-                            <button class="container_action_modification_button" onClick={this.cancelModifications}>Annuler</button>
+                            <button class="container_action_modification_button_annuler" onClick={this.cancelModifications}>Annuler</button>
                         </div>
                     }
 

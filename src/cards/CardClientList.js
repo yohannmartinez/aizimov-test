@@ -8,6 +8,7 @@ const CardClientList = ({ liste_clients }) => {
       {
         liste_clients.map((user, i) => {
           return (
+            <div className = 'card_client_list_div'> 
               <CardClient
                 date_debut={liste_clients[i].date_debut}
                 id={liste_clients[i].id_demande}
@@ -18,6 +19,7 @@ const CardClientList = ({ liste_clients }) => {
                 volume_unite={liste_clients[i].volume_unite}
                 type_produits={liste_clients[i].produits}
                 />
+              </div> 
           );
         })
       }

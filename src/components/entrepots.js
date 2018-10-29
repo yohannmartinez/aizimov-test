@@ -481,7 +481,8 @@ class entrepots extends React.Component {
                                         </div>                                         
                                     </div>                                      
                                 </div> 
-
+                                <div className = 'div_with_big_bottom_padding'>
+                                </div> 
                                 <div className = 'entrepot_infos_container_droite'> 
                                     {this.state.liste_urls.length < 1 &&
                                         <div className = 'entrepot_infos_title_images'> Aucune image ajoutée </div> 
@@ -549,7 +550,7 @@ class entrepots extends React.Component {
                     </div> 
                     {this.state.confirm_changes === true &&
                         <div className="container_action_modification">
-                            <span>Vous avez effectué des modifications !</span>
+                            <span className = 'container_action_modification_text'>Vous avez effectué des modifications !</span>
                             <button className="container_action_modification_button" onClick={this.confirmModifications}>Confirmer</button>
                             <button className="container_action_modification_button_annuler" onClick={this.lalaland}>Annuler</button>
                         </div>

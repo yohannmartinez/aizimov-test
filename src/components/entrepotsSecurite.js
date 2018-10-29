@@ -13,22 +13,21 @@ const token = '';
 
 const options_elements_securite = [
     { value: 'extincteur', label: 'extincteur' },
-    { value: 'camerasdesurveillance', label: 'caméras' },
-    { value: 'barriereaccessite', label: 'barrières' },
+    { value: 'camera_surveillance', label: 'caméras' },
+    { value: 'barriere_entree', label: 'barrières' },
     { value: 'sprinkler', label: 'sprinkler' },
     { value: 'alarme', label: 'alarme' },
-    { value: 'controledetemperature', label: 'controle de temperature' },
     { value: 'gardiennage', label: 'gardiennage' }
   ]
 
   const options_jours_ouverture = [
-    { value: 'lundi', label: 'lundi' },
-    { value: 'mardi', label: 'mardi' },
-    { value: 'mercredi', label: 'mercredi' },
-    { value: 'jeudi', label: 'jeudi' },
-    { value: 'vendredi', label: 'vendredi' },
-    { value: 'samedi', label: 'samedi' },
-    { value: 'dimanche', label: 'dimanche' },
+    { value: 'ouverture_lundi', label: 'lundi' },
+    { value: 'ouverture_mardi', label: 'mardi' },
+    { value: 'ouverture_mercredi', label: 'mercredi' },
+    { value: 'ouverture_jeudi', label: 'jeudi' },
+    { value: 'ouverture_vendredi', label: 'vendredi' },
+    { value: 'ouverture_samedi', label: 'samedi' },
+    { value: 'ouverture_dimanche', label: 'dimanche' },
   ]  
 
 class entrepotsStockage extends React.Component {
@@ -47,7 +46,10 @@ class entrepotsStockage extends React.Component {
             toggleDeconnexion : false,
             confirm_changes: false, 
             elements_securite: [], 
-            jours_ouverture: []
+            jours_ouverture_initial: [], 
+            elements_securite_initial: [], 
+            jours_ouverture: [], 
+            elements_securite: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -65,10 +67,26 @@ class entrepotsStockage extends React.Component {
         console.log(this.state)
     }
 
-    handleChangeElementsSecurite(selectedOption) {
+    handleChangeElementsSecurite(selectedOption, action) {
+        let informationsCopyNew = Object.assign({}, this.state.informations_entrepot_nouveau);  
+        if (action.action === 'remove-value'){
+            informationsCopyNew[action.removedValue.value] = false
+        }
+        if (action.action === 'select-option'){
+            informationsCopyNew[action.option.value] = true        
+        }    
+        this.setState({informations_entrepot_nouveau: informationsCopyNew, confirm_changes: true})    
         this.setState({ elements_securite: selectedOption, confirm_changes: true });
       }
-    handleChangeJoursOuverture(selectedOption) {
+    handleChangeJoursOuverture(selectedOption, action) {
+        let informationsCopyNew = Object.assign({}, this.state.informations_entrepot_nouveau);  
+        if (action.action === 'remove-value'){
+            informationsCopyNew[action.removedValue.value] = false
+        }
+        if (action.action === 'select-option'){
+            informationsCopyNew[action.option.value] = true        
+        }    
+        this.setState({informations_entrepot_nouveau: informationsCopyNew, confirm_changes: true})    
         this.setState({ jours_ouverture: selectedOption, confirm_changes: true });
       }
     
@@ -95,67 +113,80 @@ class entrepotsStockage extends React.Component {
                             })            
                             if (response.data[0].ouverture_lundi) {
                                 this.setState(prevState => ({
-                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_lundi', label: 'lundi' }]
+                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_lundi', label: 'lundi' }], 
+                                  jours_ouverture_initial: [...prevState.jours_ouverture_initial, { value: 'ouverture_lundi', label: 'lundi' }]
                                 }))
                               }
                               if (response.data[0].ouverture_mardi) {
                                 this.setState(prevState => ({
-                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_mardi', label: 'mardi' }]
+                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_mardi', label: 'mardi' }], 
+                                  jours_ouverture_initial: [...prevState.jours_ouverture_initial, { value: 'ouverture_mardi', label: 'mardi' }]
                                 }))
                               }
                               if (response.data[0].ouverture_mercredi) {
                                 this.setState(prevState => ({
-                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_mercredi', label: 'mercredi' }]
+                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_mercredi', label: 'mercredi' }], 
+                                  jours_ouverture_initial: [...prevState.jours_ouverture_initial, { value: 'ouverture_mercredi', label: 'mercredi' }]
                                 }))
                               }
                               if (response.data[0].ouverture_jeudi) {
                                 this.setState(prevState => ({
-                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_jeudi', label: 'jeudi' }]
+                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_jeudi', label: 'jeudi' }], 
+                                  jours_ouverture_initial: [...prevState.jours_ouverture_initial, { value: 'ouverture_jeudi', label: 'jeudi' }]
                                 }))
                               }
                               if (response.data[0].ouverture_vendredi) {
                                 this.setState(prevState => ({
-                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_vendredi', label: 'vendredi' }]
+                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_vendredi', label: 'vendredi' }], 
+                                  jours_ouverture_initial: [...prevState.jours_ouverture_initial, { value: 'ouverture_vendredi', label: 'vendredi' }]
                                 }))
                               }
                               if (response.data[0].ouverture_samedi) {
                                 this.setState(prevState => ({
-                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_samedi', label: 'samedi' }]
+                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_samedi', label: 'samedi' }], 
+                                  jours_ouverture_initial: [...prevState.jours_ouverture_initial, { value: 'ouverture_samedi', label: 'samedi' }]
                                 }))
                               }    
                               if (response.data[0].ouverture_dimanche) {
                                 this.setState(prevState => ({
-                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_dimanche', label: 'dimanche' }]
+                                  jours_ouverture: [...prevState.jours_ouverture, { value: 'ouverture_dimanche', label: 'dimanche' }], 
+                                  jours_ouverture_initial: [...prevState.jours_ouverture_initial, { value: 'ouverture_dimanche', label: 'dimanche' }]
                                 }))
                               }   
                               if (response.data[0].extincteur) {
                                 this.setState(prevState => ({
-                                  elements_securite: [...prevState.elements_securite, { value: 'extincteur', label: 'Extincteur' }]
+                                  elements_securite: [...prevState.elements_securite, { value: 'extincteur', label: 'Extincteur' }], 
+                                  elements_securite_initial: [...prevState.elements_securite_initial, { value: 'extincteur', label: 'Extincteur' }]
                                 }))
                               }    
                               if (response.data[0].camera_surveillance) {
                                 this.setState(prevState => ({
-                                  elements_securite: [...prevState.elements_securite, { value: 'camera_surveillance', label: 'Camera de surveillance' }]
+                                  elements_securite: [...prevState.elements_securite, { value: 'camera_surveillance', label: 'Camera de surveillance' }], 
+                                  elements_securite_initial: [...prevState.elements_securite_initial, { value: 'camera_surveillance', label: 'Camera de surveillance' }]
                                 }))
                               }   
                               if (response.data[0].barriere_entree) {
                                 this.setState(prevState => ({
-                                  elements_securite: [...prevState.elements_securite, { value: 'barriere_entree', label: "Barriere à l'entrée" }]
+                                  elements_securite: [...prevState.elements_securite, { value: 'barriere_entree', label: "Barriere à l'entrée" }], 
+                                  elements_securite_initial: [...prevState.elements_securite_initial, { value: 'barriere_entree', label: "Barriere à l'entrée" }]
                                 }))
                               }   
                               if (response.data[0].gardiennage) {
                                 this.setState(prevState => ({
-                                  elements_securite: [...prevState.elements_securite, { value: 'gardiennage', label: 'Gardiennage' }]
+                                  elements_securite: [...prevState.elements_securite, { value: 'gardiennage', label: 'Gardiennage' }], 
+                                  elements_securite_initial: [...prevState.elements_securite_initial, { value: 'gardiennage', label: 'Gardiennage' }]
                                 }))
                               }   
                               if (response.data[0].sprinkler) {
                                 this.setState(prevState => ({
-                                  elements_securite: [...prevState.elements_securite, { value: 'sprinkler', label: 'Sprinklage' }]
+                                  elements_securite: [...prevState.elements_securite, { value: 'sprinkler', label: 'Sprinklage' }], 
+                                  elements_securite_initial: [...prevState.elements_securite_initial, { value: 'sprinkler', label: 'Sprinklage' }]
                                 }))
                               }   
                               if (response.data[0].alarme) {
                                 this.setState(prevState => ({
-                                  elements_securite: [...prevState.elements_securite, { value: 'alarme', label: 'Alarme' }]
+                                  elements_securite: [...prevState.elements_securite, { value: 'alarme', label: 'Alarme' }], 
+                                  elements_securite_initial: [...prevState.elements_securite_initial, { value: 'alarme', label: 'Alarme' }]
                                 }))
                               }                                                                                                                                                                                                                                                                                                                                                                        
 
@@ -184,7 +215,8 @@ class entrepotsStockage extends React.Component {
             data_to_send['id_entrepot'] = this.state.informations_entrepot_initial.id_entrepot
             console.log('data to send: ' + data_to_send)
             try {
-                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosEntrepot', {
+                var response = fetch('http://localhost:3000/modifierInfosEntrepot', {
+                // var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosEntrepot', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data_to_send),
@@ -200,7 +232,12 @@ class entrepotsStockage extends React.Component {
 
     /*--> fonction pour annuler les changements */
     cancelModifications() {
-        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, confirm_changes: false });
+        this.setState({ 
+            informations_entrepot: this.state.informations_entrepot_initial,
+            confirm_changes: false, 
+            elements_securite: this.state.elements_securite_initial, 
+            jours_ouverture: this.state.jours_ouverture_intial
+         });
     }
 
     toogleCotation() {
@@ -341,6 +378,9 @@ class entrepotsStockage extends React.Component {
                                         </div> 
                                     </div>    
                                 </div>   
+                                <div className = 'div_with_big_bottom_padding'>
+                                </div> 
+
                                 <div style = {{flex: '0.12'}}>
                                 </div>                                 
                                 <div className = 'entrepot_securite_container_droite'> 
@@ -424,9 +464,9 @@ class entrepotsStockage extends React.Component {
                     </div> 
                     {this.state.confirm_changes === true &&
                         <div class="container_action_modification">
-                            <span>Vous avez effectué des modifications !</span>
+                            <span className = 'container_action_modification_text'>Vous avez effectué des modifications !</span>
                             <button class="container_action_modification_button" onClick={this.confirmModifications}>Confirmer</button>
-                            <button class="container_action_modification_button" onClick={this.cancelModifications}>Annuler</button>
+                            <button class="container_action_modification_button_annuler" onClick={this.cancelModifications}>Annuler</button>
                         </div>
                     }
 

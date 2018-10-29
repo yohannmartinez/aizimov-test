@@ -139,9 +139,9 @@ class clients extends React.Component {
                     </div>
                     <div className="contenu_page">
 
-                        <p >
-                            Clients
-                        </p>
+                        <div className="cotations_container_title">
+                            <p className="cotations_title_page">Mes clients</p>
+                        </div> 
                         <CardClientList liste_clients={this.state.liste_clients} />                                
                         <button onClick = {this.getState}>Get State</button> 
                     </div>
