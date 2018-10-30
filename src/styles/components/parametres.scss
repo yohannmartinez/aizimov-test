@@ -229,13 +229,24 @@
     height: auto;
 }
 
+.button_close_container_change_password{
+    position:absolute;
+    top:15px;
+    right:15px;
+    color:white;
+    font-size:20px;
+    background-color:transparent;
+    border:none;
+    cursor: pointer;
+}
+
 
 .parametres_background_change_password{
     position: fixed;
     left:220px;
-    top:0;
+    top:60px;
     width:calc(100% - 220px);
-    height:100%;
+    height:calc(100% - 60px);
     background-color: rgba(0,0,0,0.5)
 }
 

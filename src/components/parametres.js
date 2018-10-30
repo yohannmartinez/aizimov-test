@@ -34,6 +34,7 @@ class parametres extends React.Component {
             confirm_changes: false,
 
             /* -->states pour changer de mot de passe */
+            toggleDivChangePassword: false,
             change_password: {
                 mail: '',
                 ancien_mot_de_passe: '',
@@ -131,10 +132,10 @@ class parametres extends React.Component {
     /* -->Fonction pour changer de mot de passe */
     changePassword() {
         if (this.state.change_password.mail === this.state.user.email) {
-            axios.get('http://localhost:3000/changePassword', { params: { email: this.state.change_password.mail ,password: this.state.change_password.ancien_mot_de_passe, new_password: this.state.change_password.nouveau_mot_de_passe } }).then(response => {
-                if(response.data.value === "OK") {
+            axios.get('http://localhost:3000/changePassword', { params: { email: this.state.change_password.mail, password: this.state.change_password.ancien_mot_de_passe, new_password: this.state.change_password.nouveau_mot_de_passe } }).then(response => {
+                if (response.data.value === "OK") {
                     alert("mot de passe changé")
-                } else if( response.data.value === "MDP") {
+                } else if (response.data.value === "MDP") {
                     alert('ancien mot de passe éronné')
                 }
             });
@@ -348,7 +349,7 @@ class parametres extends React.Component {
 
                         {this.state.toggleDivChangePassword === true &&
                             <div className="parametres_background_change_password">
-                            <button onClick={this.setState({toggleDivChangePassword : false}) }><i class="fas fa-times"></i></button>
+                                <button class="button_close_container_change_password" onClick={()=>{this.setState({toggleDivChangePassword : false}) }}><i class="fas fa-times"></i></button>
                                 <div className="parametres_container_change_password">
                                     <p>Adresse Mail</p>
                                     <input onChange={this.handleChangeNewPassword} name="mail" value={this.state.change_password.mail} className="parametres_infos_column_input" placeholder="adresse mail" />
