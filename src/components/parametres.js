@@ -32,6 +32,13 @@ class parametres extends React.Component {
             editUserInfos: false,
             editFactureInfos: false,
             confirm_changes: false,
+
+            /* -->states pour changer de mot de passe */
+            change_password: {
+                mail: '',
+                ancien_mot_de_passe: '',
+                nouveau_mot_de_passe: '',
+            }
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -41,7 +48,9 @@ class parametres extends React.Component {
         this.confirmModifications = this.confirmModifications.bind(this);
         this.cancelModifications = this.cancelModifications.bind(this);
         this.handleChange_facturation_info = this.handleChange_facturation_info.bind(this)
-        this.getState = this.getState.bind(this); 
+        this.getState = this.getState.bind(this);
+        this.changePassword = this.changePassword.bind(this);
+        this.handleChangeNewPassword = this.handleChangeNewPassword.bind(this);
     }
 
     getState() {
@@ -119,6 +128,27 @@ class parametres extends React.Component {
         this.props.history.push('/')
     }
 
+    /* -->Fonction pour changer de mot de passe */
+    changePassword() {
+        if (this.state.change_password.mail === this.state.user.email) {
+            axios.get('http://localhost:3000/changePassword', { params: { email: this.state.change_password.mail ,password: this.state.change_password.ancien_mot_de_passe, new_password: this.state.change_password.nouveau_mot_de_passe } }).then(response => {
+                if(response.data.value === "OK") {
+                    alert("mot de passe changé")
+                } else if( response.data.value === "MDP") {
+                    alert('ancien mot de passe éronné')
+                }
+            });
+        } else {
+            alert('mauvaise adresse mail');
+        }
+    }
+
+    handleChangeNewPassword(event) {
+        let copy = Object.assign({}, this.state.change_password);
+        copy[event.target.name] = event.target.value;
+        this.setState({ change_password: copy });
+    }
+
     /* -->fonction pour confirmer les changements */
     confirmModifications() {
         this.setState({ userCancelInfos: this.state.user, infosFacturationCancel: this.state.infosFacturation, editFactureInfos: false, editUserInfos: false, confirm_changes: false }, () => {
@@ -158,6 +188,8 @@ class parametres extends React.Component {
                         pays: this.state.infosFacturation.pays,
                         code_postal: this.state.infosFacturation.code_postal,
                         id_compte: this.state.user.id_compte,
+
+                        toggleDivChangePassword: false,
                     }),
                 })
                 if (response.status >= 200 && response.status < 300) {
@@ -219,7 +251,7 @@ class parametres extends React.Component {
                     <div className="contenu_page">
                         <div className="parametres_container_title">
                             <p className="parametres_title_page">PARAMÈTRES</p>
-                            <button className="parametres_button_change_password">Modifier mon mot de passe</button>
+                            <button className="parametres_button_change_password" onClick={() => { this.setState({ toggleDivChangePassword: true }) }}>Modifier mon mot de passe</button>
                         </div>
 
 
@@ -312,9 +344,22 @@ class parametres extends React.Component {
                                 </div>
                             }
                         </div>
-                        <button onClick= {this.getState}> Get State </button>
+                        <button onClick={this.getState}> Get State </button>
 
-
+                        {this.state.toggleDivChangePassword === true &&
+                            <div className="parametres_background_change_password">
+                            <button onClick={this.setState({toggleDivChangePassword : false}) }><i class="fas fa-times"></i></button>
+                                <div className="parametres_container_change_password">
+                                    <p>Adresse Mail</p>
+                                    <input onChange={this.handleChangeNewPassword} name="mail" value={this.state.change_password.mail} className="parametres_infos_column_input" placeholder="adresse mail" />
+                                    <p>Ancien mot de passe</p>
+                                    <input onChange={this.handleChangeNewPassword} name="ancien_mot_de_passe" value={this.state.change_password.ancien_mot_de_passe} className="parametres_infos_column_input" placeholder="Ancien mot de passe" />
+                                    <p>Nouveau mot de passe</p>
+                                    <input onChange={this.handleChangeNewPassword} name="nouveau_mot_de_passe" value={this.state.change_password.nouveau_mot_de_passe} className="parametres_infos_column_input" placeholder="Ancien mot de passe" />
+                                    <button className="button_change_password" onClick={this.changePassword}>Changer de mot de passe</button>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
 

@@ -228,3 +228,39 @@
     font-weight:500;
     height: auto;
 }
+
+
+.parametres_background_change_password{
+    position: fixed;
+    left:220px;
+    top:0;
+    width:calc(100% - 220px);
+    height:100%;
+    background-color: rgba(0,0,0,0.5)
+}
+
+.parametres_container_change_password{
+    background-color:white;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    height:auto;
+    width:auto;
+    border-radius:5px;
+    padding:25px;
+    text-align: center;
+}
+
+.button_change_password{
+    padding:15px;
+    background-color:#16376D;
+    border:none;
+    color:white;
+    font-weight:500;
+    display:block;
+    margin-top:30px;
+    border-radius:5px;
+    width:100%;
+    cursor:pointer;
+}
