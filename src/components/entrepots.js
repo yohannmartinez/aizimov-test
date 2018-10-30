@@ -46,6 +46,9 @@ class entrepots extends React.Component {
             editResume: false, 
             confirm_changes: false, 
             editDescription: false, 
+            current_image: '', 
+            current_image_number: 0, 
+            max_image_number: 0
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -55,7 +58,9 @@ class entrepots extends React.Component {
         this.handleChangeInformationsEntrepot = this.handleChangeInformationsEntrepot.bind(this); 
         this.confirmModifications = this.confirmModifications.bind(this); 
         this.cancelModifications = this.cancelModifications.bind(this); 
-        this.lalaland = this.lalaland.bind(this)
+        this.lalaland = this.lalaland.bind(this); 
+        this.handleImageAdd = this.handleImageAdd.bind(this); 
+        this.handleImageSubstract = this.handleImageSubstract.bind(this); 
     }
 
     getState() {
@@ -67,6 +72,24 @@ class entrepots extends React.Component {
     lalaland() {
         this.setState({ informations_entrepot: this.state.informations_entrepot_initial, confirm_changes: false , editResume: false , editDescription: false});
     }
+    handleImageAdd(){
+        console.log(this.state.current_image_number)
+        if (this.state.current_image_number <= this.state.max_image_number){
+            var new_number = this.state.current_image_number + 1
+            console.log(new_number)
+            var new_url = this.state.liste_urls[new_number]
+            console.log(new_url)
+            this.setState({current_image_number: new_number, current_image: new_url})
+        } 
+    }
+    handleImageSubstract(){
+        console.log(this.state.current_image_number)
+        if (this.state.current_image_number > 0){
+            var new_number = this.state.current_image_number - 1
+            var new_url = this.state.liste_urls[new_number]
+            this.setState({current_image_number: new_number, current_image: new_url})
+        }  
+    }
 
     confirmModifications() {
         this.setState({ informations_entrepot_initial: this.state.informations_entrepot, confirm_changes: false, editDescription: false }, () => {
@@ -74,8 +97,8 @@ class entrepots extends React.Component {
             data_to_send['id_entrepot'] = this.state.informations_entrepot_initial.id_entrepot
             console.log('data to send: ' + data_to_send)
             try {
-                // var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosEntrepot', {
-                var response = fetch('http://localhost:3000/modifierInfosEntrepot', {                    
+                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosEntrepot', {
+                // var response = fetch('http://localhost:3000/modifierInfosEntrepot', {                    
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data_to_send),
@@ -241,7 +264,7 @@ class entrepots extends React.Component {
                                       }                                       
                                 } 
                                 if (this.state.informations_entrepot.image_2_reference != null) {    
-                                    images['image_2'] = this.state.informations_entrepot.image_1_reference
+                                    images['image_2'] = this.state.informations_entrepot.image_2_reference
                                     try{
                                         // var image = await fetch('http://localhost:3000/getImageFromS3?fileKey=' + this.state.informations_entrepot.image_2_reference)      
                                         var image = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=' + this.state.informations_entrepot.image_2_reference)      
@@ -251,7 +274,7 @@ class entrepots extends React.Component {
                                       }                                     
                                 } 
                                 if (this.state.informations_entrepot.image_3_reference != null) {   
-                                    images['image_3'] = this.state.informations_entrepot.image_1_reference
+                                    images['image_3'] = this.state.informations_entrepot.image_3_reference
                                     try{  
                                         // var image = await fetch('http://localhost:3000/getImageFromS3?fileKey=' + this.state.informations_entrepot.image_3_reference)      
                                         var image = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=' + this.state.informations_entrepot.image_3_reference)      
@@ -261,7 +284,7 @@ class entrepots extends React.Component {
                                       }                                       
                                 } 
                                 if (this.state.informations_entrepot.image_4_reference != null) {                                    
-                                    images['image_4'] = this.state.informations_entrepot.image_1_reference
+                                    images['image_4'] = this.state.informations_entrepot.image_4_reference
                                     try{
                                         // var image = await fetch('http://localhost:3000/getImageFromS3?fileKey=' + this.state.informations_entrepot.image_4_reference)      
                                         var image = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=' + this.state.informations_entrepot.image_4_reference)      
@@ -271,7 +294,7 @@ class entrepots extends React.Component {
                                           console.log(err)
                                       }                                     
                                 }          
-                                this.setState({ images: images, liste_urls: urls})                                                   
+                                this.setState({ images: images, liste_urls: urls, current_image: urls[0], max_image_number: urls.length})                                                   
 
                             })                  
                         })
@@ -344,7 +367,7 @@ class entrepots extends React.Component {
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
                             <button className="sidebar_elements" onClick={()=>{this.props.history.push('/dashboard')}}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_page_element" onClick={()=>{this.props.history.push('/entrepots')}}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={()=>{this.props.history.push('/entrepots')}}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
                             <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
@@ -493,8 +516,9 @@ class entrepots extends React.Component {
                                             <div className = 'entrepot_infos_title_images'> Vos images ({this.state.liste_urls.length}): </div> 
 
                                             <div className = 'entrepot_infos_container_images'>
-
-                                              <img src = {this.state.liste_urls[1]} className = 'entrepot_infos_images' /> 
+                                                <button className = 'entrepot_infos_button_image' onClick = {this.handleImageSubstract}> - </button> 
+                                                <img src = {this.state.current_image} className = 'entrepot_infos_images' /> 
+                                                <button className = 'entrepot_infos_button_image' onClick = {this.handleImageAdd}> + </button> 
 
                                             {/* <Carousel >
 

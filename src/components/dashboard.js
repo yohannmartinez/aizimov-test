@@ -108,7 +108,7 @@ class dashboard extends React.Component {
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
-                            <button className="sidebar_page_element" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
                             <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&

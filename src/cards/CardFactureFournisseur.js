@@ -31,7 +31,7 @@ class CardFactureFournisseur extends React.Component {
       </tr>
     );
   }
-}
+} 
 
 export default CardFactureFournisseur;
 

@@ -166,8 +166,12 @@ body{
 	position:relative;
 }
 
+.sidebar_element_selected{
+	background-color: $very-dark-blue;
+}
+
 .sidebar_page_element:hover, .sidebar_elements:hover {
-	background-color: rgb(11, 31, 63);
+	background-color: $very-dark-blue;
 }
 
 .sidebar_page_element:focus, .sidebar_elements:focus {
