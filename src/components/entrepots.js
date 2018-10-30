@@ -74,7 +74,7 @@ class entrepots extends React.Component {
     }
     handleImageAdd(){
         console.log(this.state.current_image_number)
-        if (this.state.current_image_number <= this.state.max_image_number){
+        if (this.state.current_image_number <= this.state.max_image_number -1){
             var new_number = this.state.current_image_number + 1
             console.log(new_number)
             var new_url = this.state.liste_urls[new_number]
