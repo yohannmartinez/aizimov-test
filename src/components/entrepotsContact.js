@@ -212,25 +212,30 @@ class entrepotsContact extends React.Component {
                                 </div>
                             }
                             {this.state.divAjouterContact !== true &&
-                                <button onClick={() => { this.setState({ divAjouterContact: true }) }}>Ajouter un contact</button>
+                                <button className="entrepot_contact_button_ajouter_contact" onClick={() => { this.setState({ divAjouterContact: true }) }}>Ajouter un contact</button>
                             }
                             {this.state.divAjouterContact === true &&
-                                <div>
-                                    <p>Prénom : <input placeholder="prenom" name="prenom" value={this.state.infos_ajout_contact.prenom} onChange={this.handleChangeAddContact} /></p>
-                                    <p>Nom : <input placeholder="nom" name="nom" value={this.state.infos_ajout_contact.nom} onChange={this.handleChangeAddContact} /></p>
-                                    <p>Mail : <input placeholder="mail" name="mail" value={this.state.infos_ajout_contact.mail} onChange={this.handleChangeAddContact} /></p>
-                                    <p>Poste : <input placeholder="poste" name="poste" value={this.state.infos_ajout_contact.poste} onChange={this.handleChangeAddContact} /></p>
-                                    <p>Tel. fixe : <input placeholder="telephone fixe" name="telephone_fixe" value={this.state.infos_ajout_contact.telephone_fixe} onChange={this.handleChangeAddContact} /></p>
-                                    <p>Tel. portable : <input placeholder="telephone portable" name="telephone_portable" value={this.state.infos_ajout_contact.telephone_portable} onChange={this.handleChangeAddContact} /></p>
-                                    <p>Contact Principal :
-                                        <select name="contact_principal" value={this.state.infos_ajout_contact.contact_principal} onChange={this.handleChangeAddContact}>
-                                            <option></option>
-                                            <option>Oui</option>
-                                            <option>Non</option>
-                                        </select>
-                                    </p>
-                                    <button onClick={this.ajouterContact}>Ajouter le contact</button>
-                                    <button onClick={() => { this.setState({ divAjouterContact: false }) }}>Annuler</button>
+                                <div className="entrepot_contact__div_ajouter_devis">
+                                    <div className="parametres_infos_sous_container">
+                                        <div className="parametres_infos_column">
+                                            <p>Prénom : <input className="parametres_infos_column_input" placeholder="prenom" name="prenom" value={this.state.infos_ajout_contact.prenom} onChange={this.handleChangeAddContact} /></p>
+                                            <p>Nom : <input className="parametres_infos_column_input" placeholder="nom" name="nom" value={this.state.infos_ajout_contact.nom} onChange={this.handleChangeAddContact} /></p>
+                                            <p>Mail : <input className="parametres_infos_column_input" placeholder="mail" name="mail" value={this.state.infos_ajout_contact.mail} onChange={this.handleChangeAddContact} /></p>
+                                            <p>Poste : <input className="parametres_infos_column_input" placeholder="poste" name="poste" value={this.state.infos_ajout_contact.poste} onChange={this.handleChangeAddContact} /></p>
+                                        </div>
+                                        <div className="parametres_infos_column">
+                                            <p>Tel. fixe : <input className="parametres_infos_column_input" placeholder="telephone fixe" name="telephone_fixe" value={this.state.infos_ajout_contact.telephone_fixe} onChange={this.handleChangeAddContact} /></p>
+                                            <p>Tel. portable : <input className="parametres_infos_column_input" placeholder="telephone portable" name="telephone_portable" value={this.state.infos_ajout_contact.telephone_portable} onChange={this.handleChangeAddContact} /></p>
+                                            <p>Contact Principal : <select name="contact_principal" value={this.state.infos_ajout_contact.contact_principal} onChange={this.handleChangeAddContact}>
+                                                <option></option>
+                                                <option>Oui</option>
+                                                <option>Non</option>
+                                            </select>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button className="entrepot_contact_valider_modifications" onClick={this.ajouterContact}>Ajouter le contact</button>
+                                    <button className="entrepot_contact_valider_modifications" onClick={() => { this.setState({ divAjouterContact: false }) }}>Annuler</button>
                                 </div>
                             }
                         </div>
