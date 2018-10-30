@@ -1,0 +1,30 @@
+.container_fiche_client{
+    display: flex
+}
+.container_fiche_client_gauche{
+    flex: 2
+}
+.container_fiche_client_droite{
+    flex: 1
+} 
+.fiche_client_resume_box{
+    border-radius:10px;
+    overflow:hidden;
+    background-color:white;
+    margin-top:20px;
+    margin-bottom:40px;
+    padding:none;
+    position: relative;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.3);
+    max-width:900px;
+    text-align:center;
+    color:#6d6d6d;
+    font-weight:500;
+}
+
+.fiche_client_devis_box{
+    margin-top: 3em; 
+    margin-right: 20%; 
+    margin-left: 20%; 
+    text-align: center; 
+}

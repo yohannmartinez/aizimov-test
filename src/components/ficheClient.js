@@ -25,6 +25,7 @@ class ficheClient extends React.Component {
             id: props.match.params.id,
             informations_demande: [], 
             loaded: false, 
+            toggleDivDevisTexte: false, 
 
         }
         this.handleChange = this.handleChange.bind(this);
@@ -80,10 +81,15 @@ class ficheClient extends React.Component {
           
 
         try {
-            console.log('user '+ this.state.user.id_demande)
+            console.log('id_demande '+ this.state.id)
+            console.log('id_compte '+ this.state.user.id_compte)
             console.log("on va chercher les infos d'une demande")
-            const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosDemandeCompte?id=' + this.state.id)
-            // const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosDemandeCompte?id=' + this.state.id)
+            // var url = new URL("http://localhost:3000/getInfosClientCompte"),
+            var url = new URL("http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosClientCompte"),
+
+            params = {id_compte:this.state.user.id_compte, id_demande:this.state.id}
+            Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))      
+            const response = await fetch(url)
             const json = await response.json();     
             this.setState({ informations_demande: json[0] , loaded: true});
         } catch (error) {
@@ -163,12 +169,63 @@ class ficheClient extends React.Component {
                     </div>
                     {this.state.acces == 'authorise' &&
                         <div className="contenu_page">
-                            <div> 
-                                Fiche client - {this.state.id} - {this.state.informations_demande.entreprise}
-                            </div>
-                            <button onClick = {this.getState}>Get State</button> 
+                            <div class="container_fiche_client">                        
+                                <div class="container_fiche_client_gauche">
+                                    <p class="fiche_demande_title_page">FICHE CLIENT - {this.state.informations_demande.id_demande} </p>
+                                    <span class="fiche_demande_sous_title">Résumé</span>
+                                    <div class="fiche_client_resume_box">
+                                        <div className = 'fiche_demande_resume_title'> Entreprise : {this.state.informations_demande.entreprise}</div> 
+
+                                        <div className = 'fiche_demande_resume_lign'> 
+                                            <p className = 'fiche_demande_resume_text'>Volume : {this.state.informations_demande.volume}{this.state.informations_demande.volume_unite}</p>
+                                            <p className = 'fiche_demande_resume_text'>Durée : {this.state.informations_demande.duree}</p>
+                                        </div> 
+                                        <div className = 'fiche_demande_resume_lign'> 
+                                            <p className = 'fiche_demande_resume_text'>Produit : {this.state.informations_demande.produits}</p>
+                                            <p className = 'fiche_demande_resume_text'>Date de début : {this.state.informations_demande.date_debut}</p>
+                                        </div> 
+                                    </div>
+                                    <button onClick = {this.getState}>Get State</button> 
+
+                                </div>
+
+                                <div className="container_fiche_client_droite">
+                                    <div className = 'fiche_client_devis_box'>
+                                        {this.state.informations_demande.reference_devis  &&
+                                            <div class="container_buttons_devis">
+                                                <p> Vous avez ajouté un devis le {this.state.informations_demande.date_ajout_devis} </p> 
+                                                <a href={"https://s3.eu-west-3.amazonaws.com/spf-fournisseur-container/" + this.state.informations_demande.reference_devis}>
+                                                    <button class="fiche_demande_button_accepter_demande">Voir le devis</button>
+                                                </a>
+                                            </div>                                                                                
+                                        }              
+
+                                        {!this.state.informations_demande.reference_devis && this.state.informations_demande.devis_texte && this.state.toggleDivDevisTexte === true  &&                                   
+                                            <div className="bg_devis_texte_fiche_demande">
+                                                <button class="button_close_div_devis_texte" onClick={() => { this.setState({ toggleDivDevisTexte: false }) }}><i class="fas fa-times"></i></button>
+                                                <div className="container_devis_texte_fiche_demande">
+                                                    {this.state.informations_demande.devis_texte}
+                                                </div>
+                                            </div> 
+                                        }
+                                        {!this.state.informations_demande.reference_devis && this.state.informations_demande.devis_texte && this.state.toggleDivDevisTexte === false  &&                                   
+                                            <div >
+                                                <p> Vous avez ajouté un devis en format texte le {this.state.informations_demande.date_ajout_devis} </p> 
+                                                <button className="fiche_demande_button_accepter_demande" onClick={() => { this.setState({ toggleDivDevisTexte: true }) }}>Voir le devis</button>                                                
+                                            </div> 
+                                        }                                        
+                                        {!this.state.informations_demande.reference_devis && !this.state.informations_demande.devis_texte &&                                        
+                                            <div className="container_buttons_devis">
+                                                <span>Vous n'avez pas ajouté de devis</span>
+                                            </div>
+                                        }                                        
+                                    </div>     
+                                </div> 
+                            </div> 
+
                         </div> 
                     }
+
                     {this.state.acces != 'authorise' &&
                         <div> 
                             Vous n'avez pas accès à cette demande
