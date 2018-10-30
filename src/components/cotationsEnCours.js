@@ -166,7 +166,7 @@ class cotationsEnCours extends React.Component {
                     <div id="container_page_cotations" className="contenu_page_contations_grand">
                         <div className="cotations_container_title">
                             <p className="cotations_title_page">COTATIONS EN COURS</p>
-                            <button className="cotations_button_filter">Filtrer</button>
+                            {/* <button className="cotations_button_filter">Filtrer</button> */}
                         </div>
                         {<div>
                             <p className="cotations_sous_title">Cotations en attente de votre réponse</p>

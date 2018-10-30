@@ -208,7 +208,8 @@ body{
 .contenu_page_full_width{
 	background-color:#f8f8f8;
 	width:calc(100vw - 220px);
-	padding:0px	
+	padding:0px;
+	overflow-x: hidden;	
 }
 
 .menuBurger{
