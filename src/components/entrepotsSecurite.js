@@ -347,7 +347,7 @@ class entrepotsStockage extends React.Component {
                                             </div>                                            
                                             <div className = 'entrepot_securite_horaire_div'> 
                                                 <p className = 'entrepot_horaire_label'> Fin </p>
-                                                <input className = 'entrepot_input entrepot_horaire_input' value={this.state.informations_entrepot.heure_fermeture_1_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'heure_fermeture_1_debut'/>                                                       
+                                                <input className = 'entrepot_input entrepot_horaire_input' value={this.state.informations_entrepot.heure_ouverture_1_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'heure_ouverture_1_fin'/>                                                       
                                       
                                             </div>  
                                         

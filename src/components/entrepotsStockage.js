@@ -29,7 +29,6 @@ const options_services_logistiques = [
     { value: 'certif2160', label: '2160' },
     { value: 'certif2662', label: '2662' },
     { value: 'certif2663', label: '2663' },
-    { value: 'sousdouanebool', label: 'sous douane' }
   ];
   const options_types_produits = [
     { value: 'produits_bois_carton_papier', label: 'Bois Carton Papier' },
@@ -594,9 +593,9 @@ class entrepotsStockage extends React.Component {
                                                 <div className='entrepot_infos_temperature_lign_range'>
                                                         <div className='entrepot_infos_temperature_lign'>                                                        
                                                             <p className = 'entrepot_stockage_temperature_range_title'> Frais 1:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_range_1_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_1_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_range_1_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_1_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
+                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_1_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_1_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
                                                             <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_range_1_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_1_volume'/> 
+                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_1_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_volume'/> 
                                                             <button className = 'entrepot_button_add_temperature_range' onClick = {this.addFraisRange}> + </button>
 
                                                         </div>
@@ -607,9 +606,9 @@ class entrepotsStockage extends React.Component {
                                                 <div className='entrepot_infos_temperature_lign_range'>
                                                         <div className='entrepot_infos_temperature_lign'>                                                        
                                                             <p className = 'entrepot_stockage_temperature_range_title'> Frais 2:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_range_2_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_2_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_range_2_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_2_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
+                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_2_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_2_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
                                                             <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_range_2_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_2_volume'/> 
+                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_2_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_volume'/> 
                                                             <button className = 'entrepot_button_add_temperature_range' onClick = {this.addFraisRange}> + </button>
                                                             {this.state.frais_range === 2 && 
                                                             <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeFraisRange}> - </button>
@@ -623,9 +622,9 @@ class entrepotsStockage extends React.Component {
                                                 <div className='entrepot_infos_temperature_lign_range'>
                                                         <div className='entrepot_infos_temperature_lign'>                                                        
                                                             <p className = 'entrepot_stockage_temperature_range_title'> Frais 3:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_range_3_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_3_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_range_3_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_3_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
+                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_3_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_3_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
                                                             <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_range_3_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_range_3_volume'/> 
+                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_3_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_volume'/> 
                                                             <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeFraisRange}> - </button>
 
                                                         </div>
@@ -648,9 +647,9 @@ class entrepotsStockage extends React.Component {
                                                     <div className='entrepot_infos_temperature_lign_range'>
                                                             <div className='entrepot_infos_temperature_lign'>                                                        
                                                                 <p className = 'entrepot_stockage_temperature_range_title'> Surgele 1:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_range_1_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_1_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_range_1_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_1_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
+                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_1_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_1_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
                                                                 <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_range_1_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_1_volume'/> 
+                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_1_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_volume'/> 
                                                                 <button className = 'entrepot_button_add_temperature_range' onClick = {this.addSurgeleRange}> + </button>
 
                                                             </div>
@@ -661,9 +660,9 @@ class entrepotsStockage extends React.Component {
                                                     <div className='entrepot_infos_temperature_lign_range'>
                                                             <div className='entrepot_infos_temperature_lign'>                                                        
                                                                 <p className = 'entrepot_stockage_temperature_range_title'> Surgele 2:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_range_2_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_2_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_range_2_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_2_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
+                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_2_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_2_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
                                                                 <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_range_2_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_2_volume'/> 
+                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_2_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_volume'/> 
                                                                 <button className = 'entrepot_button_add_temperature_range' onClick = {this.addSurgeleRange}> + </button>
                                                                 {this.state.surgele_range === 2 && 
                                                                 <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeSurgeleRange}> - </button>
@@ -677,9 +676,9 @@ class entrepotsStockage extends React.Component {
                                                     <div className='entrepot_infos_temperature_lign_range'>
                                                             <div className='entrepot_infos_temperature_lign'>                                                        
                                                                 <p className = 'entrepot_stockage_temperature_range_title'> Surgele 3:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_range_3_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_3_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_range_3_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_3_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
+                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_3_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_3_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
                                                                 <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_range_3_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_range_3_volume'/> 
+                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_3_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_volume'/> 
                                                                 <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeSurgeleRange}> - </button>
 
                                                             </div>
@@ -754,9 +753,9 @@ class entrepotsStockage extends React.Component {
                                                 <div className='entrepot_infos_temperature_lign_range'>
                                                         <div className='entrepot_infos_temperature_lign'>                                                        
                                                             <p className = 'entrepot_stockage_temperature_range_title'> Frais 1:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_range_1_debut}° à  {this.state.informations_entrepot.frais_range_1_fin} °</p>
+                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_1_range_debut}° à  {this.state.informations_entrepot.frais_1_range_fin} °</p>
                                                             <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left' > Taille: </p> 
-                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_range_1_volume}</p>
+                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_1_volume}</p>
                                                         </div>
                                                                                                     
                                                 </div> 
@@ -765,9 +764,9 @@ class entrepotsStockage extends React.Component {
                                                 <div className='entrepot_infos_temperature_lign_range'>
                                                         <div className='entrepot_infos_temperature_lign'>                                                        
                                                             <p className = 'entrepot_stockage_temperature_range_title'> Frais 2:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_range_2_debut}° à  {this.state.informations_entrepot.frais_range_2_fin} °</p>
+                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_2_range_debut}° à  {this.state.informations_entrepot.frais_2_range_fin} °</p>
                                                             <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left' > Taille: </p> 
-                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_range_2_volume}</p>
+                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_2_volume}</p>
 
 
                                                         </div>
@@ -778,9 +777,9 @@ class entrepotsStockage extends React.Component {
                                                 <div className='entrepot_infos_temperature_lign_range'>
                                                         <div className='entrepot_infos_temperature_lign'>                                                        
                                                             <p className = 'entrepot_stockage_temperature_range_title'> Frais 3:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_range_3_debut}° à  {this.state.informations_entrepot.frais_range_3_fin} °</p>
+                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_3_range_debut}° à  {this.state.informations_entrepot.frais_3_range_fin} °</p>
                                                             <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left'> Taille: </p> 
-                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_range_3_volume}</p>
+                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_3_volume}</p>
 
                                                         </div>
                                                                                                     
@@ -798,9 +797,9 @@ class entrepotsStockage extends React.Component {
                                                     <div className='entrepot_infos_temperature_lign_range'>
                                                             <div className='entrepot_infos_temperature_lign'>                                                        
                                                                 <p className = 'entrepot_stockage_temperature_range_title'> Surgele 1:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_range_1_debut}° à  {this.state.informations_entrepot.surgele_range_1_fin} °</p>
+                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_1_range_debut}° à  {this.state.informations_entrepot.surgele_1_range_fin} °</p>
                                                                 <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left'> Taille: </p> 
-                                                                <p className='entrepot_stockage_temperature_range_text'  >: {this.state.informations_entrepot.surgele_range_1_volume}</p>                                                                                                      
+                                                                <p className='entrepot_stockage_temperature_range_text'  >: {this.state.informations_entrepot.surgele_1_volume}</p>                                                                                                      
 
                                                             </div>
                                                                                                         
@@ -810,9 +809,9 @@ class entrepotsStockage extends React.Component {
                                                     <div className='entrepot_infos_temperature_lign_range'>
                                                             <div className='entrepot_infos_temperature_lign'>                                                        
                                                                 <p className = 'entrepot_stockage_temperature_range_title'> Surgele 2:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_range_2_debut}° à  {this.state.informations_entrepot.surgele_range_2_fin} °</p>
+                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_2_range_debut}° à  {this.state.informations_entrepot.surgele_2_range_fin} °</p>
                                                                 <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left'> Taille: </p> 
-                                                                <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.surgele_range_2_volume}</p>                                                                                                      
+                                                                <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.surgele_2_volume}</p>                                                                                                      
 
                                                             </div>
                                                                                                         
@@ -822,9 +821,9 @@ class entrepotsStockage extends React.Component {
                                                     <div className='entrepot_infos_temperature_lign_range'>
                                                             <div className='entrepot_infos_temperature_lign'>                                                        
                                                                 <p className = 'entrepot_stockage_temperature_range_title'> Surgele 3:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_range_3_debut}° à  {this.state.informations_entrepot.surgele_range_3_fin} °</p>
+                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_3_range_debut}° à  {this.state.informations_entrepot.surgele_3_range_fin} °</p>
                                                                 <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left'> Taille: </p> 
-                                                                <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.surgele_range_3_volume}</p>                                                                                                      
+                                                                <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.surgele_3_volume}</p>                                                                                                      
                                                                 
                                                             </div>
                                                                                                         
@@ -851,7 +850,7 @@ class entrepotsStockage extends React.Component {
                                         <div className = 'entrepot_services_log_et_clients_label'>
                                             Exemples de clients (facultatif)
                                         </div>      
-                                        <textarea style={{ "resize": "none" }} className = 'entrepot_input entrepot_input_clients' placeholder="" name="clients" value={this.state.informations_entrepot.autres_securite} onChange={this.handleChangeInformationsEntrepot} />
+                                        <textarea style={{ "resize": "none" }} className = 'entrepot_input entrepot_input_clients' placeholder="" name="clients" value={this.state.informations_entrepot.clients} onChange={this.handleChangeInformationsEntrepot} />
                                     </div>                                     
 
                                     <div className = 'entrepot_box entrepot_box_small '> 
