@@ -185,7 +185,7 @@ class entrepotsClientsConditions extends React.Component {
                             <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right '>
                                 Stockage et services logistiques
                             </div>    
-                            <div className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right '>
+                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right '>
                                 Sécurité et informations bâtiment
                             </div>   
                             <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne '>

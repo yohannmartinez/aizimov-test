@@ -147,8 +147,8 @@ class entrepots extends React.Component {
         });
         this.setState({'pdf_ajoute': true})
         try{
-            await upload.post('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/upload')
-            // await upload.post('http://localhost:3000/upload')
+            // await upload.post('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/upload')
+             await upload.post('http://localhost:3000/upload')
             .attach('file', this.state.files[0])            
             .field({ id :  this.state.files[0].id }) // sends a JSON post body
             .end((err, res) => {
