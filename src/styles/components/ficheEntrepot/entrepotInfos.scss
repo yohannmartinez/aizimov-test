@@ -111,13 +111,21 @@
     flex: 1;
     margin-left: 0.2em; 
     margin-right: 0.2em; 
+    border:none;
+    background-color: transparent;
+    cursor:pointer;
+    font-size:25px;
+}
+
+.entrepot_infos_button_image:focus{
+    outline: none;
 }
 
 .entrepot_infos_images{
     height: auto; 
     border-radius: 5px; 
-    border: 1.5px solid $main-blue; 
-    width: auto; 
+    border: 1.5px solid transparent; 
+    width: 300px; 
     flex: 10
 }
 
