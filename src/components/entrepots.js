@@ -435,7 +435,7 @@ class entrepots extends React.Component {
                                                         <p className = 'entrepot_infos_resume_label'>Code postal :  </p> <p className = 'entrepot_infos_resume_text'> {this.state.informations_entrepot.code_postal}</p>
                                                     </div> 
                                                     <div className = 'entrepot_infos_resume_lign'> 
-                                                        <p className = 'entrepot_infos_resume_label'>Surface totale :  </p> <p className = 'entrepot_infos_resume_text'> {this.state.informations_entrepot.siret}</p>
+                                                        <p className = 'entrepot_infos_resume_label'>Surface totale :  </p> <p className = 'entrepot_infos_resume_text'> {this.state.informations_entrepot.surface_totale}</p>
                                                     </div> 
                                                     <div className = 'entrepot_infos_resume_lign'> 
                                                         <p className = 'entrepot_infos_resume_label'>Site web :  </p> <p className = 'entrepot_infos_resume_text'> {this.state.informations_entrepot.site_web}</p>
@@ -468,7 +468,7 @@ class entrepots extends React.Component {
                                                         <p className="entrepot_infos_resume_label_edit"> Code postal :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="code_postal" placeholder="code_postal" value={this.state.informations_entrepot.code_postal} />
                                                     </div> 
                                                     <div className = 'entrepot_infos_resume_lign'>                                                         
-                                                        <p className="entrepot_infos_resume_label_edit"> Surface totale :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="taille_totale_m2" placeholder="taille_totale_m2" value={this.state.informations_entrepot.taille_totale_m2} />
+                                                        <p className="entrepot_infos_resume_label_edit"> Surface totale :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="surface_totale" placeholder="20,000m2" value={this.state.informations_entrepot.surface_totale} />
                                                     </div> 
                                                     <div className = 'entrepot_infos_resume_lign'>                                                     
                                                         <p className="entrepot_infos_resume_label_edit">Site web :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="site_web" placeholder="site web" value={this.state.informations_entrepot.site_web} />
