@@ -197,6 +197,9 @@ class entrepotsContact extends React.Component {
                             <div className='entrepot_onglet_selectionne '>
                                 Personnes à contacter
                             </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className = 'entrepot_onglet_non_selectionne '>
+                                Clients SpaceFill
+                            </div>   
                         </div>
                         <div className='contenu_page'>
                             <p className="parametres_title_page ">Personnes à contacter</p>
