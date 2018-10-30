@@ -63,9 +63,11 @@ class entrepotsContact extends React.Component {
                     console.log(user);
                     this.setState({ user: user.data[0] }, () => {
                         console.log(userloged)
-                        axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                        // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
-                                axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                // axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
                                     this.setState({ infosContact: response.data });
                                 });
                             });
@@ -168,7 +170,7 @@ class entrepotsContact extends React.Component {
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_page_element" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
                             <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>

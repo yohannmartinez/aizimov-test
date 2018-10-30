@@ -392,8 +392,8 @@ class entrepotsStockage extends React.Component {
             data_to_send['id_entrepot'] = this.state.informations_entrepot_initial.id_entrepot
             console.log('data to send: ' + data_to_send)
             try {
-                // var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosEntrepot', {
-                var response = fetch('http://localhost:3000/modifierInfosEntrepot', {
+                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierInfosEntrepot', {
+                // var response = fetch('http://localhost:3000/modifierInfosEntrepot', {
 
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
@@ -469,7 +469,7 @@ class entrepotsStockage extends React.Component {
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
                             <button className="sidebar_elements" onClick={()=>{this.props.history.push('/dashboard')}}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_page_element" onClick={()=>{this.props.history.push('/entrepots')}}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={()=>{this.props.history.push('/entrepots')}}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
                             <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
@@ -531,7 +531,7 @@ class entrepotsStockage extends React.Component {
                                                             <div className = 'entrepot_stockage_new_lign'> 
                                                                 <div className = 'entrepot_stockage_temperature_label'> Racks </div> 
                                                                 <input className = 'entrepot_input entrepot_input_temperature' value={this.state.informations_entrepot.rack_nb_palettes} onChange={this.handleChangeInformationsEntrepot}  name = 'rack_nb_palettes'/> 
-                                                            </div> 
+                                                            </div>  
                                                             <div className = 'entrepot_stockage_new_lign'> 
                                                                 <div className = 'entrepot_stockage_temperature_label'> Hauteur racks </div> 
                                                                 <input className = 'entrepot_input entrepot_input_temperature' value={this.state.informations_entrepot.ambiant_couvert_hauteur_racks} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert_hauteur_racks'/> 

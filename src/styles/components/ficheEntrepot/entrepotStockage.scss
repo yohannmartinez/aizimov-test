@@ -24,6 +24,7 @@
 .entrepot_stockage_temperature_droite{
     flex: 1.2; 
     display: flex; 
+    
 }
 .entrepot_stockage_temperature_label_main{
     flex: 4;
@@ -54,8 +55,10 @@
     font-size: 0.9em;    
     padding-top: 0.5em;  
 }
-.entrepot_stockage_temperature_partie_droite{
+.entrepot_stockage_temperature_partie_droite{ 
     flex: 1.6; 
+    text-align: left; 
+    padding-left: 2.2em; 
 }
 .entrepot_stockage_temperature_partie_gauche{
     flex: 1.2; 
@@ -63,12 +66,14 @@
 }
 .entrepot_stockage_temperature_block{
     display: inline-block;
+
 }
 
 .entrepot_stockage_new_lign{
     display: flex; 
     margin-bottom: 0.4em; 
     text-align: center; 
+
 }
 
 .entrepot_input_temperature{
@@ -148,7 +153,6 @@
 .entrepot_stockage_temperature_non_edit_small_line_space{
     margin-bottom: -0.1em; 
     margin-top: 0em; 
-
 }
 
 

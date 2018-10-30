@@ -70,7 +70,8 @@ class factures extends React.Component {
             console.log(error);
           }   
           try{
-            var image = await fetch('http://localhost:3000/getImageFromS3?fileKey=facture-345a7314-78ba-41d6-b473-b24d0da884d2.png')
+            var image = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=facture-345a7314-78ba-41d6-b473-b24d0da884d2.png')
+            // var image = await fetch('http://localhost:3000/getImageFromS3?fileKey=facture-345a7314-78ba-41d6-b473-b24d0da884d2.png')
 
             this.setState({
                 image: image
@@ -174,7 +175,7 @@ class factures extends React.Component {
                                 </div>
                             }
                             <button className="sidebar_elements" onClick={()=>{this.props.history.push('/clients')}}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_page_element" onClick={()=>{this.props.history.push('/factures')}}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={()=>{this.props.history.push('/factures')}}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
                             <button className="sidebar_elements" onClick={()=>{this.props.history.push('/parametres')}}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
                         </div>
                     </div>
@@ -208,21 +209,15 @@ class factures extends React.Component {
 
                             {this.state.factureSelectionnee &&
                                 <div className="container_center_infos_supp">
-                                    <p className="infos_supp_title">COTATION</p>
-                                    <p className="infos_supp_ref">Référence : {this.state.factureSelectionnee.id_demande}</p>
+                                    <p className="facture_infos_supp_title">FACTURE - <span className = 'facture_infos_supp_title_light'> Référence : {this.state.factureSelectionnee.id}</span> </p>
 
                                     <div className="infos_supp_white_container">
-                                        {this.state.factureSelectionnee.statut === "Attente-client" &&
-                                            <p className="infos_supp_txt">En attente de la réponse du client</p>
-                                        }
-                                        {this.state.factureSelectionnee.statut === "Attente-fournisseur" &&
-                                            <p className="infos_supp_txt">En attente de votre réponse</p>
-                                        }
-                                        <p className="infos_supp_txt">{this.state.factureSelectionnee.volume} {this.state.factureSelectionnee.volume_unite}</p>
-                                        <p className="infos_supp_txt">Localisation : {this.state.factureSelectionnee.localisation}</p>
-                                        <p className="infos_supp_txt">Produits : {this.state.factureSelectionnee.produits}</p>
-                                        <p className="infos_supp_txt">Durée : {this.state.factureSelectionnee.duree}</p>
-                                        <p className="infos_supp_txt">Début : {this.state.factureSelectionnee.date_debut}</p>
+                                        <p className="facture_infos_supp_montant_txt">Montant : {this.state.factureSelectionnee.montant}</p>
+                                        <p className="facture_infos_supp_txt">Entreprise : {this.state.factureSelectionnee.entreprise}</p>
+                                        <p className="facture_infos_supp_txt">Nom de la facture : {this.state.factureSelectionnee.nom_facture}</p>
+                                        <p className="facture_infos_supp_txt">Date de création : {this.state.factureSelectionnee.date_creation}</p>
+                                        <p className="facture_infos_supp_txt">Date à payer : {this.state.factureSelectionnee.date_a_payer}</p>
+                                        
                                         <a href={this.state.url} download>                            
                                             <button className="infos_supp_button">Voir la facture</button>
                                         </a> 

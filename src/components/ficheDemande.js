@@ -78,10 +78,12 @@ class ficheDemande extends React.Component {
                 await axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
                     this.setState({ user: user.data[0] }, () => {
-                        axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {                        
+                        // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             console.log(response)
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
-                                axios.get('http://localhost:3000/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {
+                                // axios.get('http://localhost:3000/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {
+                                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {                                    
                                     console.log('get statut demande : ' + response.data[0])
                                     this.setState({ infosDemandeStatut: response.data[0].statut, infosDemandeSupp: response.data[0], dateDevis: new Date(response.data[0].date_ajout_devis * 1000).toUTCString() });
                                 });
@@ -126,10 +128,12 @@ class ficheDemande extends React.Component {
     /* --> fonction pour gérer la demande */
     async accepterDemande() {
         this.setState({ statutDemande: "Attente-client", infosDemandeStatut: "Attente-client" }, () => {
-            axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+            axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+            // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {                
                 this.setState({ user_infos: response.data[0].id_entrepot }, () => {
                     try {
-                        var response = fetch('http://localhost:3000/changerStatutDemande', {
+                        var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
+                        // var response = fetch('http://localhost:3000/changerStatutDemande', {
                             method: 'post',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -154,10 +158,12 @@ class ficheDemande extends React.Component {
 
     refuserDemande() {
         this.setState({ statutDemande: "passee-refusee" }, () => {
-            axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+            axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+            // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                 this.setState({ user_infos: response.data[0].id_entrepot }, () => {
                     try {
-                        var response = fetch('http://localhost:3000/changerStatutDemande', {
+                        var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
+                        // var response = fetch('http://localhost:3000/changerStatutDemande', {
                             method: 'post',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -209,7 +215,8 @@ class ficheDemande extends React.Component {
         /* --> Si l'user à écrit un devis dans le textarea */
         if (this.state.devis_texte !== '') {
             try {
-                var response = fetch('http://localhost:3000/changerStatutDemande', {
+                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
+                // var response = fetch('http://localhost:3000/changerStatutDemande', {                    
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -230,7 +237,8 @@ class ficheDemande extends React.Component {
         /* --> Si l'user à upload un devis */
         if (this.state.files) {
             try {
-                var response = fetch('http://localhost:3000/changerStatutDemande', {
+                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
+                // var response = fetch('http://localhost:3000/changerStatutDemande', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -248,7 +256,8 @@ class ficheDemande extends React.Component {
             }
 
             try {
-                upload.post('http://localhost:3000/upload')
+                upload.post('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/upload')
+                // upload.post('http://localhost:3000/upload')
                     .attach('file', this.state.files[0])
                     .field({ id: this.state.files[0].id }) // sends a JSON post body
                     .end((err, res) => {
@@ -339,13 +348,19 @@ class ficheDemande extends React.Component {
 
 
                                 <div class="fiche_demande_infos">
-                                    <p class="fiche_demande_title_page">FICHE DEMANDE {this.state.informations_demande.id_demande}</p>
+                                    <p class="fiche_demande_title_page">FICHE DEMANDE </p>
                                     <span class="fiche_demande_sous_title">Résumé</span>
                                     <div class="fiche_demande_container_infos">
-                                        <p>Volume : {this.state.informations_demande.volume}{this.state.informations_demande.volume_unite}</p>
-                                        <p>Durée : {this.state.informations_demande.duree}</p>
-                                        <p>Produit : {this.state.informations_demande.produits}</p>
-                                        <p>Date de début : {this.state.informations_demande.date_debut}</p>
+                                        <div className = 'fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div> 
+
+                                        <div className = 'fiche_demande_resume_lign'> 
+                                            <p className = 'fiche_demande_resume_text'>Volume : {this.state.informations_demande.volume}{this.state.informations_demande.volume_unite}</p>
+                                            <p className = 'fiche_demande_resume_text'>Durée : {this.state.informations_demande.duree}</p>
+                                        </div> 
+                                        <div className = 'fiche_demande_resume_lign'> 
+                                            <p className = 'fiche_demande_resume_text'>Produit : {this.state.informations_demande.produits}</p>
+                                            <p className = 'fiche_demande_resume_text'>Date de début : {this.state.informations_demande.date_debut}</p>
+                                        </div> 
                                     </div>
                                     <span class="fiche_demande_sous_title">Détails</span>
                                 </div>
