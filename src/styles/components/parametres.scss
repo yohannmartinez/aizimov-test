@@ -189,25 +189,26 @@
     bottom:0;
     left:0;
     background-color: #EBEBEB;
-    border: 2px solid $orange; 
+    border: 2.5px solid $orange; 
     width:100vw;
-    padding:1.2em 3em 1.2em 3em;
+    padding:0.9em 3em 0.9em 3em;
     color:#4d4d4d;
-    font-weight:450;
+    font-weight:350;
     text-align: left;
     z-index: 100; 
+    font-size: 0.9em; 
 }
 
 .container_action_modification_button{
     border:none;
     border-radius:5px;
-    padding:0.6em 2.5em 0.6em 2.5em;
+    padding:0.5em 2.5em 0.5em 2.5em;
     margin-left:1.5em;
     color:#4d4d4d;
     background-color:$orange;
     color: white; 
     cursor:pointer;
-    font-weight:400;
+    font-weight:350;
     font-size: 1em; 
     height: auto;
 

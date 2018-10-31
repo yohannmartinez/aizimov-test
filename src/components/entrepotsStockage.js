@@ -44,6 +44,7 @@ const options_services_logistiques = [
     { value: 'messagerie', label: 'Messagerie' },
     { value: 'affretement', label: 'Affretement' },
     { value: 'commissionnaire_de_transport', label: 'Commissionnaire de transport' }, 
+    { value: 'livraison_b2c', label: 'Livraison B2C' }, 
   ]
   const options_autres_certifications = [
     { value: 'certification_oea', label: 'OEA' },
@@ -72,8 +73,6 @@ class entrepotsStockage extends React.Component {
             toogleCotation: false,
             toggleDeconnexion : false,
             confirm_changes: false, 
-            editTemperature: false, 
-            editProduits: false, 
             frais_range: 1, 
             surgele_range: 1,
             types_de_produits: [], 
@@ -266,7 +265,14 @@ class entrepotsStockage extends React.Component {
                                     services_transports: [...prevState.services_transports, { value: 'commissionnaire_de_transport', label: 'Commissionnaire de transport' }], 
                                     services_transports_initial: [...prevState.services_transports_initial, { value: 'commissionnaire_de_transport', label: 'Commissionnaire de transport' }]
                                 }))
-                              }                                                                                          
+                              }   
+
+                              if (response.data[0].livraison_b2c) {
+                                this.setState(prevState => ({
+                                    services_transports: [...prevState.services_transports, { value: 'livraison_b2c', label: 'Livraison B2C' }], 
+                                    services_transports_initial: [...prevState.services_transports_initial, { value: 'livraison_b2c', label: 'Livraison B2C' }]
+                                }))
+                              }                                                                                                                      
                               if (response.data[0].certif1511) {
                                 this.setState(prevState => ({
                                   certifications: [...prevState.certifications, { value: "certif1511", label: "1511" }], 
@@ -412,9 +418,6 @@ class entrepotsStockage extends React.Component {
         this.setState({ 
             informations_entrepot: this.state.informations_entrepot_initial, 
             confirm_changes: false, 
-            editTemperature: false, 
-            editServicesLog: false, 
-            editProduits: false, 
             certifications: this.state.certifications_initial, 
             services_logistiques: this.state.services_logistiques_initial, 
             services_transports: this.state.services_transports_initial, 
@@ -504,340 +507,287 @@ class entrepotsStockage extends React.Component {
                             <div className = 'entrepot_stockage_main_container'>                         
                                 <div className = 'entrepot_stockage_container_gauche'> 
 
-                                    <div className = 'entrepot_box entrepot_box_temperature_stockage'> 
-                                    <p className="entrepot_box_title"> RÉSUMÉ
-                                        {this.state.editTemperature === false &&
-                                            <button className="parametres_modifier_infos" onClick={() => { this.setState({ editTemperature: true }) }}><i class="fas fa-pen"></i></button>
-                                        }
-                                        {this.state.editTemperature === true &&
-                                            <button className="parametres_annuler_modifier_infos" onClick={this.cancelModifications}><i class="fas fa-times"></i></button>
-                                        }
-                                    </p>      
-                                        {this.state.editTemperature === true && 
-                                        <div>                                        
-                                            <div className='entrepot_stockage_temperature_lign'>
-                                                <div className = 'entrepot_stockage_temperature_partie_gauche'>
-                                                    <div className = 'entrepot_stockage_temperature_label_main'> Ambiant couvert </div> 
-                                                    <select className='entrepot_stockage_select' value={this.state.informations_entrepot.ambiant_couvert} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert'>
+                                    <div className = 'entrepot_box entrepot_box_temperature_stockage'>       
+                                        <div className = 'entrepot_box_title'> 
+                                            TEMPÉRATURES DE STOCKAGE
+                                        </div> 
+
+                                        <div className = 'entrepot_stockage_temperature_container'> 
+                                            <div className = 'entrepot_stockage_temperature_title_container'>
+                                                <div className = 'entrepot_stockage_temperature_title'>
+                                                    Ambiant couvert     
+                                                </div> 
+                                                <div className = 'entrepot_stockage_temperature_boolean_container'>
+                                                    <select className='entrepot_stockage_temp_boolean' value={this.state.informations_entrepot.ambiant_couvert} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert'>
                                                         <option>  </option>
                                                         <option> Oui </option>
                                                         <option> Non </option>
-                                                    </select>                                                
+                                                    </select>                                                       
                                                 </div> 
-                                                <div className = 'entrepot_stockage_temperature_partie_droite'>
-                                                    {this.state.informations_entrepot.ambiant_couvert === 'Oui' && 
-                                                        <div className = 'entrepot_stockage_temperature_block'> 
-                                                            <div className = 'entrepot_stockage_new_lign'> 
-                                                                <div className = 'entrepot_stockage_temperature_label'> Racks </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature' value={this.state.informations_entrepot.rack_nb_palettes} onChange={this.handleChangeInformationsEntrepot}  name = 'rack_nb_palettes'/> 
-                                                            </div>  
-                                                            <div className = 'entrepot_stockage_new_lign'> 
-                                                                <div className = 'entrepot_stockage_temperature_label'> Hauteur racks </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature' value={this.state.informations_entrepot.ambiant_couvert_hauteur_racks} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert_hauteur_racks'/> 
-                                                            </div>                                                             
-                                                            <div className = 'entrepot_stockage_new_lign'> 
-                                                                <div className = 'entrepot_stockage_temperature_label'> Stockage de masse </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature' value={this.state.informations_entrepot.vrac_m2} onChange={this.handleChangeInformationsEntrepot}  name = 'vrac_m2'/> 
-                                                            </div>         
-                                                            <div className = 'entrepot_stockage_new_lign'> 
-                                                                <div className = 'entrepot_stockage_temperature_label'> Hauteur possible (masse) </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature' value={this.state.informations_entrepot.ambiant_couvert_vrac_hauteur} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert_vrac_hauteur'/> 
-                                                            </div>                                                                                                                                                                           
-                                                        </div>                                                   
-                                                    }
-                                                </div>
                                             </div> 
-                                            <div className='entrepot_infos_temperature_lign' >
-                                                <div className = 'entrepot_stockage_temperature_partie_gauche'>
-                                                    <div className = 'entrepot_stockage_temperature_label_main'> Ambiant exterieur </div> 
-                                                    <select className='entrepot_stockage_select' value={this.state.informations_entrepot.ambiant_exterieur} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_exterieur'>
+                                            {this.state.informations_entrepot.ambiant_couvert === 'Oui' &&
+                                                <div> 
+                                                    <div className = 'entrepot_stockage_temperature_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Taille totale en ambiant couvert
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.ambiant_couvert_taille_totale} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert_taille_totale'/>                                                         
+                                                        </div> 
+                                                    </div> 
+                                                    <div className = 'entrepot_stockage_title_sous_partie'>
+                                                        Stockage en racks
+                                                    </div> 
+                                                    <div className = 'entrepot_stockage_temperature_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Nombre d'emplacements palettes
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.rack_nb_palettes} onChange={this.handleChangeInformationsEntrepot}  name = 'rack_nb_palettes'/>                                                         
+                                                        </div> 
+                                                    </div>  
+                                                    <div className = 'entrepot_stockage_temperature_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Hauteur maximale des racks
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.ambiant_couvert_hauteur_racks} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert_hauteur_racks'/>                                                         
+                                                        </div> 
+                                                    </div>  
+                                                    <div className = 'entrepot_stockage_title_sous_partie'>
+                                                        Stockage en masse
+                                                    </div> 
+                                                    <div className = 'entrepot_stockage_temperature_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Surface de stockage en vrac
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.vrac_m2} onChange={this.handleChangeInformationsEntrepot}  name = 'vrac_m2'/>                                                         
+                                                        </div> 
+                                                    </div>  
+                                                    <div className = 'entrepot_stockage_temperature_line entrepot_stockage_temperature_last_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Hauteur maximale
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.ambiant_couvert_hauteur_racks} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert_hauteur_racks'/>                                                         
+                                                        </div> 
+                                                    </div>                                                                                                         
+                                                </div>                                                
+                                            }
+                                        </div> 
+                                        <div className = 'entrepot_stockage_temperature_container'>                                         
+                                            <div className = 'entrepot_stockage_temperature_title_container'>
+                                                <div className = 'entrepot_stockage_temperature_title'>
+                                                    Ambiant extérieur     
+                                                </div> 
+                                                <div className = 'entrepot_stockage_temperature_boolean_container'>
+                                                    <select className='entrepot_stockage_temp_boolean' value={this.state.informations_entrepot.ambiant_exterieur} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_exterieur'>
                                                         <option>  </option>
                                                         <option> Oui </option>
                                                         <option> Non </option>
-                                                    </select>                                                
+                                                    </select>                                                       
                                                 </div> 
-                                                <div className = 'entrepot_stockage_temperature_partie_droite'>
-                                                    {this.state.informations_entrepot.ambiant_exterieur === 'Oui' && 
-                                                        <div className = 'entrepot_stockage_temperature_block'> 
-                                                            <div className = 'entrepot_stockage_new_lign'> 
-                                                                <div className = 'entrepot_stockage_temperature_label'> Taille </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature' value={this.state.informations_entrepot.ambiant_exterieur_m2} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_exterieur_m2'/> 
-                                                            </div>                                                            
-                                                            <div className = 'entrepot_stockage_new_lign'> 
-                                                                <div className = 'entrepot_stockage_temperature_label'> Sous hauvent? </div> 
-                                                                <select className='entrepot_stockage_select' value={this.state.informations_entrepot.ambiant_exterieur_sous_hauvent} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_exterieur_sous_hauvent'>
-                                                                    <option>  </option>
-                                                                    <option>Oui</option>
-                                                                    <option>Non</option>
-                                                                </select>                                                                  
-                                                            </div>                                                             
- 
-                                                        </div>                                                   
-                                                    }
-                                                </div>
-                                            </div>      
-                                            <div className='entrepot_infos_temperature_lign'>
-                                                <div className = 'entrepot_stockage_temperature_partie_gauche'>
-                                                    <div className = 'entrepot_stockage_temperature_label_main'> Froid positif </div> 
-                                                    <select className='entrepot_stockage_select' value={this.state.informations_entrepot.frais} onChange={this.handleChangeInformationsEntrepot}  name = 'frais'>
-                                                        <option>  </option>
-                                                        <option> Oui </option>
-                                                        <option> Non </option>
-                                                    </select>                                                
-                                                </div> 
-                                                <div className = 'entrepot_stockage_temperature_partie_droite'>
-
-                                                </div>
                                             </div>    
+                                            {this.state.informations_entrepot.ambiant_exterieur === 'Oui' &&
+                                                <div> 
+                                                    <div className = 'entrepot_stockage_temperature_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Surface de stockage totale
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.ambiant_exterieur_m2} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_exterieur_m2'/>                                                         
+                                                        </div> 
+                                                    </div>
+                                                    <div className = 'entrepot_stockage_temperature_line entrepot_stockage_temperature_last_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Surface de stockage sous hauvent
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.ambiant_exterieur_sous_hauvent} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_exterieur_sous_hauvent'/>                                                         
+                                                        </div> 
+                                                    </div>                                                    
+                                                </div> 
+                                            }                                                                                     
+                                        </div> 
+                                        <div className = 'entrepot_stockage_temperature_container'>                                         
+                                            <div className = 'entrepot_stockage_temperature_title_container'>
+                                                <div className = 'entrepot_stockage_temperature_title'>
+                                                    Froid positif     
+                                                </div> 
+                                                <div className = 'entrepot_stockage_temperature_boolean_container'>
+                                                    <select className='entrepot_stockage_temp_boolean' value={this.state.informations_entrepot.frais} onChange={this.handleChangeInformationsEntrepot}  name = 'frais'>
+                                                        <option>  </option>
+                                                        <option> Oui </option>
+                                                        <option> Non </option>
+                                                    </select>                                                       
+                                                </div> 
+                                            </div>  
                                             {this.state.informations_entrepot.frais === 'Oui' &&
-                                                <div className='entrepot_infos_temperature_lign_range'>
-                                                        <div className='entrepot_infos_temperature_lign'>                                                        
-                                                            <p className = 'entrepot_stockage_temperature_range_title'> Frais 1:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_1_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_1_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
-                                                            <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_1_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_volume'/> 
+                                                <div>  
+                                                    <div className = 'entrepot_stockage_temperature_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Surface de stockage totale
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.frais_taille_totale} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_taille_totale'/>                                                         
+                                                        </div> 
+                                                    </div>
+                                                    <div className = 'entrepot_explication'>
+                                                    Veuillez renseigner les cellules que vous proposez en froid positif. Vous pouvez en rajouter/retirer avec les bouttons + et -
+                                                    </div>    
+                                                    <div className = 'entrepot_stockage_temperature_range_lign'> 
+                                                        <div className = 'entrepot_stockage_temperature_range_container'> 
+                                                            <p className = 'entrepot_stockage_temperature_range_label'> De </p>
+                                                            <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.frais_1_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_range_debut'/> 
+                                                            <p className = 'entrepot_stockage_temperature_range_label'> à </p> 
+                                                            <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.frais_1_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_range_fin' /> 
+                                                        </div> 
+                                                        <div className = 'entrepot_stockage_temperature_volume_container'>
+                                                            <p className = 'entrepot_stockage_temperature_range_label entrepot_stockage_temperature_range_label_margin_left'> Taille </p> 
+                                                            <input  className = 'entrepot_stockage_temperature_volume_input' value={this.state.informations_entrepot.frais_1_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_1_volume'/> 
+                                                        </div> 
+                                                    </div>                                                 
+                                                    {this.state.frais_range >= 2 &&
+                                                        <div className = 'entrepot_stockage_temperature_range_lign'> 
+                                                            <div className = 'entrepot_stockage_temperature_range_container'> 
+                                                                <p className = 'entrepot_stockage_temperature_range_label'> De </p>
+                                                                <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.frais_2_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_range_debut'/> 
+                                                                <p className = 'entrepot_stockage_temperature_range_label'> à </p> 
+                                                                <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.frais_2_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_range_fin' /> 
+                                                            </div> 
+                                                            <div className = 'entrepot_stockage_temperature_volume_container'>
+                                                                <p className = 'entrepot_stockage_temperature_range_label entrepot_stockage_temperature_range_label_margin_left'> Taille </p> 
+                                                                <input  className = 'entrepot_stockage_temperature_volume_input' value={this.state.informations_entrepot.frais_2_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_volume'/> 
+                                                            </div> 
+                                                        </div>                                                         
+                                                    }
+                                                    {this.state.frais_range >= 3 &&
+                                                        <div className = 'entrepot_stockage_temperature_range_lign'> 
+                                                            <div className = 'entrepot_stockage_temperature_range_container'> 
+                                                                <p className = 'entrepot_stockage_temperature_range_label'> De </p>
+                                                                <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.frais_3_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_range_debut'/> 
+                                                                <p className = 'entrepot_stockage_temperature_range_label'> à </p> 
+                                                                <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.frais_3_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_range_fin' /> 
+                                                            </div> 
+                                                            <div className = 'entrepot_stockage_temperature_volume_container'>
+                                                                <p className = 'entrepot_stockage_temperature_range_label entrepot_stockage_temperature_range_label_margin_left'> Taille </p> 
+                                                                <input  className = 'entrepot_stockage_temperature_volume_input' value={this.state.informations_entrepot.frais_3_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_volume'/> 
+                                                            </div> 
+                                                        </div>                                                         
+                                                    }         
+                                                    {this.state.frais_range <2 &&
+                                                        <div className = 'entrepot_stockage_temperature_ligne_ajout'> 
                                                             <button className = 'entrepot_button_add_temperature_range' onClick = {this.addFraisRange}> + </button>
-
-                                                        </div>
-                                                                                                    
+                                                        </div> 
+                                                    }
+                                                    {this.state.frais_range === 2 && 
+                                                        <div className = 'entrepot_stockage_temperature_ligne_ajout'>
+                                                            <button className = 'entrepot_button_add_temperature_range' onClick = {this.addFraisRange}> + </button>
+                                                            <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeFraisRange}> - </button>
+                                                        </div> 
+                                                    }   
+                                                    {this.state.frais_range  === 3 &&
+                                                        <div className = 'entrepot_stockage_temperature_ligne_ajout'> 
+                                                            <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeFraisRange}> - </button>
+                                                        </div> 
+                                                    }                                                                                                                                                
                                                 </div> 
                                             }
-                                            {this.state.informations_entrepot.frais === 'Oui' && this.state.frais_range > 1 &&
-                                                <div className='entrepot_infos_temperature_lign_range'>
-                                                        <div className='entrepot_infos_temperature_lign'>                                                        
-                                                            <p className = 'entrepot_stockage_temperature_range_title'> Frais 2:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_2_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_2_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
-                                                            <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_2_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_2_volume'/> 
-                                                            <button className = 'entrepot_button_add_temperature_range' onClick = {this.addFraisRange}> + </button>
-                                                            {this.state.frais_range === 2 && 
-                                                            <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeFraisRange}> - </button>
-                                                            }
 
-                                                        </div>
-                                                                                                    
+                                        </div> 
+                                        <div className = 'entrepot_stockage_temperature_container'>                                         
+                                            <div className = 'entrepot_stockage_temperature_title_container'>
+                                                <div className = 'entrepot_stockage_temperature_title'>
+                                                    Froid négatif     
                                                 </div> 
-                                            }      
-                                            {this.state.informations_entrepot.frais === 'Oui' && this.state.frais_range > 2  &&
-                                                <div className='entrepot_infos_temperature_lign_range'>
-                                                        <div className='entrepot_infos_temperature_lign'>                                                        
-                                                            <p className = 'entrepot_stockage_temperature_range_title'> Frais 3:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_3_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.frais_3_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
-                                                            <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                            <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.frais_3_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'frais_3_volume'/> 
-                                                            <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeFraisRange}> - </button>
-
-                                                        </div>
-                                                                                                    
-                                                </div> 
-                                            }                                                                                    
-                                            <div className='entrepot_infos_temperature_lign'>
-                                                <div className = 'entrepot_stockage_temperature_partie_gauche'>
-                                                    <div className = 'entrepot_stockage_temperature_label_main'> Froid négatif </div> 
-                                                    <select className='entrepot_stockage_select' value={this.state.informations_entrepot.surgele} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele'>
+                                                <div className = 'entrepot_stockage_temperature_boolean_container'>
+                                                    <select className='entrepot_stockage_temp_boolean' value={this.state.informations_entrepot.surgele} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele'>
                                                         <option>  </option>
-                                                        <option>Oui</option>
-                                                        <option>Non</option>
-                                                    </select>                                                
+                                                        <option> Oui </option>
+                                                        <option> Non </option>
+                                                    </select>                                                       
                                                 </div> 
-                                                <div className = 'entrepot_stockage_temperature_partie_droite'>
-                                                </div> 
-                                            </div> 
-                                                {this.state.informations_entrepot.surgele === 'Oui' &&
-                                                    <div className='entrepot_infos_temperature_lign_range'>
-                                                            <div className='entrepot_infos_temperature_lign'>                                                        
-                                                                <p className = 'entrepot_stockage_temperature_range_title'> Surgele 1:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_1_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_1_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
-                                                                <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_1_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_volume'/> 
-                                                                <button className = 'entrepot_button_add_temperature_range' onClick = {this.addSurgeleRange}> + </button>
-
-                                                            </div>
-                                                                                                        
-                                                    </div> 
-                                                }
-                                                {this.state.informations_entrepot.surgele === 'Oui' && this.state.surgele_range > 1 &&
-                                                    <div className='entrepot_infos_temperature_lign_range'>
-                                                            <div className='entrepot_infos_temperature_lign'>                                                        
-                                                                <p className = 'entrepot_stockage_temperature_range_title'> Surgele 2:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_2_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_2_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
-                                                                <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_2_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_volume'/> 
-                                                                <button className = 'entrepot_button_add_temperature_range' onClick = {this.addSurgeleRange}> + </button>
-                                                                {this.state.surgele_range === 2 && 
-                                                                <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeSurgeleRange}> - </button>
-                                                                }
-
-                                                            </div>
-                                                                                                        
-                                                    </div> 
-                                                }      
-                                                {this.state.informations_entrepot.surgele === 'Oui' && this.state.surgele_range > 2  &&
-                                                    <div className='entrepot_infos_temperature_lign_range'>
-                                                            <div className='entrepot_infos_temperature_lign'>                                                        
-                                                                <p className = 'entrepot_stockage_temperature_range_title'> Surgele 3:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_3_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_range_debut'/><p className ='entrepot_stockage_temperature_range_text'> ° à </p> <input className = 'entrepot_input entrepot_input_range_temperature' value={this.state.informations_entrepot.surgele_3_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_range_fin'/><p className ='entrepot_stockage_temperature_range_text'>°</p>
-                                                                <div className = 'entrepot_stockage_temperature_range_text_volume'> Taille </div> 
-                                                                <input className = 'entrepot_input entrepot_input_temperature_range_volume' value={this.state.informations_entrepot.surgele_3_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_volume'/> 
-                                                                <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeSurgeleRange}> - </button>
-
-                                                            </div>
-                                                                                                        
-                                                    </div> 
-                                                }         
-                                        </div> 
-                                        }       
-
-                                        {this.state.editTemperature === false && 
-                                        <div>                                        
-                                            <div className='entrepot_stockage_temperature_lign'>
-                                                <div className = 'entrepot_stockage_temperature_partie_gauche'>
-                                                    <div className = 'entrepot_stockage_temperature_label_main'> Ambiant couvert: </div> 
-                                                    <p className='entrepot_stockage_temperature_non_edit'  > {this.state.informations_entrepot.ambiant_couvert}</p>
-                                                </div> 
-                                                <div className = 'entrepot_stockage_temperature_partie_droite'>
-                                                    {this.state.informations_entrepot.ambiant_couvert === 'Oui' && 
-                                                        <div className = 'entrepot_stockage_temperature_block'> 
-                                                            <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
-                                                                <div className = 'entrepot_stockage_temperature_label'> Racks </div> 
-                                                                <div className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.rack_nb_palettes}</div>
+                                            </div>  
+                                            {this.state.informations_entrepot.surgele === 'Oui' &&
+                                                <div>  
+                                                    <div className = 'entrepot_stockage_temperature_line'>
+                                                        <div className = 'entrepot_stockage_temperature_label'>
+                                                            Surface de stockage totale
+                                                        </div> 
+                                                        <div className= 'entrepot_stockage_temperature_container_input'>
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.surgele_taille_totale} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_taille_totale'/>                                                         
+                                                        </div> 
+                                                    </div>
+                                                    <div className = 'entrepot_explication'>
+                                                    Veuillez renseigner les cellules que vous proposez en froid négatif. Vous pouvez en rajouter/retirer avec les bouttons + et -
+                                                    </div>    
+                                                    <div className = 'entrepot_stockage_temperature_range_lign'> 
+                                                        <div className = 'entrepot_stockage_temperature_range_container'> 
+                                                            <p className = 'entrepot_stockage_temperature_range_label'> De </p>
+                                                            <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.surgele_1_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_range_debut'/> 
+                                                            <p className = 'entrepot_stockage_temperature_range_label'> à </p> 
+                                                            <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.surgele_1_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_range_fin' /> 
+                                                        </div> 
+                                                        <div className = 'entrepot_stockage_temperature_volume_container'>
+                                                            <p className = 'entrepot_stockage_temperature_range_label entrepot_stockage_temperature_range_label_margin_left'> Taille </p> 
+                                                            <input  className = 'entrepot_stockage_temperature_volume_input' value={this.state.informations_entrepot.surgele_1_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_1_volume'/> 
+                                                        </div> 
+                                                    </div>                                                 
+                                                    {this.state.surgele_range >= 2 &&
+                                                        <div className = 'entrepot_stockage_temperature_range_lign'> 
+                                                            <div className = 'entrepot_stockage_temperature_range_container'> 
+                                                                <p className = 'entrepot_stockage_temperature_range_label'> De </p>
+                                                                <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.surgele_2_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_range_debut'/> 
+                                                                <p className = 'entrepot_stockage_temperature_range_label'> à </p> 
+                                                                <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.surgele_2_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_range_fin' /> 
                                                             </div> 
-                                                            <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
-                                                                <div className = 'entrepot_stockage_temperature_label '> Hauteur racks </div> 
-                                                                <div className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.ambiant_couvert_hauteur_racks}</div>
-                                                            </div>                                                             
-                                                            <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
-                                                                <div className = 'entrepot_stockage_temperature_label '> Stockage de masse </div> 
-                                                                <div className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.vrac_m2}</div>
-                                                            </div>       
-                                                            <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
-                                                                <div className = 'entrepot_stockage_temperature_label '> Hauteur possible (masse) </div> 
-                                                                <div className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.ambiant_couvert_vrac_hauteur}</div>
-                                                            </div>                                                                                                               
-                                                        </div>                                                   
-                                                    }
-                                                </div>
-                                            </div> 
-                                            <div className='entrepot_infos_temperature_lign'>
-                                                <div className = 'entrepot_stockage_temperature_partie_gauche'>
-                                                    <div className = 'entrepot_stockage_temperature_label_main'> Ambiant exterieur </div> 
-                                                    <p className='entrepot_stockage_temperature_non_edit'  > {this.state.informations_entrepot.ambiant_exterieur}</p>
-                                               
-                                                </div> 
-                                                <div className = 'entrepot_stockage_temperature_partie_droite'>
-                                                    {this.state.informations_entrepot.ambiant_exterieur === 'Oui' && 
-                                                        <div className = 'entrepot_stockage_temperature_block'> 
-                                                            <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
-                                                                <div className = 'entrepot_stockage_temperature_label'> Taille </div> 
-                                                                <p className='entrepot_stockage_temperature_non_edit'  > {this.state.informations_entrepot.ambiant_exterieur_m2}</p>
+                                                            <div className = 'entrepot_stockage_temperature_volume_container'>
+                                                                <p className = 'entrepot_stockage_temperature_range_label entrepot_stockage_temperature_range_label_margin_left'> Taille </p> 
+                                                                <input  className = 'entrepot_stockage_temperature_volume_input' value={this.state.informations_entrepot.surgele_2_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_2_volume'/> 
                                                             </div> 
-                                                            <div className = 'entrepot_stockage_new_lign entrepot_stockage_temperature_non_edit_small_line_space'> 
-                                                                <div className = 'entrepot_stockage_temperature_label '> Sous hauvent? </div>                                                                
-                                                                <p className='entrepot_stockage_temperature_non_edit '  > {this.state.informations_entrepot.ambiant_exterieur_sous_hauvent}</p>                                                                    
-                                                            </div>                                                             
- 
-                                                        </div>                                                   
+                                                        </div>                                                         
                                                     }
-                                                </div>
-                                            </div>      
-                                            <div className='entrepot_infos_temperature_lign'>
-                                                <div className = 'entrepot_stockage_temperature_partie_gauche'>
-                                                    <div className = 'entrepot_stockage_temperature_label_main'> Froid positif </div> 
-                                                    <p className='entrepot_stockage_temperature_non_edit'  > {this.state.informations_entrepot.frais}</p>
-                                              
+                                                    {this.state.surgele_range >= 3 &&
+                                                        <div className = 'entrepot_stockage_temperature_range_lign'> 
+                                                            <div className = 'entrepot_stockage_temperature_range_container'> 
+                                                                <p className = 'entrepot_stockage_temperature_range_label'> De </p>
+                                                                <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.surgele_3_range_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_range_debut'/> 
+                                                                <p className = 'entrepot_stockage_temperature_range_label'> à </p> 
+                                                                <input className = 'entrepot_stockage_temperature_range_input' value={this.state.informations_entrepot.surgele_3_range_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_range_fin' /> 
+                                                            </div> 
+                                                            <div className = 'entrepot_stockage_temperature_volume_container'>
+                                                                <p className = 'entrepot_stockage_temperature_range_label entrepot_stockage_temperature_range_label_margin_left'> Taille </p> 
+                                                                <input  className = 'entrepot_stockage_temperature_volume_input' value={this.state.informations_entrepot.surgele_3_volume} onChange={this.handleChangeInformationsEntrepot}  name = 'surgele_3_volume'/> 
+                                                            </div> 
+                                                        </div>                                                         
+                                                    }         
+                                                    {this.state.surgele_range <2 &&
+                                                        <div className = 'entrepot_stockage_temperature_ligne_ajout'> 
+                                                            <button className = 'entrepot_button_add_temperature_range' onClick = {this.addSurgeleRange}> + </button>
+                                                        </div> 
+                                                    }
+                                                    {this.state.surgele_range === 2 && 
+                                                        <div className = 'entrepot_stockage_temperature_ligne_ajout'>
+                                                            <button className = 'entrepot_button_add_temperature_range' onClick = {this.addSurgeleRange}> + </button>
+                                                            <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeSurgeleRange}> - </button>
+                                                        </div> 
+                                                    }   
+                                                    {this.state.surgele_range  === 3 &&
+                                                        <div className = 'entrepot_stockage_temperature_ligne_ajout'> 
+                                                            <button className = 'entrepot_button_remove_temperature_range' onClick = {this.removeSurgeleRange}> - </button>
+                                                        </div> 
+                                                    }                                                                                                                                                
                                                 </div> 
-                                                <div className = 'entrepot_stockage_temperature_partie_droite'>
-                                                </div>
-                                            </div>    
-                                            {this.state.informations_entrepot.frais === 'Oui' &&
-                                                <div className='entrepot_infos_temperature_lign_range'>
-                                                        <div className='entrepot_infos_temperature_lign'>                                                        
-                                                            <p className = 'entrepot_stockage_temperature_range_title'> Frais 1:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_1_range_debut}° à  {this.state.informations_entrepot.frais_1_range_fin} °</p>
-                                                            <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left' > Taille: </p> 
-                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_1_volume}</p>
-                                                        </div>
-                                                                                                    
-                                                </div> 
-                                            }
-                                            {this.state.informations_entrepot.frais === 'Oui' && this.state.frais_range > 1 &&
-                                                <div className='entrepot_infos_temperature_lign_range'>
-                                                        <div className='entrepot_infos_temperature_lign'>                                                        
-                                                            <p className = 'entrepot_stockage_temperature_range_title'> Frais 2:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_2_range_debut}° à  {this.state.informations_entrepot.frais_2_range_fin} °</p>
-                                                            <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left' > Taille: </p> 
-                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_2_volume}</p>
-
-
-                                                        </div>
-                                                                                                    
-                                                </div> 
-                                            }      
-                                            {this.state.informations_entrepot.frais === 'Oui' && this.state.frais_range > 2  &&
-                                                <div className='entrepot_infos_temperature_lign_range'>
-                                                        <div className='entrepot_infos_temperature_lign'>                                                        
-                                                            <p className = 'entrepot_stockage_temperature_range_title'> Frais 3:</p> 
-                                                            <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.frais_3_range_debut}° à  {this.state.informations_entrepot.frais_3_range_fin} °</p>
-                                                            <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left'> Taille: </p> 
-                                                            <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.frais_3_volume}</p>
-
-                                                        </div>
-                                                                                                    
-                                                </div> 
-                                            }                                                                                    
-                                            <div className='entrepot_infos_temperature_lign'>
-                                                <div className = 'entrepot_stockage_temperature_partie_gauche'>
-                                                    <div className = 'entrepot_stockage_temperature_label_main'> Froid négatif </div> 
-                                                    <p className='entrepot_stockage_temperature_non_edit'  > {this.state.informations_entrepot.surgele}</p>                                              
-                                                </div> 
-                                                <div className = 'entrepot_stockage_temperature_partie_droite'>
-                                                </div> 
-                                            </div> 
-                                                {this.state.informations_entrepot.surgele === 'Oui' &&
-                                                    <div className='entrepot_infos_temperature_lign_range'>
-                                                            <div className='entrepot_infos_temperature_lign'>                                                        
-                                                                <p className = 'entrepot_stockage_temperature_range_title'> Surgele 1:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_1_range_debut}° à  {this.state.informations_entrepot.surgele_1_range_fin} °</p>
-                                                                <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left'> Taille: </p> 
-                                                                <p className='entrepot_stockage_temperature_range_text'  >: {this.state.informations_entrepot.surgele_1_volume}</p>                                                                                                      
-
-                                                            </div>
-                                                                                                        
-                                                    </div> 
-                                                }
-                                                {this.state.informations_entrepot.surgele === 'Oui' && this.state.surgele_range > 1 &&
-                                                    <div className='entrepot_infos_temperature_lign_range'>
-                                                            <div className='entrepot_infos_temperature_lign'>                                                        
-                                                                <p className = 'entrepot_stockage_temperature_range_title'> Surgele 2:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_2_range_debut}° à  {this.state.informations_entrepot.surgele_2_range_fin} °</p>
-                                                                <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left'> Taille: </p> 
-                                                                <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.surgele_2_volume}</p>                                                                                                      
-
-                                                            </div>
-                                                                                                        
-                                                    </div> 
-                                                }      
-                                                {this.state.informations_entrepot.surgele === 'Oui' && this.state.surgele_range > 2  &&
-                                                    <div className='entrepot_infos_temperature_lign_range'>
-                                                            <div className='entrepot_infos_temperature_lign'>                                                        
-                                                                <p className = 'entrepot_stockage_temperature_range_title'> Surgele 3:</p> 
-                                                                <p className ='entrepot_stockage_temperature_range_text'> De {this.state.informations_entrepot.surgele_3_range_debut}° à  {this.state.informations_entrepot.surgele_3_range_fin} °</p>
-                                                                <p className = 'entrepot_stockage_temperature_range_text entrepot_stockage_temperature_non_edit_margin_left'> Taille: </p> 
-                                                                <p className='entrepot_stockage_temperature_range_text'  > {this.state.informations_entrepot.surgele_3_volume}</p>                                                                                                      
-                                                                
-                                                            </div>
-                                                                                                        
-                                                    </div> 
-                                                }         
-                                        </div> 
-                                        }                                                                                                                                                           
+                                            }                                                                                       
+                                        </div>                                                                                                                                                                                                                                                               
 
                                     </div> 
 
                                     <div className = 'entrepot_box entrepot_box_temperature_stockage'> 
-                                        <p className="entrepot_box_title"> PRODUITS ET CLIENTS
+                                        <p className="entrepot_box_title"> CLIENTS
                                         </p>      
-                                        <div className = 'entrepot_services_log_et_clients_label'>
+                                        {/* <div className = 'entrepot_services_log_et_clients_label'>
                                             Produits stockés
                                         </div>  
                                         <Select
@@ -846,57 +796,16 @@ class entrepotsStockage extends React.Component {
                                             options={options_types_produits}
                                             className='entrepots_stockage_services_logistiques_select'
                                             isMulti={true}
-                                        />      
+                                        />       */}
                                         <div className = 'entrepot_services_log_et_clients_label'>
                                             Exemples de clients (facultatif)
                                         </div>      
+                                        <div className = 'entrepot_explication'>
+                                            Veuillez renseigner certaines références clients pour cet entrepôt
+                                        </div>  
                                         <textarea style={{ "resize": "none" }} className = 'entrepot_input entrepot_input_clients' placeholder="" name="clients" value={this.state.informations_entrepot.clients} onChange={this.handleChangeInformationsEntrepot} />
                                     </div>                                     
-
-                                    <div className = 'entrepot_box entrepot_box_small '> 
-                                        <p className="entrepot_box_title"> IT et E-commerce
-                                        </p>      
-                                        <div className = 'entrepot_services_log_et_clients_label'>
-                                            IT
-                                        </div> 
-                                        <div className = 'entrepot_lign_checkbox_it'>
-                                            <div className = 'entrepot_lign_checkbox_it_gauche'>
-                                                <input type="checkbox" className = 'entrepot_checkbox' name="wms_bool" value={this.state.informations_entrepot.wms_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.wms_bool}/>  
-                                                <p className = 'entrepot_checkbox_input'> WMS </p>
-                                            </div>                                       
-                                            {this.state.informations_entrepot.wms_bool &&
-                                            <div className = 'entrepot_lign_checkbox_it_droite'>
-                                                <p className = 'entrepot_checkbox_input'> Nom du WMS: </p>
-                                                <input className = 'entrepot_input ' value={this.state.informations_entrepot.wms_detail} onChange={this.handleChangeInformationsEntrepot}  name = 'wms_detail' />                                                 
-                                            </div>                                               
-                                            }
-                                            {!this.state.informations_entrepot.wms_bool &&                                            
-                                            <div className = 'entrepot_lign_checkbox_it_droite'>                                                
-                                            </div>                                                
-                                            }
-                                        </div>
-
-                                        <div className = 'entrepot_services_log_et_clients_label'>
-                                            ECommerce
-                                        </div>                                         
-                                        <div className = 'entrepot_lign_checkbox_it'>
-                                            <div className = 'entrepot_lign_checkbox_it_gauche'>
-                                                <input type="checkbox" className = 'entrepot_checkbox' name="ecommerce_bool" value={this.state.informations_entrepot.ecommerce_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.ecommerce_bool}/>  
-                                                <p className = 'entrepot_checkbox_input'> Ecommerce </p>
-                                            </div>                                       
-                                            {this.state.informations_entrepot.ecommerce_bool &&
-                                            <div className = 'entrepot_lign_checkbox_it_droite'>
-                                                <p className = 'entrepot_checkbox_input'> Logiciels d'intégration: </p>
-                                                <input className = 'entrepot_input ' value={this.state.informations_entrepot.ecommerce_integration} onChange={this.handleChangeInformationsEntrepot}  name = 'ecommerce_integration'/>                                                 
-                                            </div>                                               
-                                            }
-                                            {!this.state.informations_entrepot.ecommerce_bool &&                                            
-                                            <div className = 'entrepot_lign_checkbox_it_droite'>                                                
-                                            </div>                                                
-                                            }
-                                        </div>                                        
-
-                                    </div> 
+                                
                                     <div className = 'div_with_big_bottom_padding'>
                                     </div> 
 
@@ -963,6 +872,48 @@ class entrepotsStockage extends React.Component {
                                             <p className = 'entrepot_checkbox_input'> Assurance Responsabilité Civile </p>
                                         </div>                                                                                    
                                     </div>
+                                    <div className = 'entrepot_box entrepot_box_small '> 
+                                        <p className="entrepot_box_title"> IT et E-commerce
+                                        </p> 
+
+                                        <div className = 'entrepot_stockage_title_sous_partie'>
+                                            IT
+                                        </div>  
+                                        <div className = 'entrepot_lign_checkbox'>
+                                            <input type="checkbox" className = 'entrepot_checkbox' name="wms_bool" value={this.state.informations_entrepot.wms_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.wms_bool}/>  
+                                            <p className = 'entrepot_checkbox_input'> WMS </p>
+                                        </div>     
+                                        {this.state.informations_entrepot.wms_bool &&
+                                            <div className = 'entrepot_it_line'>
+                                                <div className = 'entrepot_it_label'>
+                                                    Nom du WMS
+                                                </div> 
+                                                <div className= 'entrepot_it_container_input'>
+                                                    <input className = ' entrepot_it_input ' value={this.state.informations_entrepot.wms_detail} onChange={this.handleChangeInformationsEntrepot}  name = 'wms_detail'/>                                                         
+                                                </div> 
+                                            </div>
+                                           
+                                        }                                          
+                                        <div className = 'entrepot_stockage_title_sous_partie'>
+                                            ECommerce
+                                        </div>  
+                                        <div className = 'entrepot_lign_checkbox'>
+                                            <input type="checkbox" className = 'entrepot_checkbox' name="ecommerce_bool" value={this.state.informations_entrepot.ecommerce_bool} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.ecommerce_bool}/>  
+                                            <p className = 'entrepot_checkbox_input'> Ecommerce </p>
+                                        </div>     
+                                        {this.state.informations_entrepot.ecommerce_bool &&
+                                            <div className = 'entrepot_it_line '>
+                                                <div className = 'entrepot_it_label'>
+                                                    Logiciels avec lesquels vous vous intégrez
+                                                </div> 
+                                                <div className= 'entrepot_it_container_input'>
+                                                    <input className = ' entrepot_it_input ' value={this.state.informations_entrepot.ecommerce_integration} onChange={this.handleChangeInformationsEntrepot}  name = 'ecommerce_integrations'/>                                                         
+                                                </div> 
+                                            </div>
+                                           
+                                        }                                                                                                                    
+
+                                    </div>                                     
 
                                 </div>                     
                             </div>                         

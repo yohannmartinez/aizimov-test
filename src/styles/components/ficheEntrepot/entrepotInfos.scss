@@ -61,7 +61,7 @@
 // Description
 .entrepot_infos_description_box{
     flex: 1; 
-    margin-left: 4%; 
+    margin-left: 8%; 
     overflow:hidden;
     position: relative;
     min-height: 6rem; 
@@ -83,7 +83,6 @@
 // Disponibilité: 
 .entrepot_infos_dispo_box{
     flex: 1; 
-    margin-right: 4%; 
     overflow:hidden;
     position: relative;
     min-height: 6rem; 
@@ -94,6 +93,8 @@
 .entrepot_infos_title_images{
     font-size: 0.9rem; 
     color: $dark-grey;
+    text-align: center; 
+    margin-left: 3em; 
     font-weight: 500;  
     margin-top: 1.5em; 
     margin-bottom: 0.5em
@@ -115,6 +116,11 @@
     background-color: transparent;
     cursor:pointer;
     font-size:25px;
+    width: 5%; 
+
+}
+.container_entrepot_infos_button_image{
+    width: 5%; 
 }
 
 .entrepot_infos_button_image:focus{
@@ -125,7 +131,7 @@
     height: auto; 
     border-radius: 5px; 
     border: 1.5px solid transparent; 
-    width: 300px; 
+    width: 90%; 
     flex: 10
 }
 
@@ -136,10 +142,12 @@
     background-color: $dark-blue; 
     font-size: 0.9rem; 
     margin: 1rem auto; 
-    border-radius: 5px; 
+    border-radius: 5px;
+    margin-left: 7.5em;  
 }
 
 .fiche_entrepot_ajout_image_dropzone_text{
     font-size: 1em; 
     padding-top: 1em ; 
+
 }
