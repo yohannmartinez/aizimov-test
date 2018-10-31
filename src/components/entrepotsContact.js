@@ -46,6 +46,7 @@ class entrepotsContact extends React.Component {
         this.getIdDemande = this.getIdDemande.bind(this);
         this.handleChangeAddContact = this.handleChangeAddContact.bind(this);
         this.ajouterContact = this.ajouterContact.bind(this);
+        this.deleteContact = this.deleteContact.bind(this);
     }
 
     async componentDidMount() {
@@ -64,10 +65,10 @@ class entrepotsContact extends React.Component {
                     this.setState({ user: user.data[0] }, () => {
                         console.log(userloged)
                         axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
-                        // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                            // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
-                                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
-                                // axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                    // axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
                                     this.setState({ infosContact: response.data });
                                 });
                             });
@@ -117,6 +118,17 @@ class entrepotsContact extends React.Component {
 
         /* --> met la demande en question dans le state selectedCotation pour pouvoir l'afficher dans la div infossupp */
         this.setState({ selectedContact: this.state.infosContact[id_contact] });
+    }
+
+    deleteContact(id) {
+        /* this.state.infosContact.splice(id,1);
+        console.log(this.state.infosContact) */
+        this.state.infosContact.forEach((contact,i) => {
+            if(contact.id === id){
+                this.state.infosContact.splice(i,1);
+                console.log(this.state.infosContact)
+            }
+        });
     }
 
     ajouterContact() {
@@ -189,21 +201,23 @@ class entrepotsContact extends React.Component {
                                 Informations principales
                             </div>
                             <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
-                                Stockage et services logistiques
+                                Stockage
                             </div>
                             <div onClick={() => { this.props.history.push('/entrepots-securite') }} className='entrepot_onglet_non_selectionne '>
-                                Sécurité et informations bâtiment
+                                Informations bâtiment
                             </div>
                             <div className='entrepot_onglet_selectionne '>
                                 Personnes à contacter
                             </div>
-                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className = 'entrepot_onglet_non_selectionne '>
-                                Clients SpaceFill
-                            </div>   
+                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className='entrepot_onglet_non_selectionne '>
+                                Conditions
+                            </div>
                         </div>
                         <div className='contenu_page'>
-                            <p className="parametres_title_page ">Personnes à contacter</p>
-                            <p>Renseignez ici les responsables de l'entrepot à contacter</p>
+                            <p className="entrepot_contact_title_page ">Personnes à contacter
+                                    <button className="entrepot_contact_button_ajouter_contact" onClick={() => { this.setState({ divAjouterContact: true }) }}>Ajouter un contact</button>
+                            </p>
+                            <p className="entrepot_contact_description_page">Renseignez ici les responsables de l'entrepot à contacter</p>
                             {this.state.infosContact === null &&
                                 <div>
                                     <span>Vous n'avez ajouté aucun contact</span>
@@ -211,12 +225,10 @@ class entrepotsContact extends React.Component {
                             }
                             {this.state.infosContact !== null &&
                                 <div>
-                                    <ContactList contacts={this.state.infosContact} getIdDemande={this.getIdDemande} />
+                                    <ContactList contacts={this.state.infosContact} getIdDemande={this.getIdDemande} deleteContact={this.deleteContact} />
                                 </div>
                             }
-                            {this.state.divAjouterContact !== true &&
-                                <button className="entrepot_contact_button_ajouter_contact" onClick={() => { this.setState({ divAjouterContact: true }) }}>Ajouter un contact</button>
-                            }
+
                             {this.state.divAjouterContact === true &&
                                 <div className="entrepot_contact__div_ajouter_devis">
                                     <div className="parametres_infos_sous_container">

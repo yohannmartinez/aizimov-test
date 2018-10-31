@@ -3,32 +3,31 @@
 // Partie ONGLETS: 
 .entrepot_onglets_container{
     display: flex; 
-    background: #DCDCDC;     
+    background: #f8f8f8;     
     min-height: 2.2rem; 
     color: $dark-grey; 
     text-align: center; 
     font-size: 0.8rem; 
-    cursor:pointer    
+    cursor:pointer  ;
+    max-width:900px;
+    margin-top:20px;
+    margin-left:50px
 }
 .entrepot_onglet_selectionne{
     flex: 1; 
     background: #f8f8f8; 
-    padding-top: 0.6rem; 
-    border-radius: 5px; 
-    border: 1px solid #f8f8f8; 
-    font-weight: 650
+    padding-top: 0.6rem;
+    font-weight: 650;
+    border-bottom:2px solid $dark-grey;
 }
 .entrepot_onglet_non_selectionne{
     flex: 1; 
     padding-top: 0.6rem; 
-    font-weight: 400
+    font-weight: 400;
+    color:rgb(163, 162, 162);
+    border-bottom:2px solid rgb(197, 197, 197);
 }
-.entrepot_onglet_border_left{
-    border-left: 1px solid $middle-grey; 
-}
-.entrepot_onglet_border_right{
-    border-right: 1px solid $middle-grey; 
-}
+
 
 // BOXES pour les informations - styling global
 .entrepot_box{

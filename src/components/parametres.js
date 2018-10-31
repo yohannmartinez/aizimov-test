@@ -272,7 +272,7 @@ class parametres extends React.Component {
                                     <div className="parametres_infos_column">
                                         <p>Nom : {this.state.user.nom}</p>
                                         <p>Prenom : {this.state.user.prenom} </p>
-                                        <p>Nom de l'entreprise : {this.state.user.entreprise}</p>
+                                        <p>Entreprise : {this.state.user.entreprise}</p>
                                     </div>
                                     <div className="parametres_infos_column">
                                         <p>Portable : {this.state.user.telephone_portable}</p>
@@ -286,7 +286,7 @@ class parametres extends React.Component {
                                     <div className="parametres_infos_column">
                                         <p>Nom : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="nom" placeholder="nom" value={this.state.user.nom} /></p>
                                         <p>Prenom : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="prenom" placeholder="prenom" value={this.state.user.prenom} /></p>
-                                        <p>Nom de l'entreprise : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="entreprise" placeholder="nom de l'entreprise" value={this.state.user.entreprise} /></p>
+                                        <p>Entreprise : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="entreprise" placeholder="nom de l'entreprise" value={this.state.user.entreprise} /></p>
                                     </div>
                                     <div className="parametres_infos_column">
                                         <p>Portable : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="telephone_portable" placeholder="portable" value={this.state.user.telephone_portable} /></p>
