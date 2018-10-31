@@ -43,9 +43,7 @@ class entrepots extends React.Component {
             informations_entrepot_initial: [],
             liste_urls: [],
             pdf_description: '',
-            editResume: false,
             confirm_changes: false,
-            editDescription: false,
             current_image: '',
             current_image_number: 0,
             max_image_number: 0
@@ -115,7 +113,7 @@ class entrepots extends React.Component {
     /*--> fonction pour annuler les changements */
     cancelModifications() {
         console.log('cancelling mofid')
-        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, confirm_changes: false, editResume: false });
+        this.setState({ informations_entrepot: this.state.informations_entrepot_initial });
     }
 
     handleChangeInformationsEntrepot(event) {
@@ -328,10 +326,6 @@ class entrepots extends React.Component {
         }
     }
 
-    /*--> fonction pour annuler les changements */
-    cancelModifications() {
-        this.setState({ editResume: false });
-    }
 
     deconnexion() {
         localStorage.removeItem("token", token);
@@ -404,78 +398,39 @@ class entrepots extends React.Component {
                                     <div className='entrepot_infos_container_gauche'>
                                         <div className='entrepot_box'>
                                             <p className="entrepot_box_title"> RÉSUMÉ
-                                        {this.state.editResume === false &&
-                                                    <button className="parametres_modifier_infos" onClick={() => { this.setState({ editResume: true }) }}><i class="fas fa-pen"></i></button>
-                                                }
-                                                {this.state.editResume === true &&
-                                                    <button className="parametres_annuler_modifier_infos" onClick={this.lalaland}><i class="fas fa-times"></i></button>
-                                                }
                                             </p>
-                                            {this.state.editResume === false &&
-                                                <div className="entrepot_infos_resume_subcontainer">
-                                                    <div className="entrepot_infos_resume_column">
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className='entrepot_infos_resume_label'>Entreprise : </p> <p className='entrepot_infos_resume_text'> {this.state.informations_entrepot.entreprise}</p>
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className='entrepot_infos_resume_label'>Adresse : </p> <p className='entrepot_infos_resume_text'>{this.state.informations_entrepot.adresse} </p>
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className='entrepot_infos_resume_label'>Ville : </p> <p className='entrepot_infos_resume_text'>{this.state.informations_entrepot.ville}</p>
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className='entrepot_infos_resume_label'>Chiffre d'affaire : </p><p className='entrepot_infos_resume_text'> {this.state.informations_entrepot.chiffreaffaires}</p>
-                                                        </div>
+                                        
+                                            <div className="entrepot_infos_resume_subcontainer">
+                                                <div className="entrepot_infos_resume_column_edit">
+                                                    <div className='entrepot_infos_resume_lign'>
+                                                        <p className="entrepot_infos_resume_label_edit">Entreprise : </p><input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="entreprise" placeholder="entreprise" value={this.state.informations_entrepot.entreprise} />
                                                     </div>
-                                                    <div className="entrepot_infos_resume_column">
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className='entrepot_infos_resume_label'>SIRET :  </p> <p className='entrepot_infos_resume_text'> {this.state.informations_entrepot.siret}</p>
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className='entrepot_infos_resume_label'>Code postal :  </p> <p className='entrepot_infos_resume_text'> {this.state.informations_entrepot.code_postal}</p>
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className='entrepot_infos_resume_label'>Surface totale :  </p> <p className='entrepot_infos_resume_text'> {this.state.informations_entrepot.surface_totale}</p>
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className='entrepot_infos_resume_label'>Site web :  </p> <p className='entrepot_infos_resume_text'> {this.state.informations_entrepot.site_web}</p>
-                                                        </div>
+                                                    <div className='entrepot_infos_resume_lign'>
+                                                        <p className="entrepot_infos_resume_label_edit">Adresse : </p><input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="adresse" placeholder="adresse" value={this.state.informations_entrepot.adresse} />
                                                     </div>
-                                                </div>
-                                            }
-                                            {this.state.editResume === true &&
-                                                <div className="entrepot_infos_resume_subcontainer">
-                                                    <div className="entrepot_infos_resume_column_edit">
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className="entrepot_infos_resume_label_edit">Entreprise : </p><input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="entreprise" placeholder="entreprise" value={this.state.informations_entrepot.entreprise} />
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className="entrepot_infos_resume_label_edit">Adresse : </p><input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="adresse" placeholder="adresse" value={this.state.informations_entrepot.adresse} />
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className="entrepot_infos_resume_label_edit">Ville : </p><input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="ville" placeholder="ville" value={this.state.informations_entrepot.ville} />
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className="entrepot_infos_resume_label_edit">Chiffre d'affaires : </p><input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="chiffreaffaires" placeholder="CA" value={this.state.informations_entrepot.chiffreaffaires} />
-                                                        </div>
+                                                    <div className='entrepot_infos_resume_lign'>
+                                                        <p className="entrepot_infos_resume_label_edit">Ville : </p><input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="ville" placeholder="ville" value={this.state.informations_entrepot.ville} />
+                                                    </div>
+                                                    <div className='entrepot_infos_resume_lign'>
+                                                        <p className="entrepot_infos_resume_label_edit">Chiffre d'affaires : </p><input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="chiffreaffaires" placeholder="CA" value={this.state.informations_entrepot.chiffreaffaires} />
+                                                    </div>
 
+                                                </div>
+                                                <div className="entrepot_infos_resume_column_edit">
+                                                    <div className='entrepot_infos_resume_lign'>
+                                                        <p className="entrepot_infos_resume_label_edit">  SIRET :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="siret" placeholder="siret" value={this.state.informations_entrepot.siret} />
                                                     </div>
-                                                    <div className="entrepot_infos_resume_column_edit">
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className="entrepot_infos_resume_label_edit">  SIRET :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="siret" placeholder="siret" value={this.state.informations_entrepot.siret} />
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className="entrepot_infos_resume_label_edit"> Code postal :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="code_postal" placeholder="code_postal" value={this.state.informations_entrepot.code_postal} />
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className="entrepot_infos_resume_label_edit"> Surface totale :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="surface_totale" placeholder="20,000m2" value={this.state.informations_entrepot.surface_totale} />
-                                                        </div>
-                                                        <div className='entrepot_infos_resume_lign'>
-                                                            <p className="entrepot_infos_resume_label_edit">Site web :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="site_web" placeholder="site web" value={this.state.informations_entrepot.site_web} />
-                                                        </div>
+                                                    <div className='entrepot_infos_resume_lign'>
+                                                        <p className="entrepot_infos_resume_label_edit"> Code postal :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="code_postal" placeholder="code_postal" value={this.state.informations_entrepot.code_postal} />
+                                                    </div>
+                                                    <div className='entrepot_infos_resume_lign'>
+                                                        <p className="entrepot_infos_resume_label_edit"> Surface totale :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="surface_totale" placeholder="20,000m2" value={this.state.informations_entrepot.surface_totale} />
+                                                    </div>
+                                                    <div className='entrepot_infos_resume_lign'>
+                                                        <p className="entrepot_infos_resume_label_edit">Site web :</p> <input className="entrepot_input entrepot_infos_input_resume" onChange={this.handleChangeInformationsEntrepot} name="site_web" placeholder="site web" value={this.state.informations_entrepot.site_web} />
                                                     </div>
                                                 </div>
-                                            }
+                                            </div>
 
 
                                         </div>
@@ -494,6 +449,21 @@ class entrepots extends React.Component {
                                     <div className='div_with_big_bottom_padding'>
                                     </div>
                                     <div className='entrepot_infos_container_droite'>
+                                        <div className='entrepot_box entrepot_infos_description_box'>
+                                            <p className="entrepot_box_title"> DESCRIPTION
+                                            </p>
+                                            <div className = 'entrepot_explication'>
+                                            Veuillez renseigner une description en quelques lignes de votre entrepot qui sera présentée à vos potentiels clients
+                                            </div> 
+
+
+                                            <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
+                                        </div>
+
+
+
+
+
                                         {this.state.liste_urls.length < 1 &&
                                             <div className='entrepot_infos_title_images'> Aucune image ajoutée </div>
                                         }
@@ -526,19 +496,9 @@ class entrepots extends React.Component {
                                         }
                                         <div className='entrepot_box entrepot_infos_description_box'>
                                             <p className="entrepot_box_title"> DESCRIPTION
-                                                {this.state.editDescription === false &&
-                                                    <button className="parametres_modifier_infos" onClick={() => { this.setState({ editDescription: true }) }}><i class="fas fa-pen"></i></button>
-                                                }
-                                                {this.state.editDescription === true &&
-                                                    <button className="parametres_annuler_modifier_infos" onClick={this.lalaland}><i class="fas fa-times"></i></button>
-                                                }
+
                                             </p>
-                                            {this.state.editDescription === false &&
-                                                <p className='entrepot_infos_description_label'> {this.state.informations_entrepot.description} </p>
-                                            }
-                                            {this.state.editDescription === true &&
-                                                <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
-                                            }
+                                            <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
                                         </div>
 
                                         <div>

@@ -9,7 +9,7 @@
     text-align: center; 
 }
 .entrepot_infos_container_droite{
-    flex: 1.15; 
+    flex: 1.5; 
     text-align: center; 
 }
 
@@ -17,7 +17,7 @@
 // Resume: 
 .entrepot_infos_resume_subcontainer{
     display: flex; 
-    padding:0.5em 1em 0em 2em;
+    padding:0.5em 0.7em 0.5em 0.7em;
 }
 
 .entrepot_infos_resume_column{
@@ -52,6 +52,9 @@
     flex: 1.5; 
     height: 1.5rem; 
     padding-top: 0.5em; 
+    margin-right: 1em; 
+    max-width: 9em; 
+    font-size: 0.8em; 
 }
 .entrepot_infos_resume_lign{
     display: flex; 
