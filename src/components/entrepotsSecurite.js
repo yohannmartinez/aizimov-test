@@ -357,7 +357,13 @@ class entrepotsStockage extends React.Component {
                                                     Nombre de quais de chargement
                                             </div>  
                                             <input className = 'entrepot_input entrepot_securite_medium' value={this.state.informations_entrepot.quais_de_chargement} onChange={this.handleChangeInformationsEntrepot}  name = 'quais_de_chargement'/>                                                       
-                                        </div>    
+                                        </div>   
+                                        <div className='entrepot_securite_lign'> 
+                                            <div className = 'entrepot_securite_label'> 
+                                                    Surface totale de l'entrepôt
+                                            </div>  
+                                            <input className = 'entrepot_input entrepot_securite_medium' value={this.state.informations_entrepot.surface_totale} onChange={this.handleChangeInformationsEntrepot}  name = 'surface_totale'/>                                                       
+                                        </div>                                          
                                         <div className='entrepot_securite_lign'> 
                                             <div className = 'entrepot_securite_label'> 
                                                     Hauteur sous poutre

@@ -482,25 +482,12 @@ class entrepots extends React.Component {
 
                                         <div className='entrepots_infos_container_droite_divise_deux'>
                                             <div className='entrepot_box entrepot_infos_dispo_box'>
-                                                <p className="entrepot_box_title"> DISPONIBILITÉ
-                                            </p>
-
-                                            </div>
-                                            <div className='entrepot_box entrepot_infos_description_box'>
-                                                <p className="entrepot_box_title"> DESCRIPTION
-                                            {this.state.editDescription === false &&
-                                                        <button className="parametres_modifier_infos" onClick={() => { this.setState({ editDescription: true }) }}><i class="fas fa-pen"></i></button>
-                                                    }
-                                                    {this.state.editDescription === true &&
-                                                        <button className="parametres_annuler_modifier_infos" onClick={this.lalaland}><i class="fas fa-times"></i></button>
-                                                    }
+                                                <p className="entrepot_box_title"> 
+                                                    DISPONIBILITÉS
                                                 </p>
-                                                {this.state.editDescription === false &&
-                                                    <p className='entrepot_infos_description_label'> {this.state.informations_entrepot.description} </p>
-                                                }
-                                                {this.state.editDescription === true &&
-                                                    <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
-                                                }
+                                                <div className = 'entrepot_dispo_lign'> 
+                                                </div> 
+
                                             </div>
                                         </div>
                                     </div>
@@ -519,27 +506,16 @@ class entrepots extends React.Component {
                                                     {this.state.current_image_number > 0 &&
                                                         <button className='entrepot_infos_button_image' onClick={this.handleImageSubstract}> <i class="fas fa-caret-left"></i> </button>
                                                     }
+                                                    {this.state.current_image_number === 0 &&
+                                                        <div className='entrepot_infos_button_image'> </div>
+                                                    }                                                    
                                                     <img src={this.state.current_image} className='entrepot_infos_images' />
                                                     {this.state.current_image_number < this.state.max_image_number - 1 &&
                                                         <button className='entrepot_infos_button_image' onClick={this.handleImageAdd}> <i class="fas fa-caret-right"></i> </button>
                                                     }
-
-
-                                                    {/* <Carousel >
-
-                                                {this.state.liste_urls.map((image, i) => {
-                                                    return (
-                                                        <div >
-                                                            <img src = {this.state.liste_urls[i]}   alt="Img"/>
-                                                        </div>  
-                                                    )
-                                                }) 
-                                                }                                                   
-                                                
-                                            </Carousel> */}
-                                                    {/* <ImageGallery items={this.state.liste_urls} showFullscreenButton = {false}
-                                            showPlayButton = {false} originalClass = "entrepot_infos_images" /> */}
-
+                                                    {this.state.current_image_number === this.state.max_image_number - 1 &&
+                                                        <div className='entrepot_infos_button_image'> </div>
+                                                    }                                                                                       
                                                 </div>
                                             </div>
                                         }
@@ -548,6 +524,23 @@ class entrepots extends React.Component {
                                                 <p className='fiche_entrepot_ajout_image_dropzone_text'>Ajouter une image </p>
                                             </Dropzone>
                                         }
+                                        <div className='entrepot_box entrepot_infos_description_box'>
+                                            <p className="entrepot_box_title"> DESCRIPTION
+                                                {this.state.editDescription === false &&
+                                                    <button className="parametres_modifier_infos" onClick={() => { this.setState({ editDescription: true }) }}><i class="fas fa-pen"></i></button>
+                                                }
+                                                {this.state.editDescription === true &&
+                                                    <button className="parametres_annuler_modifier_infos" onClick={this.lalaland}><i class="fas fa-times"></i></button>
+                                                }
+                                            </p>
+                                            {this.state.editDescription === false &&
+                                                <p className='entrepot_infos_description_label'> {this.state.informations_entrepot.description} </p>
+                                            }
+                                            {this.state.editDescription === true &&
+                                                <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
+                                            }
+                                        </div>
+
                                         <div>
                                             {(this.state.informations_entrepot.description_reference_pdf === '' || this.state.informations_entrepot.description_reference_pdf === null) &&
                                                 <div>

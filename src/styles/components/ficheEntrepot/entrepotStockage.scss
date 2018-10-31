@@ -16,117 +16,130 @@
 .entrepot_box_temperature_stockage{
     min-height: 14em; 
 }
-.entrepot_stockage_temperature_lign{
+
+.entrepot_stockage_temperature_title_container{
     display: flex; 
-    margin-top: 0.8rem; 
+    text-align: left; 
+}
+.entrepot_stockage_temperature_container{
+    margin: 1.3em 5%; 
+    border-radius: 5px; 
+    border: 0.8px solid $light-grey; 
 }
 
-.entrepot_stockage_temperature_droite{
-    flex: 1.2; 
-    display: flex; 
-    
+.entrepot_stockage_temperature_title{
+    font-size: 0.9em; 
+    font-weight: 600; 
+    flex: 1; 
+    padding: 1.1em; 
 }
-.entrepot_stockage_temperature_label_main{
-    flex: 4;
-    font-size: 0.8em; 
-    padding-top: 0.6em; 
-    text-align: left; 
-    padding-left: 1.1rem;
-    font-weight: 450; 
-    padding-bottom: 1em; 
+.entrepot_stockage_temperature_boolean_container{
+    flex: 1.5
+}
+.entrepot_stockage_temp_boolean{
+    background-color: white;
+    color: $middle-grey; 
+    border: 0.5px solid $light-grey; 
+    border-radius: 5px; 
+    padding-top: 0.5em; 
+    padding:1em;
+    height: 2em; 
+    max-width: 5em; 
+    font-size: 0.9em;    
+    margin-top: 0.7em;  
+}
+.entrepot_stockage_temperature_line{
+    display: flex; 
+}
+.entrepot_stockage_temperature_last_line{
+    margin-bottom: 1em; 
 }
 .entrepot_stockage_temperature_label{
-    flex: 4;
-    font-size: 0.8em; 
+    padding-left: 1.1em; 
     padding-top: 0.6em; 
-    text-align: left; 
-}
-.entrepot_stockage_select{
-    flex: 1;
-    margin: 0 5%; 
-    border:none;
-    background-color: white;
+    margin-top: 0.5em; 
+    font-size: 0.8em; 
     color: $dark-grey; 
-    border: 1px solid $light-grey; 
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-    padding:1em;
-    border-radius:4px;
-    height: 1.7em; 
-    font-size: 0.9em;    
-    padding-top: 0.5em;  
-}
-.entrepot_stockage_temperature_partie_droite{ 
-    flex: 1.6; 
     text-align: left; 
-    padding-left: 2.2em; 
+    flex: 1
 }
-.entrepot_stockage_temperature_partie_gauche{
-    flex: 1.2; 
+.entrepot_stockage_temperature_container_input{
+    flex: 1; 
+    text-align: right; 
+}
+.entrepot_stockage_temperature_input{
+    margin-right: 1.5em; 
+    max-width: 8em; 
+    margin-top: 0.5em;  
+    position: relative;
+    border-radius: 5px; 
+    font-size: 0.8rem; 
+    padding-left: 0.6em; 
+    height: 2em; 
+    border: 0.5px solid $light-grey; 
+}
+.entrepot_stockage_title_sous_partie{
+    font-weight: 550; 
+    font-size: 0.8em; 
+    margin-top: 1.5em; 
+    text-align: left; 
+    padding-left: 1.1em; 
+}
+.entrepot_stockage_temperature_range_lign{
     display: flex; 
+    margin-left: 1em
 }
-.entrepot_stockage_temperature_block{
-    display: inline-block;
-
+.entrepot_stockage_temperature_range_label{
+    font-size: 0.85em; 
+    color: $dark-grey; 
 }
-
-.entrepot_stockage_new_lign{
-    display: flex; 
-    margin-bottom: 0.4em; 
-    text-align: center; 
-
-}
-
-.entrepot_input_temperature{
-    flex: 4; 
-    margin-right: 1em; 
-    max-width: 6em; 
+.entrepot_stockage_temperature_range_input{
+    max-width: 2em; 
+    height: 2em; 
     margin-left: 1em; 
-}
-
-.entrepot_input_range_temperature{
-    max-width: 1.8em; 
-    height: 1.7em; 
-    margin-left: 0.5em; 
-    margin-right: 0.5em; 
-    margin-top: 0.4em; 
-}
-.entrepot_stockage_temperature_range_title{
+    margin-right: 1em; 
+    border-radius: 5px; 
+    border: 0.5px solid $light-grey; 
     font-size: 0.8em; 
-    font-weight: 350; 
-    padding-left: 1.2rem;
-    margin-right: 2em
+    margin-top: 0.5em; 
+    padding-left: 1em; 
 }
-.entrepot_stockage_temperature_range_text{
-    font-size: 0.8em; 
-    
-}
-.entrepot_stockage_temperature_range_text_volume{
-    font-size: 0.8em; 
-    margin-left: 1.5em; 
-    padding-top: 0.8em; 
-}
-.entrepot_infos_temperature_lign{
+.entrepot_stockage_temperature_volume_container{
     display: flex; 
-    margin-top: 0.6em; 
+    text-align: right; 
 }
-
-.entrepot_infos_temperature_lign_range{
+.entrepot_stockage_temperature_range_container{
     display: flex; 
-    margin-top: -1rem;     
 }
-.entrepot_input_temperature_range_volume{
-    height: 1.7em; 
-    margin-left: 0.5em; 
-    margin-right: 0.5em; 
-    margin-top: 0.4em; 
-    max-width: 4.5em;     
+.entrepot_align_right{
+    text-align: right; 
 }
 
+.entrepot_stockage_temperature_volume_input{
+    margin-right: 1.5em; 
+    margin-left: 1em; 
+    max-width: 8em; 
+    margin-top: 0.5em;  
+    position: relative;
+    border-radius: 5px; 
+    font-size: 0.8rem; 
+    padding-left: 0.6em; 
+    height: 2em; 
+    border: 0.5px solid $light-grey;     
+}
+.entrepot_stockage_temperature_ligne_ajout{
+    text-align: right; 
+    display: flex; 
+    margin-right: 1em; 
+    margin-bottom: 1em; 
+    margin-top: 0.5em; 
+}
 .entrepot_button_add_temperature_range{
-    background-color: $main-blue; 
+    background-color: $dark-blue; 
     height: 1.7rem; 
     margin-left: 1.2em; 
     color: white; 
+    border-radius: 5px;
     font-size: 0.9em; 
     width: 1.8em
 }
@@ -134,26 +147,49 @@
     background-color: red; 
     height: 1.7rem; 
     margin-left: 1.2em; 
+    border-radius: 5px;
     color: white; 
     font-size: 0.9em; 
     width: 1.8em
 }
+.entrepot_stockage_temperature_range_label_margin_left{
+    margin-left: 2em; 
+}
 
-.entrepot_stockage_temperature_non_edit{
-    font-size: 0.8rem; 
-    color: $dark-grey; 
-    margin-left: 1em; 
+
+
+.entrepot_it_line{
+    display: flex; 
+    margin-bottom: 1em; 
+    margin-top: -0.7em; 
+}
+.entrepot_it_label{
+    padding-left: 1.1em; 
+    padding-top: 0.6em; 
     margin-top: 0.5em; 
+    font-size: 0.8em; 
+    color: $dark-grey; 
+    text-align: left; 
+    flex: 1
+}
+.entrepot_it_container_input{
+    flex: 1; 
+    text-align: right; 
+}
+.entrepot_it_input{
+    margin-right: 1.5em; 
+    max-width: 8em; 
+    margin-top: 0.5em;  
+    position: relative;
+    border-radius: 5px; 
+    font-size: 0.8rem; 
+    padding-left: 0.6em; 
+    height: 2em; 
+    border: 0.5px solid $light-grey; 
 }
 
-.entrepot_stockage_temperature_non_edit_margin_left{
-    margin-left: 1.5em; 
-}
 
-.entrepot_stockage_temperature_non_edit_small_line_space{
-    margin-bottom: -0.1em; 
-    margin-top: 0em; 
-}
+
 
 
 // Produits et clients: 
@@ -161,6 +197,7 @@
 .entrepot_services_log_et_clients_label{
     font-size: 0.8em; 
     padding-top: 1.2em; 
+    margin-bottom: 0.5em; 
     text-align: left; 
     padding-left: 1.1rem;
     font-weight: 450; 
@@ -208,22 +245,4 @@
 
 .entrepot_box_small{
     min-height: 5em; 
-}
-
-.entrepot_lign_checkbox_it_gauche{
-    flex: 2; 
-    display: flex; 
-}
-.entrepot_lign_checkbox_it_droite{
-    flex: 2; 
-    display: flex; 
-}
-.entrepot_lign_checkbox_it{
-    display: flex; 
-}
-
-.entrepot_checkbox_clients{
-    flex: 1; 
-    margin-left: 1.1em; 
-    margin-top: 0.7em;    
 }
