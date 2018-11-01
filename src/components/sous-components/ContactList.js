@@ -5,14 +5,27 @@ class ContactList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      contacts: this.props.contacts
+    }
+  }
 
+    componentWillReceiveProps(props) {
+    const contacts= props.contacts
+    console.log(contacts)
+    console.log(this.state.contacts)
+    if (contacts != this.state.contacts) {
+      console.log('props different que state dans child')
+      this.setState({contacts: contacts})
+    }
+    else {
+      console.log('the same')
     }
   }
 
 
   render() {
     return (
-      this.props.contacts.map((contact, i) => {
+      this.state.contacts.map((contact, i) => {
         
           return (
             <Contact

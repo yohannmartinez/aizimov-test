@@ -43,7 +43,35 @@ class Contact extends React.Component {
 
   afficherInfosSupp() {
     this.setState({ editContact: true });
-
+  }
+  componentWillReceiveProps(props) {
+    if (props.id != this.state.id){
+      this.setState({ contactInfosCopie: {
+        id: props.id,
+        mail: props.mail,
+        nom: props.nom,
+        prenom: props.prenom,
+        telephone_fixe: props.telephone_fixe,
+        telephone_portable: props.telephone_portable,
+        number: props.number,
+        contact_principal: props.contact_principal,
+        poste: props.poste,
+        id_entrepot: props.id_entrepot
+        }, 
+        contactInfos: {
+          id: props.id,
+          mail: props.mail,
+          nom: props.nom,
+          prenom: props.prenom,
+          telephone_fixe: props.telephone_fixe,
+          telephone_portable: props.telephone_portable,
+          number: props.number,
+          contact_principal: props.contact_principal,
+          poste: props.poste,
+          id_entrepot: props.id_entrepot
+          }        
+      })
+    }
   }
 
   confirmerModification() {

@@ -10,9 +10,11 @@ import { triggerMenu } from '../actions/menuburger';
 import Dropzone from 'react-dropzone'
 const uuidv4 = require('uuid/v4');
 const upload = require('superagent');
-// var Carousel = require('react-responsive-carousel').Carousel;
-// var Carousel = require('nuka-carousel');
-// import ImageGallery from 'react-image-gallery';
+import flechePleineDroite from '../img/fleche_pleine_droite.png'; 
+import flechePleineGauche from '../img/fleche_pleine_gauche.png'; 
+import flecheVideDroite from '../img/fleche_vide_droite.png'; 
+import flecheVideGauche from '../img/fleche_vide_gauche.png'; 
+
 
 
 const token = '';
@@ -46,7 +48,8 @@ class entrepots extends React.Component {
             confirm_changes: false,
             current_image: '',
             current_image_number: 0,
-            max_image_number: 0
+            max_image_number: 0, 
+            au_moins_une_temperature: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -243,6 +246,11 @@ class entrepots extends React.Component {
                         axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             // axios.get('http://localhost:3000/getInfosEntrepot', {params: {id_compte: this.state.user.id_compte } }).then(response => {                            
                             console.log(response.data[0])
+                            if (response.data[0].frais || response.data[0].surgele || response.data[0].ambiant_couvert || response.data[0].ambiant_exterieur) {
+                                this.setState({
+                                    au_moins_une_temperature: true
+                                })
+                            }
                             this.setState({
                                 informations_entrepot: response.data[0],
                                 informations_entrepot_initial: response.data[0]
@@ -383,7 +391,7 @@ class entrepots extends React.Component {
                                 Stockage
                             </div>
                             <div onClick={() => { this.props.history.push('/entrepots-securite') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
-                                Informations bâtiment
+                                Sécurité
                             </div>
                             <div onClick={() => { this.props.history.push('/entrepots-contact') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Personnes à contacter
@@ -440,6 +448,14 @@ class entrepots extends React.Component {
                                                 <p className="entrepot_box_title"> 
                                                     DISPONIBILITÉS
                                                 </p>
+                                                {this.state.au_moins_une_temperature &&
+                                                    <div> 
+                                                        <div className = 'entrepot_explication'> 
+                                                        Pour chaque type de température que vous faites, veuillez renseigner votre disponibilité en pourcentage d’espace libre de manière mensuelle (estimations)
+                                                        </div>                                                         
+                                                    </div>
+                                                }
+
                                                 <div className = 'entrepot_dispo_lign'> 
                                                 </div> 
 
@@ -453,18 +469,85 @@ class entrepots extends React.Component {
                                             <p className="entrepot_box_title"> DESCRIPTION
                                             </p>
                                             <div className = 'entrepot_explication'>
-                                            Veuillez renseigner une description en quelques lignes de votre entrepot qui sera présentée à vos potentiels clients
+                                            Veuillez renseigner une description en quelques lignes de votre entrepot qui sera présentée à vos potentiels clients.
+                                            </div> 
+                                            <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
+
+                                            <div className = 'entrepot_infos_description_label'>
+                                                Plaquette de votre entreprise
+                                            </div> 
+                                            {this.state.informations_entrepot.description_reference_pdf != '' &&
+                                                <div className = ''> 
+                                                    <p className = 'entrepot_infos_lien_plaquette'> {this.state.informations_entrepot.description_reference_pdf} </p>
+                                                    <button className = 'entrepot_infos_button'> 
+                                                        Voir ma plaquette
+                                                    </button> 
+                                                    <Dropzone onDrop={this.onDropPdf.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
+                                                        <button className='entrepot_infos_button' >Modifier ma plaquette </button>
+                                                    </Dropzone>                                                    
+                                                </div> 
+                                            }
+                                            {this.state.informations_entrepot.description_reference_pdf === '' &&
+                                                <Dropzone onDrop={this.onDropPdf.bind(this)} className='entrepot_infos_dropzone entrepot_margin_end_box' accept="image/jpeg,  image/jpg, image/png, application/pdf">
+                                                    <button className='entrepot_infos_button' >Modifier ma plaquette </button>
+                                                </Dropzone>                                               
+                                            }
+                                            <div className ='entrepot_margin_end_box'>
                                             </div> 
 
+                                            <div className = 'entrepot_infos_description_label entrepot_margin_end_box'>
+                                                Photos de votre entrepôt (max 4)
+                                            </div> 
+                                            {this.state.liste_urls.length < 1 &&
+                                                <div> 
+                                                    <div className='entrepot_explication'> Vous n’avez pas encore ajouté de photos de votre entrepot. C’est une étape importante qui augmente vos chances de gagner une cotation.   </div>
+                                                    <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
+                                                        <button className='entrepot_infos_button' >Ajouter une photo </button>
+                                                    </Dropzone>    
+                                                    <div className = 'entrepot_margin_end_box'> </div>                                              
+                                                </div> 
+                                            }
+                                            {this.state.liste_urls.length >= 1 &&
+                                                <div> 
+                                                    <div className='entrepot_image_container'> 
+                                                        <div className = 'entrepot_image_container_button'>
+                                                            {this.state.current_image_number > 0 &&
+                                                                <img src = {flechePleineGauche} className = 'entrepot_image_fleche' onClick = {this.handleImageSubstract}/> 
+                                                            }
+                                                            {this.state.current_image_number === 0 &&
+                                                                <img src = {flecheVideGauche} className = 'entrepot_image_fleche'/> 
+                                                            }                                                                                                                      
+                                                        </div>
 
-                                            <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
+                                                        <div className = 'entrepot_image_container_image'>
+                                                            <img src={this.state.current_image} className='entrepot_infos_images' />
+                                                        </div> 
+
+                                                        <div className = 'entrepot_image_container_button'>
+                                                            {this.state.current_image_number === this.state.max_image_number -1 &&
+                                                                <img src = {flecheVideDroite} className = 'entrepot_image_fleche' /> 
+                                                            }
+                                                            {this.state.current_image_number < this.state.max_image_number -1 &&
+                                                                <img src = {flechePleineDroite} className = 'entrepot_image_fleche' onClick = {this.handleImageAdd}/> 
+                                                            }                                                                
+                                                        </div>  
+                                                    </div>
+                                                    {this.state.liste_urls.length < 3 &&
+                                                    <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
+                                                        <button className='entrepot_infos_button' >Ajouter une photo </button>
+                                                    </Dropzone>                                                        
+                                                    }                                                    
+                                                </div>                                           
+                                            }                                            
+                                            <div className = 'entrepot_margin_end_box'> </div>    
+                                            
                                         </div>
 
 
 
 
 
-                                        {this.state.liste_urls.length < 1 &&
+                                        {/* {this.state.liste_urls.length < 1 &&
                                             <div className='entrepot_infos_title_images'> Aucune image ajoutée </div>
                                         }
 
@@ -493,34 +576,8 @@ class entrepots extends React.Component {
                                             <Dropzone onDrop={this.onDrop.bind(this)} className='fiche_entrepot_ajout_image_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
                                                 <p className='fiche_entrepot_ajout_image_dropzone_text'>Ajouter une image </p>
                                             </Dropzone>
-                                        }
-                                        <div className='entrepot_box entrepot_infos_description_box'>
-                                            <p className="entrepot_box_title"> DESCRIPTION
+                                        } */}
 
-                                            </p>
-                                            <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
-                                        </div>
-
-                                        <div>
-                                            {(this.state.informations_entrepot.description_reference_pdf === '' || this.state.informations_entrepot.description_reference_pdf === null) &&
-                                                <div>
-                                                    <div> Aucune description ajoutée </div>
-                                                    <Dropzone onDrop={this.onDropPdf.bind(this)} className='fiche_entrepot_ajout_image_dropzone' accept="application/word, application/pdf">
-                                                        <p className='fiche_entrepot_ajout_image_dropzone_text'>Ajouter un Pdf de description </p>
-                                                    </Dropzone>
-                                                </div>
-                                            }
-                                            {this.state.informations_entrepot.description_reference_pdf != '' && this.state.informations_entrepot.description_reference_pdf != null &&
-                                                <div>
-                                                    <div className='entrepot_infos_title_images'>
-                                                        Votre pdf:
-                                            </div>
-                                                    <p className='entrepot_infos_description_label'> {this.state.informations_entrepot.description_reference_pdf} </p>
-                                                </div>
-                                            }
-
-
-                                        </div>
 
                                     </div>
                                 </div>

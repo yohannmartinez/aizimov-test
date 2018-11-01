@@ -74,14 +74,7 @@
     margin: 1em ; 
     width: 90%; 
 }
-.entrepot_infos_description_label{
-    font-size: 0.8rem; 
-    font-weight: 400; 
-    min-height: 1.6em;       
-    text-align: left; 
-    padding:1em 3em 1em 1em ;
-    margin-left: 1em; 
-}
+
 
 // Disponibilité: 
 .entrepot_infos_dispo_box{
@@ -90,6 +83,69 @@
     position: relative;
     min-height: 6rem; 
 }
+
+.entrepot_infos_lien_plaquette{
+    text-decoration: underline; 
+    font-size: 0.8em; 
+    padding-left: 1.1em; 
+    color: $dark-grey; 
+    text-align: left; 
+    padding-bottom: 1em; 
+}
+.entrepot_infos_description_label{
+    font-size: 0.9em; 
+    font-weight: 450; 
+    margin-top: 2em; 
+    text-align: left; 
+    padding-left: 1.1em; 
+}
+.entrepot_infos_dropzone{
+    text-align: center; 
+    height: 2em; 
+    margin-bottom: 1em; 
+}
+
+.entrepot_infos_button{
+    height: 2em; 
+    border-radius: 5px; 
+    width: 14em; 
+    color: white; 
+    font-size: 0.85em; 
+    background-color: $dark-blue; 
+    border:none; 
+    margin-bottom: 1em; 
+}
+.entrepot_image_container{
+    display: flex; 
+    margin-left: 1.1em; 
+    margin-right: 1.1em;
+    margin-top: 1em; 
+    margin-bottom: 2em; 
+    max-height: 10em; 
+}
+.entrepot_image_container_button{
+    flex: 1
+}
+.entrepot_image_container_image{
+    flex: 8
+}
+.entrepot_image_fleche{
+    width: 0.8em; 
+    height: auto; 
+    cursor: pointer;
+    margin: auto; 
+    padding-top: 4em; 
+}
+.entrepot_infos_images{
+    max-height: 100%; 
+    height: auto; 
+    max-width: 100%; 
+    width: auto; 
+    margin: auto; 
+    padding-top: auto; 
+}
+
+
 
 
 // Images: 
@@ -120,7 +176,6 @@
     cursor:pointer;
     font-size:25px;
     width: 5%; 
-
 }
 .container_entrepot_infos_button_image{
     width: 5%; 
@@ -154,3 +209,4 @@
     padding-top: 1em ; 
 
 }
+

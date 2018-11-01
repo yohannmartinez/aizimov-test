@@ -129,6 +129,7 @@ class entrepotsContact extends React.Component {
                 console.log(this.state.infosContact)
             }
         });
+        this.forceUpdate()
     }
 
     ajouterContact() {
