@@ -30,8 +30,7 @@ class Demande extends React.Component {
         {this.state.statut === "passee-refusee" && <td className="infos_cotations_txt"><div className="rondStatut" style={{"background-color" : "#f3ea95"}}></div>Cotation refusée</td>}
         {this.state.statut === "passee-gagnee" && <td className="infos_cotations_txt"><div className="rondStatut" style={{"background-color" : "#6c996c"}}></div>Cotation gagnée</td>}
         <td className="infos_cotations_txt">{this.state.produits}</td>
-        <td className="infos_cotations_txt">{this.state.volume}</td>
-        <td className="infos_cotations_txt">{this.state.volume_unite}</td>
+        <td className="infos_cotations_txt">{this.state.volume} {this.state.volume_unite}</td>
         <td className="infos_cotations_txt">{this.state.duree}</td>
       </tr>
     );

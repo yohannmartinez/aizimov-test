@@ -111,6 +111,7 @@ a{
 
 .fiche_demande_title_page{
     font-size:20px;
+    padding-bottom: 2em; 
     font-weight:700;
     letter-spacing: 1.5px;
     display:block;
@@ -215,6 +216,7 @@ a{
 }
 .fiche_demande_resume_title{
     color: $dark-grey; 
+    flex: 1; 
     text-align: left; 
     font-size: 0.9em; 
     font-weight: 600; 

@@ -77,6 +77,35 @@
 
 
 // Disponibilité: 
+.entrepot_disponibilite_sliders_container{
+    display: flex; 
+    margin-left: 1em; 
+    margin-right: 1em; 
+}
+.entrepot_disponibilite_slider_container{
+    flex: 1; 
+    text-align: center; 
+    min-height: 10em; 
+}
+.entrepot_disponibilite_percentage_label{
+    color: $orange; 
+    font-size: 0.7em; 
+    font-weight: 500; 
+}
+.entrepot_disponibilite_slider{
+    min-height: 10em; 
+}
+.entrepot_disponibilite_label{
+    font-size: 0.7em; 
+    font-weight: 500; 
+    margin-bottom: 0.7em; 
+}
+
+
+
+
+
+
 .entrepot_infos_dispo_box{
     flex: 1; 
     overflow:hidden;

@@ -5,11 +5,12 @@
 }
 
 .cotations_title_page{
-    font-size:20px;
-    font-weight:700;
+    font-size:1.4em; ;
+    font-weight:600;
+
     letter-spacing: 1.5px;
     display:inline-block;
-    color:rgb(87, 87, 87);
+    color: $dark-grey; 
 }
 
 .cotations_button_filter{
@@ -27,9 +28,9 @@
 }
 
 .cotations_sous_title{
-    font-weight:600;
-    color:#6e6e6e;
-    font-size:18px;
+    font-weight:550;
+    color:$dark-grey;
+    font-size:1.2em;
     margin-top:50px
     
 }
@@ -113,9 +114,17 @@
 }
 
 .infos_cotations_txt{
+    font-size: 0.9em; 
+    font-weight: 450; 
+    color: $dark-grey
+}
+.infos_cotations_column{
     padding-left:5px;
     border:none;
-    position: relative;
+    color: $dark-grey; 
+    font-weight: 550; 
+    font-size: 1em; 
+    position: relative;    
 }
 
 .container_center_infos_supp{
@@ -142,6 +151,7 @@
 
 .infos_supp_white_container{
     background-color:white;
+    color: $dark-grey; 
     border-radius:10px;
     padding:25px;
     margin-top:20px;

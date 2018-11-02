@@ -112,7 +112,7 @@ class cotationsEnCours extends React.Component {
             console.log('non')
             document.getElementById('container_page_cotations').className = "contenu_page_contations_grand"
             console.log(document.getElementById('container_page_cotations').className)
-        } */
+        } */ 
     }
 
     closeInfosSupp() {
@@ -195,16 +195,16 @@ class cotationsEnCours extends React.Component {
 
                                     <div className="infos_supp_white_container">
                                         {this.state.selectedCotation.statut === "Attente-client" &&
-                                            <p className="infos_supp_txt">En attente de la réponse du client</p>
+                                            <p className="facture_infos_supp_montant_txt">En attente de la réponse du client</p>
                                         }
                                         {this.state.selectedCotation.statut === "Attente-fournisseur" &&
-                                            <p className="infos_supp_txt">En attente de votre réponse</p>
+                                            <p className="facture_infos_supp_montant_txt">En attente de votre réponse</p>
                                         }
-                                        <p className="infos_supp_txt">{this.state.selectedCotation.volume} {this.state.selectedCotation.volume_unite}</p>
-                                        <p className="infos_supp_txt">Localisation : {this.state.selectedCotation.localisation}</p>
-                                        <p className="infos_supp_txt">Produits : {this.state.selectedCotation.produits}</p>
-                                        <p className="infos_supp_txt">Durée : {this.state.selectedCotation.duree}</p>
-                                        <p className="infos_supp_txt">Début : {this.state.selectedCotation.date_debut}</p>
+                                        <p className="facture_infos_supp_txt">Volume: {this.state.selectedCotation.volume} {this.state.selectedCotation.volume_unite}</p>
+                                        <p className="facture_infos_supp_txt">Localisation : {this.state.selectedCotation.localisation}</p>
+                                        <p className="facture_infos_supp_txt">Produits : {this.state.selectedCotation.produits}</p>
+                                        <p className="facture_infos_supp_txt">Durée : {this.state.selectedCotation.duree}</p>
+                                        <p className="facture_infos_supp_txt">Début : {this.state.selectedCotation.date_debut}</p>
                                         <button className="infos_supp_button" onClick={()=> {this.props.history.push(`/fiche-demande/${this.state.selectedCotation.id_demande}`)}}>Voir plus de détails</button>
                                     </div>
                                 </div>

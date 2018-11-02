@@ -172,7 +172,6 @@ class ficheClient extends React.Component {
                             <div class="container_fiche_client">                        
                                 <div class="container_fiche_client_gauche">
                                     <p class="fiche_demande_title_page">FICHE CLIENT - {this.state.informations_demande.id_demande} </p>
-                                    <span class="fiche_demande_sous_title">Résumé</span>
                                     <div class="fiche_client_resume_box">
                                         <div className = 'fiche_demande_resume_title'> Entreprise : {this.state.informations_demande.entreprise}</div> 
 
@@ -185,8 +184,15 @@ class ficheClient extends React.Component {
                                             <p className = 'fiche_demande_resume_text'>Date de début : {this.state.informations_demande.date_debut}</p>
                                         </div> 
                                     </div>
+                                    <div className = 'fiche_client_brief_container'>
+                                        <div className= 'fiche_client_brief_title '> 
+                                            Brief 
+                                        </div>
+                                        <p className = 'fiche_client_brief_text'>
+                                            {this.state.informations_demande.brief_text}
+                                        </p>
+                                    </div> 
                                     <button onClick = {this.getState}>Get State</button> 
-
                                 </div>
 
                                 <div className="container_fiche_client_droite">
@@ -197,7 +203,7 @@ class ficheClient extends React.Component {
                                                 <a href={"https://s3.eu-west-3.amazonaws.com/spf-fournisseur-container/" + this.state.informations_demande.reference_devis}>
                                                     <button class="fiche_demande_button_accepter_demande">Voir le devis</button>
                                                 </a>
-                                            </div>                                                                                
+                                            </div>                                                                                 
                                         }              
 
                                         {!this.state.informations_demande.reference_devis && this.state.informations_demande.devis_texte && this.state.toggleDivDevisTexte === true  &&                                   

@@ -67,8 +67,8 @@ class entrepotsContact extends React.Component {
                         axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
-                                axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
-                                    // axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                // axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
                                     this.setState({ infosContact: response.data });
                                 });
                             });
@@ -135,7 +135,8 @@ class entrepotsContact extends React.Component {
     ajouterContact() {
         this.setState({ divAjouterContact: false })
         try {
-            var response = fetch('http://localhost:3000/addContact', {
+            var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/addContact', {            
+            // var response = fetch('http://localhost:3000/addContact', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
