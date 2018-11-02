@@ -200,7 +200,7 @@ class entrepotsClientsConditions extends React.Component {
                             <div className = 'entrepot_clients_main_container'>    
                                 <div className = 'entrepot_clients_container_gauche'> 
 
-                                    <div className = 'entrepot_box entrepot_box_temperature_stockage'> 
+                                    <div className = 'entrepot_box entrepot_box_temperature_stockage div_gauche'> 
                                         <p className="entrepot_box_title"> CONDITIONS MINIMALES 
                                         </p>  
                                         <div className='entrepot_clients_lign'>                                        
@@ -233,28 +233,28 @@ class entrepotsClientsConditions extends React.Component {
                                 </div>                                 
                                 <div className = 'entrepot_clients_container_droite'> 
 
-                                    <div className = 'entrepot_box '> 
+                                    <div className = "entrepot_box div_droite"> 
                                         <p className="entrepot_box_title"> TYPES DE DEMANDES ACCEPTEES
                                         </p>  
-                                        <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="stock_mort_possible" value={this.state.informations_entrepot.stock_mort_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.stock_mort_possible}/>  
-                                            <p className = 'entrepot_checkbox_input'> Stock mort </p>
+                                        <div className ="entrepot_lign_checkbox">
+                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="stock_mort_possible" value={this.state.informations_entrepot.stock_mort_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.stock_mort_possible}/>  
+                                            <span className = "entrepot_checkbox_input"> Stock mort </span>
                                         </div> 
-                                        <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="fort_taux_rotation_possible" value={this.state.informations_entrepot.fort_taux_rotation_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.fort_taux_rotation_possible}/>  
-                                            <p className = 'entrepot_checkbox_input'> Fort taux de rotation </p>
+                                        <div className ="entrepot_lign_checkbox">
+                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="fort_taux_rotation_possible" value={this.state.informations_entrepot.fort_taux_rotation_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.fort_taux_rotation_possible}/>  
+                                            <span className = "entrepot_checkbox_input"> Fort taux de rotation </span>
                                         </div> 
-                                        <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="preparation_commande_possible" value={this.state.informations_entrepot.preparation_commande_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.preparation_commande_possible}/>  
-                                            <p className = 'entrepot_checkbox_input'> Stockage avec préparation de commande </p>
+                                        <div className ="entrepot_lign_checkbox">
+                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="preparation_commande_possible" value={this.state.informations_entrepot.preparation_commande_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.preparation_commande_possible}/>  
+                                            <span className = "entrepot_checkbox_input"> Stockage avec préparation de commande </span>
                                         </div> 
-                                        <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="acces_ponctuel" value={this.state.informations_entrepot.acces_ponctuel} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
-                                            <p className = 'entrepot_checkbox_input'> Accès ponctuel à l'entrepôt pour le client </p>
+                                        <div className ="entrepot_lign_checkbox">
+                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="acces_ponctuel" value={this.state.informations_entrepot.acces_ponctuel} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                            <span className = "entrepot_checkbox_input"> Accès ponctuel à l'entrepôt pour le client </span>
                                         </div> 
-                                        <div className = 'entrepot_lign_checkbox'>
-                                            <input type="checkbox" className = 'entrepot_checkbox_clients' name="sous_loc_possible" value={this.state.informations_entrepot.sous_loc_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
-                                            <p className = 'entrepot_checkbox_input'> Sous-location d'une partie de l'entrepôt </p>
+                                        <div className ="entrepot_lign_checkbox">
+                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="sous_loc_possible" value={this.state.informations_entrepot.sous_loc_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
+                                            <span className = "entrepot_checkbox_input"> Sous-location d'une partie de l'entrepôt </span>
                                         </div>                                                                                                                                                                                                            
                                     </div> 
 

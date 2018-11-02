@@ -65,11 +65,15 @@ a{
 }
 
 .fiche_demande_textarea{
-    width:400px;
-    min-height:400px;
+    display: block;
+    min-height:300px;
     border-radius: 5px;
     padding:5px;
     text-align: center;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border:none;
+    width:100%;
+    margin-top:10px;
 }
 
 .fihe_demande_submit_devis{
@@ -84,6 +88,7 @@ a{
     font-size:1em;
     margin-left: 50%;
     transform: translate(-50%);
+    width:100%;
 }
 
 .button_close_div_devis{
@@ -92,7 +97,7 @@ a{
     background-color:transparent;
     right:30px;
     top:30px;
-    color:#6d6d6d;
+    color:#ffffff;
     cursor:pointer;
 }
 
@@ -160,6 +165,7 @@ a{
     font-weight: 500;
     width:300px;
     cursor: pointer;
+    
 }
 
 .fiche_demande_statut{
@@ -190,6 +196,20 @@ a{
     padding:20px;
     text-align: center;
     border-radius:5px;
+    text-align:center;
+    font-weight:500;
+}
+
+.input_infos_devis_texte{
+    border: none;
+    background-color: white;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top:10px;
+    text-align: center;
+    width:calc(100% - 20px);
+    display: block;
 }
 
 .button_close_div_devis_texte{
@@ -223,4 +243,18 @@ a{
     padding-left: 1.1em;
     margin-top: 1em; 
     margin-bottom: 0.5em; 
+}
+
+.fiche_demande_choose_option{
+    border:none;
+    display:block;
+    border-radius:5px;
+    color:white;
+    font-weight:500;
+    cursor: pointer;
+    background-color:#16376D;
+    padding:15px;
+    font-size:14px;
+    margin-top:15px;
+    width:100%;
 }

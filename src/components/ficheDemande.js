@@ -39,9 +39,15 @@ class ficheDemande extends React.Component {
 
             /* --> faire apparaitre la div pour proposer un devis */
             divPropositionDevis: false,
+            divPropositionDevisTexte: false,
+            divPropositionDevisFichier: false,
             fileName: null,
             devis_texte: '',
+            prix_entree: '',
+            prix_sortie: '',
+            prix_stockage: '',
             toggleDivDevisTexte: false,
+            extension_fichier: null,
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -51,7 +57,8 @@ class ficheDemande extends React.Component {
         this.accepterDemande = this.accepterDemande.bind(this);
         this.refuserDemande = this.refuserDemande.bind(this);
         this.onDrop = this.onDrop.bind(this);
-        this.submitDevis = this.submitDevis.bind(this);
+        this.submitDevisTexte = this.submitDevisTexte.bind(this);
+        this.submitDevisFichier = this.submitDevisFichier.bind(this);
     }
 
     async componentDidMount() {
@@ -78,12 +85,12 @@ class ficheDemande extends React.Component {
                 await axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
                     this.setState({ user: user.data[0] }, () => {
-                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {                        
-                        // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                            // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             console.log(response)
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
                                 // axios.get('http://localhost:3000/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {
-                                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {                                    
+                                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getStatutDemande', { params: { id_demande: this.state.informations_demande.id_demande, id_entrepot: this.state.id_entrepot } }).then(response => {
                                     console.log('get statut demande : ' + response.data[0])
                                     this.setState({ infosDemandeStatut: response.data[0].statut, infosDemandeSupp: response.data[0], dateDevis: new Date(response.data[0].date_ajout_devis * 1000).toUTCString() });
                                 });
@@ -129,11 +136,11 @@ class ficheDemande extends React.Component {
     async accepterDemande() {
         this.setState({ statutDemande: "Attente-client", infosDemandeStatut: "Attente-client" }, () => {
             axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
-            // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {                
+                // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {                
                 this.setState({ user_infos: response.data[0].id_entrepot }, () => {
                     try {
                         var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
-                        // var response = fetch('http://localhost:3000/changerStatutDemande', {
+                            // var response = fetch('http://localhost:3000/changerStatutDemande', {
                             method: 'post',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -159,11 +166,11 @@ class ficheDemande extends React.Component {
     refuserDemande() {
         this.setState({ statutDemande: "passee-refusee" }, () => {
             axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
-            // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
+                // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                 this.setState({ user_infos: response.data[0].id_entrepot }, () => {
                     try {
                         var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
-                        // var response = fetch('http://localhost:3000/changerStatutDemande', {
+                            // var response = fetch('http://localhost:3000/changerStatutDemande', {
                             method: 'post',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -190,14 +197,16 @@ class ficheDemande extends React.Component {
     /* --> fonction pour le drop */
     onDrop(files) {
         /* --> fonction pour récupérer l'extension du fichier */
-        function  getExtension(str) {
+        function getExtension(str) {
             let unjoin = str.split(".");
             let extension = unjoin[unjoin.length - 1]
+            
             return extension;
         }
-        
+
         var files_with_id = files
         files_with_id[0]['id'] = 'devis-' + String(uuidv4()) + "." + getExtension(files[0].name);
+        this.setState({extension_fichier : getExtension(files[0].name)})
         console.log(files_with_id)
         this.setState({
             files: files_with_id,
@@ -206,17 +215,17 @@ class ficheDemande extends React.Component {
         this.setState({ 'pdf_ajoute': true })
         var image = URL.createObjectURL(files[0])
         this.setState({ image: image })
-        
+
     }
 
     /* -->envoyer les infos du devis */
-    async submitDevis() {
+    async submitDevisTexte() {
         this.setState({ divPropositionDevis: false });
         /* --> Si l'user à écrit un devis dans le textarea */
         if (this.state.devis_texte !== '') {
             try {
                 var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
-                // var response = fetch('http://localhost:3000/changerStatutDemande', {                    
+                    // var response = fetch('http://localhost:3000/changerStatutDemande', {                    
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -224,6 +233,9 @@ class ficheDemande extends React.Component {
                         id_entrepot: this.state.id_entrepot,
                         date_ajout_devis: Math.floor(Date.now() / 1000),
                         devis_texte: this.state.devis_texte,
+                        prix_entree: this.state.prix_entree,
+                        prix_sortie: this.state.prix_sortie,
+                        prix_stockage: this.state.prix_stockage,
                     }),
                 })
                 if (response.status >= 200 && response.status < 300) {
@@ -233,12 +245,14 @@ class ficheDemande extends React.Component {
                 console.log(errors)
             }
         }
+    }
 
-        /* --> Si l'user à upload un devis */
+    async submitDevisFichier() {
+        /* --> Si l'user à upload un devis fichier*/
         if (this.state.files) {
             try {
                 var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
-                // var response = fetch('http://localhost:3000/changerStatutDemande', {
+                    // var response = fetch('http://localhost:3000/changerStatutDemande', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -257,7 +271,7 @@ class ficheDemande extends React.Component {
 
             try {
                 upload.post('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/upload')
-                // upload.post('http://localhost:3000/upload')
+                    // upload.post('http://localhost:3000/upload')
                     .attach('file', this.state.files[0])
                     .field({ id: this.state.files[0].id }) // sends a JSON post body
                     .end((err, res) => {
@@ -268,7 +282,6 @@ class ficheDemande extends React.Component {
                 console.log("upload raté")
             }
         }
-
     }
 
 
@@ -314,33 +327,56 @@ class ficheDemande extends React.Component {
 
                     <div className="contenu_page">
 
-                        {/* --> div pour ajouter un devis */}
+
+
                         {this.state.divPropositionDevis === true &&
-                            <div className="proposition_devis_container">
-
+                            <div className="bg_devis_texte_fiche_demande">
                                 <button class="button_close_div_devis" onClick={() => { this.setState({ divPropositionDevis: false }) }}><i class="fas fa-times"></i></button>
-                                <p className="cotations_title_page">Proposer un devis</p>
-                                <div class="sous_container_flex_proposition_devis">
-
-                                    <div class="sous_container_gauche_proposition_devis">
-                                        <p className="fiche_demande_sous_title">Possibilité 1 - Choisissez un fichier (pdf)</p>
-                                        <Dropzone onDrop={this.onDrop} className="fiche_demande_dropzone">
-                                            {!this.state.fileName && <span>Aucun fichier selectionné</span>}
-                                            {this.state.fileName}
-                                        </Dropzone>
-                                    </div>
-
-
-                                    <div class="sous_container_droite_proposition_devis">
-                                        <p className="fiche_demande_sous_title">Possibilité 2 - Écrivez vos propositions ici</p>
-                                        <textarea style={{ "resize": "none" }} placeholder="informations" class="fiche_demande_textarea" name="devis_texte" value={this.state.devis_texte} onChange={this.handleChange} />
-                                        <button onClick={this.submitDevis} className="fihe_demande_submit_devis">Envoyer les informations</button>
-                                    </div>
-
-
+                                <div className="container_devis_texte_fiche_demande">
+                                    <p>Quelle méthode souhaitez vous utiliser pour proposer un devis ?</p>
+                                    <button className="fiche_demande_choose_option" onClick={() => { this.setState({ divPropositionDevis: false, divPropositionDevisFichier: true }) }}>Télécharger un fichier</button>
+                                    <button className="fiche_demande_choose_option" onClick={() => { this.setState({ divPropositionDevis: false, divPropositionDevisTexte: true }) }}>Entrer les informations</button>
                                 </div>
                             </div>
                         }
+
+
+
+                        {this.state.divPropositionDevisFichier === true &&
+                            <div className="bg_devis_texte_fiche_demande">
+                                <button class="button_close_div_devis" onClick={() => { this.setState({ divPropositionDevisFichier: false }) }}><i class="fas fa-times"></i></button>
+                                <div className="container_devis_texte_fiche_demande">
+                                    <p className="fiche_demande_sous_title">Proposez un devis</p>
+                                    <Dropzone onDrop={this.onDrop} className="fiche_demande_dropzone">
+                                        {!this.state.fileName && <span>Aucun fichier selectionné</span>}
+                                        {this.state.fileName}
+                                    </Dropzone>
+                                    <button onClick={this.submitDevisFichier} className="fihe_demande_submit_devis">Continuer</button>
+                                </div>
+                            </div>
+                        }
+
+
+
+
+                        {this.state.divPropositionDevisTexte === true &&
+                            <div className="bg_devis_texte_fiche_demande">
+                                <button class="button_close_div_devis" onClick={() => { this.setState({ divPropositionDevisTexte: false }) }}><i class="fas fa-times"></i></button>
+                                <div className="container_devis_texte_fiche_demande">
+                                    <p className="fiche_demande_sous_title">Entrez les informations suivantes</p>
+                                    <input className="input_infos_devis_texte" onChange={this.handleChange} name="prix_entree" placeholder="Tarif Entrée" value={this.state.prix_entree} />
+                                    <input className="input_infos_devis_texte" onChange={this.handleChange} name="prix_sortie" placeholder="Tarif Sortie" value={this.state.prix_sortie} />
+                                    <input className="input_infos_devis_texte" onChange={this.handleChange} name="prix_stockage" placeholder="Tarif Stockage" value={this.state.prix_stockage} />
+                                    <textarea style={{ "resize": "none" }} placeholder="Commentaires" class="fiche_demande_textarea" name="devis_texte" value={this.state.devis_texte} onChange={this.handleChange} />
+                                    <button onClick={this.submitDevisTexte} className="fihe_demande_submit_devis">Continuer</button>
+                                </div>
+                            </div>
+                        }
+
+
+
+
+
 
 
                         {this.state.informations_demande !== null &&
@@ -351,16 +387,16 @@ class ficheDemande extends React.Component {
                                     <p class="fiche_demande_title_page">FICHE DEMANDE </p>
                                     <span class="fiche_demande_sous_title">Résumé</span>
                                     <div class="fiche_demande_container_infos">
-                                        <div className = 'fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div> 
+                                        <div className='fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div>
 
-                                        <div className = 'fiche_demande_resume_lign'> 
-                                            <p className = 'fiche_demande_resume_text'>Volume : {this.state.informations_demande.volume}{this.state.informations_demande.volume_unite}</p>
-                                            <p className = 'fiche_demande_resume_text'>Durée : {this.state.informations_demande.duree}</p>
-                                        </div> 
-                                        <div className = 'fiche_demande_resume_lign'> 
-                                            <p className = 'fiche_demande_resume_text'>Produit : {this.state.informations_demande.produits}</p>
-                                            <p className = 'fiche_demande_resume_text'>Date de début : {this.state.informations_demande.date_debut}</p>
-                                        </div> 
+                                        <div className='fiche_demande_resume_lign'>
+                                            <p className='fiche_demande_resume_text'>Volume : {this.state.informations_demande.volume}{this.state.informations_demande.volume_unite}</p>
+                                            <p className='fiche_demande_resume_text'>Durée : {this.state.informations_demande.duree}</p>
+                                        </div>
+                                        <div className='fiche_demande_resume_lign'>
+                                            <p className='fiche_demande_resume_text'>Produit : {this.state.informations_demande.produits}</p>
+                                            <p className='fiche_demande_resume_text'>Date de début : {this.state.informations_demande.date_debut}</p>
+                                        </div>
                                     </div>
                                     <span class="fiche_demande_sous_title">Détails</span>
                                 </div>
@@ -426,7 +462,10 @@ class ficheDemande extends React.Component {
                                             <div className="bg_devis_texte_fiche_demande">
                                                 <button class="button_close_div_devis_texte" onClick={() => { this.setState({ toggleDivDevisTexte: false }) }}><i class="fas fa-times"></i></button>
                                                 <div className="container_devis_texte_fiche_demande">
-                                                    {this.state.infosDemandeSupp.devis_texte}
+                                                <p>Prix de l'entrée : {this.state.infosDemandeSupp.prix_entree}</p>
+                                                <p>Prix de la sortie : {this.state.infosDemandeSupp.prix_sortie}</p>
+                                                <p>Prix de stockage : {this.state.infosDemandeSupp.prix_stockage}</p>
+                                                <p>Commentaires : {this.state.infosDemandeSupp.devis_texte}</p>
                                                 </div>
                                             </div>
                                         }
