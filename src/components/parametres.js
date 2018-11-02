@@ -270,28 +270,28 @@ class parametres extends React.Component {
                             {this.state.editUserInfos === false &&
                                 <div className="parametres_infos_sous_container">
                                     <div className="parametres_infos_column">
-                                        <p>Nom : {this.state.user.nom}</p>
-                                        <p>Prenom : {this.state.user.prenom} </p>
-                                        <p>Entreprise : {this.state.user.entreprise}</p>
+                                        <p>Nom : <span className="parametres_info_clair">{this.state.user.nom}</span></p>
+                                        <p>Prenom : <span className="parametres_info_clair">{this.state.user.prenom}</span> </p>
+                                        <p>Entreprise : <span className="parametres_info_clair">{this.state.user.entreprise}</span></p>
                                     </div>
                                     <div className="parametres_infos_column">
-                                        <p>Portable : {this.state.user.telephone_portable}</p>
-                                        <p>Fixe : {this.state.user.telephone_fixe}</p>
-                                        <p>Email : {this.state.user.email}</p>
+                                        <p>Portable : <span className="parametres_info_clair">{this.state.user.telephone_portable}</span></p>
+                                        <p>Fixe : <span className="parametres_info_clair">{this.state.user.telephone_fixe}</span></p>
+                                        <p>Email : <span className="parametres_info_clair">{this.state.user.email}</span></p>
                                     </div>
                                 </div>
                             }
                             {this.state.editUserInfos === true &&
                                 <div className="parametres_infos_sous_container">
                                     <div className="parametres_infos_column">
-                                        <p>Nom : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="nom" placeholder="nom" value={this.state.user.nom} /></p>
-                                        <p>Prenom : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="prenom" placeholder="prenom" value={this.state.user.prenom} /></p>
-                                        <p>Entreprise : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="entreprise" placeholder="nom de l'entreprise" value={this.state.user.entreprise} /></p>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Nom :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="nom" placeholder="nom" value={this.state.user.nom} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Prenom :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="prenom" placeholder="prenom" value={this.state.user.prenom} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Entreprise :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="entreprise" placeholder="nom de l'entreprise" value={this.state.user.entreprise} /></div>
                                     </div>
                                     <div className="parametres_infos_column">
-                                        <p>Portable : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="telephone_portable" placeholder="portable" value={this.state.user.telephone_portable} /></p>
-                                        <p>Fixe : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="telephone_fixe" placeholder="fixe" value={this.state.user.telephone_fixe} /></p>
-                                        <p>Email : <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="email" placeholder="email" value={this.state.user.email} /></p>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Portable :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="telephone_portable" placeholder="portable" value={this.state.user.telephone_portable} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Fixe :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="telephone_fixe" placeholder="fixe" value={this.state.user.telephone_fixe} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Email :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_user_info} name="email" placeholder="email" value={this.state.user.email} /></div>
                                     </div>
                                 </div>
                             }
@@ -312,17 +312,17 @@ class parametres extends React.Component {
                             {this.state.editFactureInfos === false &&
                                 <div className="parametres_infos_sous_container">
                                     <div className="parametres_infos_column">
-                                        <p>SIRET : {this.state.infosFacturation.siret}</p>
-                                        <p>TVA : {this.state.infosFacturation.tva}</p>
-                                        <p>BIC : {this.state.infosFacturation.bic}</p>
-                                        <p>IBAN : {this.state.infosFacturation.iban}</p>
-                                        <p>Banque : {this.state.infosFacturation.banque}</p>
+                                        <p>SIRET :<span className="parametres_info_clair"> {this.state.infosFacturation.siret}</span></p>
+                                        <p>TVA :<span className="parametres_info_clair"> {this.state.infosFacturation.tva}</span></p>
+                                        <p>BIC :<span className="parametres_info_clair"> {this.state.infosFacturation.bic}</span></p>
+                                        <p>IBAN :<span className="parametres_info_clair"> {this.state.infosFacturation.iban}</span></p>
+                                        <p>Banque :<span className="parametres_info_clair"> {this.state.infosFacturation.banque}</span></p>
                                     </div>
                                     <div className="parametres_infos_column">
-                                        <p>Adresse : {this.state.infosFacturation.adresse_facturation}</p>
-                                        <p>Ville : {this.state.infosFacturation.ville}</p>
-                                        <p>Pays : {this.state.infosFacturation.pays}</p>
-                                        <p>Code postal : {this.state.infosFacturation.code_postal}</p>
+                                        <p>Adresse :<span className="parametres_info_clair"> {this.state.infosFacturation.adresse_facturation}</span></p>
+                                        <p>Ville :<span className="parametres_info_clair"> {this.state.infosFacturation.ville}</span></p>
+                                        <p>Pays :<span className="parametres_info_clair"> {this.state.infosFacturation.pays}</span></p>
+                                        <p>Code postal :<span className="parametres_info_clair"> {this.state.infosFacturation.code_postal}</span></p>
                                     </div>
 
                                 </div>
@@ -330,17 +330,17 @@ class parametres extends React.Component {
                             {this.state.editFactureInfos === true &&
                                 <div className="parametres_infos_sous_container">
                                     <div className="parametres_infos_column">
-                                        <p>SIRET : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="siret" placeholder="SIRET" value={this.state.infosFacturation.siret} /></p>
-                                        <p>TVA : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="tva" placeholder="TVA" value={this.state.infosFacturation.tva} /></p>
-                                        <p>BIC : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="bic" placeholder="BIC" value={this.state.infosFacturation.bic} /></p>
-                                        <p>IBAN : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="iban" placeholder="IBAN" value={this.state.infosFacturation.iban} /></p>
-                                        <p> Banque : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="banque" placeholder="banque" value={this.state.infosFacturation.banque} /></p>
+                                    <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">SIRET :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="siret" placeholder="SIRET" value={this.state.infosFacturation.siret} /></div>
+                                    <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">TVA : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="tva" placeholder="TVA" value={this.state.infosFacturation.tva} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">BIC : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="bic" placeholder="BIC" value={this.state.infosFacturation.bic} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">IBAN : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="iban" placeholder="IBAN" value={this.state.infosFacturation.iban} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title"> Banque : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="banque" placeholder="banque" value={this.state.infosFacturation.banque} /></div>
                                     </div>
                                     <div className="parametres_infos_column">
-                                        <p>Adresse : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="adresse_facturation" placeholder="adresse de facturation" value={this.state.infosFacturation.adresse_facturation} /></p>
-                                        <p>Ville : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="ville" placeholder="ville" value={this.state.infosFacturation.ville} /></p>
-                                        <p>Pays : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="pays" placeholder="pays" value={this.state.infosFacturation.pays} /></p>
-                                        <p>Code postal : <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="code_postal" placeholder="code_postal" value={this.state.infosFacturation.code_postal} /></p>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Adresse : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="adresse_facturation" placeholder="adresse de facturation" value={this.state.infosFacturation.adresse_facturation} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Ville : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="ville" placeholder="ville" value={this.state.infosFacturation.ville} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Pays : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="pays" placeholder="pays" value={this.state.infosFacturation.pays} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">Code postal : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="code_postal" placeholder="code_postal" value={this.state.infosFacturation.code_postal} /></div>
                                     </div>
                                 </div>
                             }

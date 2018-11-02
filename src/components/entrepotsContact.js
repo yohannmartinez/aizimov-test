@@ -27,7 +27,7 @@ class entrepotsContact extends React.Component {
             toogleCotation: false,
             toggleDeconnexion: false,
             id_entrepot: '',
-            infosContact: null,
+            infosContact: [],
             divAjouterContact: false,
             infos_ajout_contact: {
                 prenom: "",
@@ -121,11 +121,26 @@ class entrepotsContact extends React.Component {
     }
 
     deleteContact(id) {
-        /* this.state.infosContact.splice(id,1);
-        console.log(this.state.infosContact) */
-        this.state.infosContact.forEach((contact,i) => {
-            if(contact.id === id){
-                this.state.infosContact.splice(i,1);
+        try {
+            var response = fetch('http://localhost:3000/deleteContact', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: id,
+                    actif: "Non",
+                    date_inactif: Math.floor(Date.now() / 1000),
+                }),
+            })
+            if (response.status >= 200 && response.status < 300) {
+                console.log('tout est bon')
+            }
+        } catch (errors) {
+            alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
+        }
+
+        this.state.infosContact.forEach((contact, i) => {
+            if (contact.id === id) {
+                this.state.infosContact.splice(i, 1);
                 console.log(this.state.infosContact)
             }
         });
@@ -147,14 +162,18 @@ class entrepotsContact extends React.Component {
                     telephone_portable: this.state.infos_ajout_contact.telephone_portable,
                     poste: this.state.infos_ajout_contact.poste,
                     contact_principal: this.state.infos_ajout_contact.contact_principal,
+                    actif: 'Oui',
                 }),
-            })
-            if (response.status >= 200 && response.status < 300) {
-                console.log('tout est bon')
-            }
+            }).then(
+                this.state.infosContact.push({ id: this.state.infosContact[this.state.infosContact.length -1].id +1 ,id_entrepot : this.state.id_entrepot, nom: this.state.infos_ajout_contact.nom, prenom: this.state.infos_ajout_contact.prenom, mail: this.state.infos_ajout_contact.mail, telephone_fixe: this.state.infos_ajout_contact.telephone_fixe, telephone_portable: this.state.infos_ajout_contact.telephone_portable, poste: this.state.infos_ajout_contact.poste }),
+                console.log(this.state.infosContact)
+
+            )
+
         } catch (errors) {
             alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
         }
+
     }
 
 
@@ -197,6 +216,25 @@ class entrepotsContact extends React.Component {
                         </div>
                     </div>
                     <div className="contenu_page_full_width">
+
+                        {this.state.divAjouterContact === true &&
+                            <div className="entrepot_contact__div_ajouter_devis">
+                                <button className="entrepot_contact_add_contact_button_cancel" onClick={() => { this.setState({ divAjouterContact: false }) }}><i class="fas fa-times"></i></button>
+                                <div className="entrepot_contact_white_container_ajouter_devis">
+                                    <p><input className="entrepot_contact_ajout_contact_input" placeholder="prenom" name="prenom" value={this.state.infos_ajout_contact.prenom} onChange={this.handleChangeAddContact} /></p>
+                                    <p><input className="entrepot_contact_ajout_contact_input" placeholder="nom" name="nom" value={this.state.infos_ajout_contact.nom} onChange={this.handleChangeAddContact} /></p>
+                                    <p><input className="entrepot_contact_ajout_contact_input" placeholder="mail" name="mail" value={this.state.infos_ajout_contact.mail} onChange={this.handleChangeAddContact} /></p>
+                                    <p><input className="entrepot_contact_ajout_contact_input" placeholder="poste" name="poste" value={this.state.infos_ajout_contact.poste} onChange={this.handleChangeAddContact} /></p>
+                                    <p><input className="entrepot_contact_ajout_contact_input" placeholder="telephone fixe" name="telephone_fixe" value={this.state.infos_ajout_contact.telephone_fixe} onChange={this.handleChangeAddContact} /></p>
+                                    <p><input className="entrepot_contact_ajout_contact_input" placeholder="telephone portable" name="telephone_portable" value={this.state.infos_ajout_contact.telephone_portable} onChange={this.handleChangeAddContact} /></p>
+
+                                    <button className="entrepot_contact_add_contact_button" onClick={this.ajouterContact}>Ajouter le contact</button>
+                                </div>
+                            </div>
+                        }
+
+
+
                         <div className='entrepot_onglets_container'>
                             <div onClick={() => { this.props.history.push('/entrepots') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Informations principales
@@ -219,41 +257,17 @@ class entrepotsContact extends React.Component {
                                     <button className="entrepot_contact_button_ajouter_contact" onClick={() => { this.setState({ divAjouterContact: true }) }}>Ajouter un contact</button>
                             </p>
                             <p className="entrepot_contact_description_page">Renseignez ici les responsables de l'entrepot à contacter</p>
-                            {this.state.infosContact === null &&
+                            {this.state.infosContact.length === 0 &&
                                 <div>
                                     <span>Vous n'avez ajouté aucun contact</span>
                                 </div>
                             }
-                            {this.state.infosContact !== null &&
+                            {this.state.infosContact.length > 0 &&
                                 <div>
                                     <ContactList contacts={this.state.infosContact} getIdDemande={this.getIdDemande} deleteContact={this.deleteContact} />
                                 </div>
                             }
 
-                            {this.state.divAjouterContact === true &&
-                                <div className="entrepot_contact__div_ajouter_devis">
-                                    <div className="parametres_infos_sous_container">
-                                        <div className="parametres_infos_column">
-                                            <p>Prénom : <input className="parametres_infos_column_input" placeholder="prenom" name="prenom" value={this.state.infos_ajout_contact.prenom} onChange={this.handleChangeAddContact} /></p>
-                                            <p>Nom : <input className="parametres_infos_column_input" placeholder="nom" name="nom" value={this.state.infos_ajout_contact.nom} onChange={this.handleChangeAddContact} /></p>
-                                            <p>Mail : <input className="parametres_infos_column_input" placeholder="mail" name="mail" value={this.state.infos_ajout_contact.mail} onChange={this.handleChangeAddContact} /></p>
-                                            <p>Poste : <input className="parametres_infos_column_input" placeholder="poste" name="poste" value={this.state.infos_ajout_contact.poste} onChange={this.handleChangeAddContact} /></p>
-                                        </div>
-                                        <div className="parametres_infos_column">
-                                            <p>Tel. fixe : <input className="parametres_infos_column_input" placeholder="telephone fixe" name="telephone_fixe" value={this.state.infos_ajout_contact.telephone_fixe} onChange={this.handleChangeAddContact} /></p>
-                                            <p>Tel. portable : <input className="parametres_infos_column_input" placeholder="telephone portable" name="telephone_portable" value={this.state.infos_ajout_contact.telephone_portable} onChange={this.handleChangeAddContact} /></p>
-                                            <p>Contact Principal : <select name="contact_principal" value={this.state.infos_ajout_contact.contact_principal} onChange={this.handleChangeAddContact}>
-                                                <option></option>
-                                                <option>Oui</option>
-                                                <option>Non</option>
-                                            </select>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <button className="entrepot_contact_valider_modifications" onClick={this.ajouterContact}>Ajouter le contact</button>
-                                    <button className="entrepot_contact_valider_modifications" onClick={() => { this.setState({ divAjouterContact: false }) }}>Annuler</button>
-                                </div>
-                            }
                         </div>
                     </div>
 

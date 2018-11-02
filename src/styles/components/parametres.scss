@@ -59,10 +59,16 @@
 
 .parametres_infos_column{
     flex:1;
-    padding:20px 10px 10px 40px;
+    padding:20px 30px 30px 40px;
     font-weight:500;
     color:#464646;
     
+}
+
+.parametres_info_clair{
+    color:#888888;
+    text-align:right;
+    float:right;
 }
 
 /* --> style pour les icones croix et stylo pour modifier les infos */
@@ -260,7 +266,7 @@
     height:auto;
     width:auto;
     border-radius:5px;
-    padding:25px;
+    padding:35px;
     text-align: center;
 }
 
