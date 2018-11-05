@@ -29,17 +29,56 @@ a{
 }
 
 .fiche_demande_dropzone{
-    width:200px;
+    width:100%;
     height:50px;
     border-radius:5px;
     text-align:center;
-    padding:5px;
-    background-color: #f8f8f8;
-    box-shadow: 0 0 5px rgb(134, 134, 134);
-    cursor:pointer;
     color:#6d6d6d;
     margin-left: 50%;
     transform: translate(-50%);
+    min-width:250px;
+}
+
+.button_fiche_demande_upload_devis{
+    border:none;
+    color:white;
+    background-color:#16376D;
+    border-radius:5px;
+    padding:15px;
+    width:100%;
+    cursor:pointer;
+}
+
+.fiche_demande_file_container{
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 250px;
+    background-color: white;
+    border: 0.5px solid #b9b9b9;
+    height: 60px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.fiche_demande_file_extension{
+    background-color: #ad2727;
+    color: white;
+    width: auto;
+    text-align: center;
+    padding: 0 15px 0 15px;
+    font-weight: 700;
+    font-size: 16px;
+    height: 60px;
+    line-height: 60px;
+    display: inline-block;
+    margin: 0 15px 0 0;
+    border-right:0.5px solid #b9b9b9;
+
+}
+
+.fiche_demande_file_nom_fichier{
+    width:100%;
+    padding-right:15px;
 }
 
 .fiche_demande_container_infos{
@@ -81,9 +120,9 @@ a{
     color:white;
     border-radius: 5px;
     border:none;
-    padding:10px;
+    padding:15px;
     display:block;
-    margin-top:15px;
+    margin-top:30px;
     cursor:pointer;
     font-size:1em;
     margin-left: 50%;
@@ -111,7 +150,7 @@ a{
 }
 
 .container_statut_demande{
-    margin-bottom:15px;
+    margin-bottom:35px;
 }
 
 .fiche_demande_title_page{
@@ -193,7 +232,7 @@ a{
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
-    padding:20px;
+    padding:35px;
     text-align: center;
     border-radius:5px;
     text-align:center;

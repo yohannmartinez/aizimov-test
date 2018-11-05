@@ -150,10 +150,10 @@
     margin-right: 1.1em;
     margin-top: 1em; 
     margin-bottom: 2em; 
-    max-height: 10em; 
 }
 .entrepot_image_container_button{
-    flex: 1
+    flex: 1;
+    position: relative;
 }
 .entrepot_image_container_image{
     flex: 8
@@ -162,8 +162,9 @@
     width: 0.8em; 
     height: auto; 
     cursor: pointer;
-    margin: auto; 
-    padding-top: 4em; 
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%); 
 }
 .entrepot_infos_images{
     max-height: 100%; 
