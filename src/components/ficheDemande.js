@@ -200,13 +200,13 @@ class ficheDemande extends React.Component {
         function getExtension(str) {
             let unjoin = str.split(".");
             let extension = unjoin[unjoin.length - 1]
-            
+
             return extension;
         }
 
         var files_with_id = files
         files_with_id[0]['id'] = 'devis-' + String(uuidv4()) + "." + getExtension(files[0].name);
-        this.setState({extension_fichier : getExtension(files[0].name)})
+        this.setState({ extension_fichier: getExtension(files[0].name).toUpperCase() })
         console.log(files_with_id)
         this.setState({
             files: files_with_id,
@@ -348,10 +348,17 @@ class ficheDemande extends React.Component {
                                 <div className="container_devis_texte_fiche_demande">
                                     <p className="fiche_demande_sous_title">Proposez un devis</p>
                                     <Dropzone onDrop={this.onDrop} className="fiche_demande_dropzone">
-                                        {!this.state.fileName && <span>Aucun fichier selectionné</span>}
-                                        {this.state.fileName}
+                                        {!this.state.fileName && <button className="button_fiche_demande_upload_devis">Télécharger un fichier</button>}
+                                        {this.state.fileName &&
+                                            <div className="fiche_demande_file_container">
+                                                
+                                                    <span className="fiche_demande_file_extension">{this.state.extension_fichier}</span>
+                                                    <span className="fiche_demande_file_nom_fichier">{this.state.fileName}</span>
+                                                
+                                            </div>
+                                        }
                                     </Dropzone>
-                                    <button onClick={this.submitDevisFichier} className="fihe_demande_submit_devis">Continuer</button>
+                                    {this.state.fileName && <button onClick={this.submitDevisFichier} className="fihe_demande_submit_devis">Continuer</button>}
                                 </div>
                             </div>
                         }
@@ -467,10 +474,10 @@ class ficheDemande extends React.Component {
                                             <div className="bg_devis_texte_fiche_demande">
                                                 <button class="button_close_div_devis_texte" onClick={() => { this.setState({ toggleDivDevisTexte: false }) }}><i class="fas fa-times"></i></button>
                                                 <div className="container_devis_texte_fiche_demande">
-                                                <p>Prix de l'entrée : {this.state.infosDemandeSupp.prix_entree}</p>
-                                                <p>Prix de la sortie : {this.state.infosDemandeSupp.prix_sortie}</p>
-                                                <p>Prix de stockage : {this.state.infosDemandeSupp.prix_stockage}</p>
-                                                <p>Commentaires : {this.state.infosDemandeSupp.devis_texte}</p>
+                                                    <p>Prix de l'entrée : {this.state.infosDemandeSupp.prix_entree}</p>
+                                                    <p>Prix de la sortie : {this.state.infosDemandeSupp.prix_sortie}</p>
+                                                    <p>Prix de stockage : {this.state.infosDemandeSupp.prix_stockage}</p>
+                                                    <p>Commentaires : {this.state.infosDemandeSupp.devis_texte}</p>
                                                 </div>
                                             </div>
                                         }
