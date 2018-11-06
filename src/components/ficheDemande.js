@@ -377,7 +377,7 @@ class ficheDemande extends React.Component {
 
 
 
-
+ 
 
                         {this.state.informations_demande !== null &&
                             <div class="container_fiche_demande">
@@ -386,7 +386,7 @@ class ficheDemande extends React.Component {
                                 <div class="fiche_demande_infos">
                                     <p class="fiche_demande_title_page">FICHE DEMANDE </p>
                                     <span class="fiche_demande_sous_title">Résumé</span>
-                                    <div class="fiche_demande_container_infos">
+                                    <div class="fiche_client_resume_box">
                                         <div className='fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div>
 
                                         <div className='fiche_demande_resume_lign'>
@@ -398,7 +398,12 @@ class ficheDemande extends React.Component {
                                             <p className='fiche_demande_resume_text'>Date de début : {this.state.informations_demande.date_debut}</p>
                                         </div>
                                     </div>
-                                    <span class="fiche_demande_sous_title">Détails</span>
+                                    <span class="fiche_demande_sous_title">Brief plus complet</span>
+                                    <div class="fiche_client_resume_box">
+                                    <p className = 'fiche_client_brief_text'>
+                                            {this.state.informations_demande.brief_text}
+                                    </p>                                        
+                                    </div> 
                                 </div>
 
 

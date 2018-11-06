@@ -37,12 +37,14 @@ class cotationsEnCours extends React.Component {
         this.deconnexion = this.deconnexion.bind(this);
         this.getIdDemande = this.getIdDemande.bind(this);
         this.closeInfosSupp = this.closeInfosSupp.bind(this);
+        this.getState = this.getState.bind(this); 
+    }
+
+    getState() {
+        console.log(this.state)
     }
 
     async componentDidMount() {
-
-        
-        
 
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
@@ -140,7 +142,7 @@ class cotationsEnCours extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.email}</span>
+                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
@@ -210,6 +212,7 @@ class cotationsEnCours extends React.Component {
                                 </div>
                             }
                         </div>
+                        <button onClick = {this.getState}>Get State</button> 
                     </div>
                 </div>
 

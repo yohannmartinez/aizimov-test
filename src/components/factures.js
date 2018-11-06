@@ -61,7 +61,7 @@ class factures extends React.Component {
         }
         try {
             console.log('user '+ this.state.user.id_compte)
-            console.log('on va chercher la liste de clients')            
+            console.log('on va chercher la liste de factures')            
             // const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getFacturesforId?id=' + this.state.user.id_compte)
             const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getFacturesforId?id=' + this.state.user.id_compte)
             const json = await response.json();     
@@ -95,8 +95,20 @@ class factures extends React.Component {
         }
     }    
 
-    getIdFacture(id_facture) {
-        
+    async getIdFacture(id_facture) {
+        try{
+            var image = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=' + this.state.liste_factures[id_facture]['s3_name'])
+            // var image = await fetch('http://localhost:3000/getImageFromS3?fileKey=facture-345a7314-78ba-41d6-b473-b24d0da884d2.png')
+            var url = "http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=" + this.state.liste_factures[id_facture]['s3_name']
+            this.setState({
+                image: image
+            })
+            this.setState({
+                url: url
+            })
+          } catch(err){
+              console.log(err)
+          } 
         /* --> met la demande en question dans le state selectedCotation pour pouvoir l'afficher dans la div infossupp */
         this.setState({ factureSelectionnee: this.state.liste_factures[id_facture] });
 
@@ -104,11 +116,9 @@ class factures extends React.Component {
         if (document.getElementById('container_page_liste_factures').className === "contenu_page_contations_grand") {
             document.getElementById('container_page_liste_factures').className = "contenu_page_contations_petit";
             document.getElementById('infosSupp').style.transform = "translate(0,0)";
-        } /* else {
-            console.log('non')
-            document.getElementById('container_page_cotations').className = "contenu_page_contations_grand"
-            console.log(document.getElementById('container_page_cotations').className)
-        } */
+        } 
+          
+   
     }
 
 
@@ -156,7 +166,7 @@ class factures extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
+                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>

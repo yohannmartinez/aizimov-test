@@ -64,7 +64,65 @@ class entrepots extends React.Component {
             current_image_number: 0,
             max_image_number: 0, 
             au_moins_une_temperature: false, 
-            test: 10, 
+            test: 10,    
+            disponibilite_initial: {
+                ambiant_couvert : { 
+                    1: {annee: '', pourcentage: '', timestamp: ''},
+                    2: {annee: '', pourcentage: '', timestamp: ''},
+                    3: {annee: '', pourcentage: '', timestamp: ''},
+                    4: {annee: '', pourcentage: '', timestamp: ''},
+                    5: {annee: '', pourcentage: '', timestamp: ''},
+                    6: {annee: '', pourcentage: '', timestamp: ''},
+                    7: {annee: '', pourcentage: '', timestamp: ''},
+                    8: {annee: '', pourcentage: '', timestamp: ''},
+                    9: {annee: '', pourcentage: '', timestamp: ''},
+                    10: {annee: '', pourcentage: '', timestamp: ''},
+                    11: {annee: '', pourcentage: '', timestamp: ''},
+                    0: {annee: '', pourcentage: '', timestamp: ''}
+                 }, 
+                 frais : {
+                    1: {annee: '', pourcentage: '', timestamp: ''},
+                    2: {annee: '', pourcentage: '', timestamp: ''},
+                    3: {annee: '', pourcentage: '', timestamp: ''},
+                    4: {annee: '', pourcentage: '', timestamp: ''},
+                    5: {annee: '', pourcentage: '', timestamp: ''},
+                    6: {annee: '', pourcentage: '', timestamp: ''},
+                    7: {annee: '', pourcentage: '', timestamp: ''},
+                    8: {annee: '', pourcentage: '', timestamp: ''},
+                    9: {annee: '', pourcentage: '', timestamp: ''},
+                    10: {annee: '', pourcentage: '', timestamp: ''},
+                    11: {annee: '', pourcentage: '', timestamp: ''},
+                    0: {annee: '', pourcentage: '', timestamp: ''}                     
+                 }, 
+                 surgele : {
+                    1: {annee: '', pourcentage: '', timestamp: ''},
+                    2: {annee: '', pourcentage: '', timestamp: ''},
+                    3: {annee: '', pourcentage: '', timestamp: ''},
+                    4: {annee: '', pourcentage: '', timestamp: ''},
+                    5: {annee: '', pourcentage: '', timestamp: ''},
+                    6: {annee: '', pourcentage: '', timestamp: ''},
+                    7: {annee: '', pourcentage: '', timestamp: ''},
+                    8: {annee: '', pourcentage: '', timestamp: ''},
+                    9: {annee: '', pourcentage: '', timestamp: ''},
+                    10: {annee: '', pourcentage: '', timestamp: ''},
+                    11: {annee: '', pourcentage: '', timestamp: ''},
+                    0: {annee: '', pourcentage: '', timestamp: ''}                     
+                 }, 
+                 ambiant_exterieur : {
+                    1: {annee: '', pourcentage: '', timestamp: ''},
+                    2: {annee: '', pourcentage: '', timestamp: ''},
+                    3: {annee: '', pourcentage: '', timestamp: ''},
+                    4: {annee: '', pourcentage: '', timestamp: ''},
+                    5: {annee: '', pourcentage: '', timestamp: ''},
+                    6: {annee: '', pourcentage: '', timestamp: ''},
+                    7: {annee: '', pourcentage: '', timestamp: ''},
+                    8: {annee: '', pourcentage: '', timestamp: ''},
+                    9: {annee: '', pourcentage: '', timestamp: ''},
+                    10: {annee: '', pourcentage: '', timestamp: ''},
+                    11: {annee: '', pourcentage: '', timestamp: ''},
+                    0: {annee: '', pourcentage: '', timestamp: ''}                     
+                 }                 
+            },         
             disponibilite_nouveau: {
                 ambiant_couvert : { 
                     1: {annee: '', pourcentage: '', timestamp: ''},
@@ -204,7 +262,9 @@ class entrepots extends React.Component {
 
     /*--> fonction pour annuler les changements */
     lalaland() {
-        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, confirm_changes: false, editResume: false, editDescription: false });
+        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, 
+            disponibilite: this.state.disponibilite_initial,
+            confirm_changes: false, editResume: false, editDescription: false });
     }
     handleOnChangeTest(value) {
         this.setState({
@@ -534,6 +594,8 @@ class entrepots extends React.Component {
                                 this.setState({disponibilites_bdd: disponibilites_bdd})
                                 /* On récupère l'état initial des disponibilités (vide pour tous les mois et températures pour l'instant) */
                                 var disponibilite_state = this.state.disponibilite
+                                var disponibiliteCopy = Object.assign({}, this.state.disponibilite);
+
                                 disponibilites_bdd.forEach(function(element) {
                                         disponibilite_state[element.temperature][element.mois]['annee'] = element.annee
                                         disponibilite_state[element.temperature][element.mois]['date_ajout'] = element.date_ajout
@@ -544,6 +606,8 @@ class entrepots extends React.Component {
                                         }
                                     }                                    
                                 )
+                                
+                                this.setState({disponibilite_initial: disponibilite_state})
                                 this.setState({disponibilite: disponibilite_state})                            
                             })                            
                         })
@@ -605,7 +669,7 @@ class entrepots extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
+                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>

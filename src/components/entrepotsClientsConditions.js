@@ -154,7 +154,7 @@ class entrepotsClientsConditions extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
+                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
@@ -233,7 +233,7 @@ class entrepotsClientsConditions extends React.Component {
                                 </div>                                 
                                 <div className = 'entrepot_clients_container_droite'> 
 
-                                    <div className = "entrepot_box div_droite"> 
+                                    <div className = "entrepot_box entrepot_box_temperature_stockage div_droite"> 
                                         <p className="entrepot_box_title"> TYPES DE DEMANDES ACCEPTEES
                                         </p>  
                                         <div className ="entrepot_lign_checkbox">

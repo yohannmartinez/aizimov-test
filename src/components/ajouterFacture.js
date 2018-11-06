@@ -127,7 +127,7 @@ class ajouterFacture extends React.Component {
     async submitFacture(){
         console.log(this.state.files[0])
         try{
-            upload.post('http://localhost:3000/upload')
+            upload.post('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/upload')
             .attach('file', this.state.files[0])            
             .field({ id :  this.state.files[0].id }) // sends a JSON post body
             .end((err, res) => {
@@ -178,7 +178,7 @@ class ajouterFacture extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
+                    <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>

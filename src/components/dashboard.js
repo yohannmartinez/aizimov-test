@@ -84,9 +84,7 @@ class dashboard extends React.Component {
 
         return (
             <div>
-                {this.state.user.verifie === "true" &&
-                    <NotVerify></NotVerify>
-                }
+                
                 <div className="navbar">
                     {this.state.toggleDeconnexion === true &&
                         <div class="container_deconnexion">
@@ -99,7 +97,7 @@ class dashboard extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.email}</span>
+                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
