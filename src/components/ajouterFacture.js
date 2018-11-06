@@ -232,7 +232,7 @@ class ajouterFacture extends React.Component {
 
                                         <div className = 'ajout_facture_dropzone_container'>
                                             {this.state.pdf_ajoute != true &&
-                                                <Dropzone onDrop={this.onDrop.bind(this)} className = 'ajout_facture_dropzone'  accept="image/jpeg,  image/jpg image/png application/pdf">
+                                                <Dropzone onDrop={this.onDrop.bind(this)} className = 'ajout_facture_dropzone'  accept="image/jpeg,  image/jpg, image/png, application/pdf">
                                                     <p className ='ajout_facture_dropzone_text_small'>Ajouter le pdf de la facture ici </p>
                                                     <p className ='ajout_facture_dropzone_text_big'> + </p>
                                                 </Dropzone>

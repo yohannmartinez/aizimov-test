@@ -257,7 +257,7 @@ class entrepots extends React.Component {
 
     getState() {
         console.log(this.state)
-        console.log(this.state.disponibilite['ambiant_couvert'][this.state.current_month]['pourcentage'])
+        console.log(this.state.images['image_1'] === '')
     }
 
     /*--> fonction pour annuler les changements */
@@ -386,11 +386,11 @@ class entrepots extends React.Component {
 
     async onDrop(files) {
         var files_with_id = files
-        if (this.state.images['image_1'] === '') {
+        if (this.state.images['image_1'] === '' || this.state.images['image_1']=== undefined ) {
             var numero = '1'
-        } else if (this.state.images['image_2'] === '') {
+        } else if (this.state.images['image_2'] === '' || this.state.images['image_2']=== undefined) {
             var numero = '2'
-        } else if (this.state.images['image_3'] === '') {
+        } else if (this.state.images['image_3'] === '' || this.state.images['image_3']=== undefined) {
             var numero = '3'
         } else {
             var numero = '4'
@@ -403,6 +403,15 @@ class entrepots extends React.Component {
             files: files_with_id
         });
         this.setState({ 'pdf_ajoute': true })
+
+        var liste_urls = this.state.liste_urls
+        var max_image_number = this.state.max_image_number + 1
+        liste_urls.push('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=' + 'image-entrepot-' + this.state.informations_entrepot.id_entrepot + '-' + String(numero) + '.png')
+        this.setState({
+            liste_urls: liste_urls, 
+            max_image_number: max_image_number
+        })
+
         try {
             await upload.post('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/upload')
             // await upload.post('http://localhost:3000/upload')
@@ -965,7 +974,7 @@ class entrepots extends React.Component {
                                                             }                                                                
                                                         </div>  
                                                     </div>
-                                                    {this.state.liste_urls.length < 3 &&
+                                                    {this.state.liste_urls.length < 4 &&
                                                     <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
                                                         <button className='entrepot_infos_button' >Ajouter une photo </button>
                                                     </Dropzone>                                                        
