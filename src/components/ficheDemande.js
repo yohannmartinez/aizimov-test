@@ -384,45 +384,25 @@ class ficheDemande extends React.Component {
 
 
 
- 
+
 
                         {this.state.informations_demande !== null &&
                             <div class="container_fiche_demande">
-
-
-                                <div class="fiche_demande_infos">
-                                    <p class="fiche_demande_title_page">FICHE DEMANDE </p>
-                                    <span class="fiche_demande_sous_title">Résumé</span>
-                                    <div class="fiche_client_resume_box">
-                                        <div className='fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div>
-
-                                        <div className='fiche_demande_resume_lign'>
-                                            <p className='fiche_demande_resume_text'>Volume : {this.state.informations_demande.volume}{this.state.informations_demande.volume_unite}</p>
-                                            <p className='fiche_demande_resume_text'>Durée : {this.state.informations_demande.duree}</p>
-                                        </div>
-                                        <div className='fiche_demande_resume_lign'>
-                                            <p className='fiche_demande_resume_text'>Produit : {this.state.informations_demande.produits}</p>
-                                            <p className='fiche_demande_resume_text'>Date de début : {this.state.informations_demande.date_debut}</p>
-                                        </div>
-                                    </div>
-                                    <span class="fiche_demande_sous_title">Brief plus complet</span>
-                                    <div class="fiche_client_resume_box">
-                                    <p className = 'fiche_client_brief_text'>
-                                            {this.state.informations_demande.brief_text}
-                                    </p>                                        
-                                    </div> 
+                                <p class="fiche_demande_title_page">FICHE DEMANDE </p>
+                                <div class='fiche_demande_breadcrumb'>
+                                        <button className="fiche_demande_breadcrumb_before" onClick={()=> {this.props.history.push('/cotationsEnCours')}}>Cotations en cours</button>
+                                        <span className='fiche_demande_breadcrumb_sep'>></span>
+                                        <span className='fiche_demande_breadcrumb_actual'>Référence : {this.state.informations_demande.id_demande}</span>
                                 </div>
-
-
                                 <div class="fiche_demande_statut">
-
-                                    <div>
                                         {this.state.infosDemandeStatut === "Attente-fournisseur" &&
-                                            <div>
+                                            <div class="containter_fiche_demande_statut">
+                                                <div class="container_status">
                                                 <div className="rondStatut" style={{ "background-color": "orange" }}></div><span>En attente de votre réponse</span>
+                                                </div>
                                                 <div className="container_buttons_devis">
-                                                    <button onClick={this.accepterDemande} className="fiche_demande_button_accepter_demande">Se positionner sur la demande</button>
-                                                    <button onClick={this.refuserDemande} className="fiche_demande_button_refuser_demande">Refuser la demande</button>
+                                                    <button onClick={this.refuserDemande} className="fiche_demande_button_refuser_demande">Refuser</button>
+                                                    <button onClick={this.accepterDemande} className="fiche_demande_button_accepter_demande">Se positionner</button>
                                                 </div>
                                             </div>
                                         }
@@ -453,7 +433,7 @@ class ficheDemande extends React.Component {
                                             </div>
                                         }
                                         {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.reference_devis &&
-                                            <div>
+                                            <div> 
                                                 <p class="title_devis_fiche_demande">Vous avez ajouté un devis le {this.state.dateDevis}</p>
                                                 <div class="container_buttons_devis">
                                                     <a href={"https://s3.eu-west-3.amazonaws.com/spf-fournisseur-container/" + this.state.infosDemandeSupp.reference_devis}>
@@ -481,9 +461,47 @@ class ficheDemande extends React.Component {
                                                 </div>
                                             </div>
                                         }
-                                    </div>
-
                                 </div>
+                            
+                                <div class="fiche_demande_infos">
+                                    {/*<span class="fiche_demande_sous_title">Résumé</span>*/}
+                                    <div class='fiche_demande_container'>
+                                        <div class="fiche_demande_container_resume">
+                                            {/*<div className='fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div>*/}
+                                            <p className='fiche_demande_resume_title'>Résumé</p>
+                                            <div className='fiche_demande_resume_lign'>
+                                                <p className='fiche_demande_resume_text'><span className="fiche_demande_resume_text_title">Volume : </span><span className="fiche_demande_resume_text_value">{this.state.informations_demande.volume}{this.state.informations_demande.volume_unite}</span></p>
+                                                <p className='fiche_demande_resume_text'><span className="fiche_demande_resume_text_title">Durée : </span><span className="fiche_demande_resume_text_value">{this.state.informations_demande.duree}</span></p>
+                                            </div>
+                                            <div className='fiche_demande_resume_lign'>
+                                                <p className='fiche_demande_resume_text'><span className="fiche_demande_resume_text_title">Produit : </span><span className="fiche_demande_resume_text_value">{this.state.informations_demande.produits}</span></p>
+                                                <p className='fiche_demande_resume_text'><span className="fiche_demande_resume_text_title">Date de début : </span><span className="fiche_demande_resume_text_value">{this.state.informations_demande.date_debut}</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="fiche_demande_container_infos">
+                                            {/*<div className='fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div>*/}
+                                            <p className='fiche_demande_resume_title'>Infos</p>
+                                            <div className='fiche_demande_resume_lign'>
+                                                <p className='fiche_demande_infos_text'><span className="fiche_demande_infos_text_title">Email : </span><span className="fiche_demande_resume_text_value">adresse.email@email.com</span></p>
+                                            </div>
+                                            <div className='fiche_demande_resume_lign'>
+                                                <p className='fiche_demande_infos_text'><span className="fiche_demande_infos_text_title">Téléphone : </span><span className="fiche_demande_resume_text_value">06 54 59 53 54</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='fiche_demande_container'>
+                                        <div class="fiche_demande_container_details">
+                                            {/*<div className='fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div>*/}
+                                            <p className='fiche_demande_resume_title'>Résumé</p>
+                                            <div className='fiche_demande_details_lign'>
+                                                <p className='fiche_demande_details_text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porta erat maximus sapien faucibus tincidunt. Aliquam posuere facilisis lectus, porttitor ultricies enim faucibus ut. Aliquam ac velit et justo sodales finibus. Quisque accumsan magna vel dolor porta, id feugiat orci eleifend. Phasellus vel rutrum lectus. Etiam venenatis orci velit. Nam sapien sapien, efficitur at maximus sed, pharetra vitae neque.</p>
+                                                <p className='fiche_demande_details_text'>Cras ac lacus sagittis, porttitor purus ac, volutpat magna. Integer sit amet tincidunt neque, eu sagittis nunc. Sed hendrerit turpis lobortis vehicula lacinia. Aliquam quis scelerisque ipsum. Curabitur mattis elit id fermentum maximus. In hac habitasse platea dictumst. Nulla vitae lectus sed tellus fringilla elementum. Vivamus sit amet dui quis dolor tempor volutpat quis in sapien. Vestibulum tincidunt augue tempus mi ultrices, vel eleifend sapien rhoncus. Pellentesque erat justo, faucibus vel rhoncus ac, dignissim et nunc. Curabitur ac tortor facilisis, rutrum sapien et, pharetra neque. Nunc ut tellus lectus. Maecenas mattis massa felis, vitae gravida tortor tincidunt sit amet. Sed at tellus ex. Nullam ut vehicula lacus, ac eleifend diam.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                 
+                            
                             </div>
                         }
                     </div>

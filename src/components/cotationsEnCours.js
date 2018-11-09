@@ -168,7 +168,7 @@ class cotationsEnCours extends React.Component {
                             <p className="cotations_title_page">COTATIONS EN COURS</p>
                             {/* <button className="cotations_button_filter">Filtrer</button> */}
                         </div>
-                        {<div>
+                        {/*<div>
                             <p className="cotations_sous_title">Cotations en attente de votre réponse</p>
                             {this.state.demandesAttenteFournisseur.length > 0 &&
                                 <DemandesAttenteFournisseurList demandes={this.state.demandesAttenteFournisseur} getIdDemande={this.getIdDemande} />
@@ -177,7 +177,7 @@ class cotationsEnCours extends React.Component {
                             {this.state.demandesAttenteFournisseur.length === 0 &&
                                 <span>Aucune demande en attente de votre confirmation</span>
                             }
-                        </div>}
+                        </div>*/}
                         <div>
                             <p className="cotations_sous_title">Toutes vos cotations en attente</p>
                             <DemandesList demandes={this.state.demandes} getIdDemande={this.getIdDemande} />
