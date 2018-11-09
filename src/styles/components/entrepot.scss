@@ -72,7 +72,7 @@
     margin-top: 2em; 
     text-align: left; 
     font-size: 0.9em; 
-    font-weight: 450; 
+    font-weight: 500;
     color: $dark-grey; 
 }
 
@@ -129,7 +129,7 @@
 .entrepots_infos_input{
     background-color:#f8f8f8;
     border:none; 
-    padding:none;
+    padding: 0;
     position: relative;
     box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);  
     border-radius: 5px; 
@@ -209,12 +209,146 @@
     padding-top: 1em; 
     text-align: left; 
     padding-left: 1.1rem;
-    font-weight: 450; 
+    font-weight: 500;
     padding-bottom: 1em; 
 }
 
 
-
+.entrepot_contact_title_button_container{
+  display: flex;
+  align-items: center;
+}
+.entrepot_contact_title_page_container{
+  flex: 2;
+  min-width: 60%;
+}
+.entrepot_contact_button_ajouter_contact_container{
+  float: right;
+  flex: 2;
+  max-width: 40%
+}
 // Separation au sein d'une meme ligne dans une Box
+
+
+
+
+@media (max-width:550px){
+  .entrepot_infos_resume_lign {
+    text-align: center;
+    display: block;
+  }
+  .entrepot_box_title, .entrepot_stockage_temperature_title_container, .entrepot_infos_input_resume, .entrepot_stockage_temperature_input, .entrepot_stockage_temperature_label, .entrepot_stockage_temperature_container_input, .entrepot_stockage_title_sous_partie, .entrepot_services_log_et_clients_label {
+    text-align: center;
+  }
+  .entrepot_infos_resume_subcontainer{
+    padding-bottom: 2em;
+  }
+  .entrepot_stockage_temperature_line, .entrepot_stockage_temperature_range_lign, .entrepot_stockage_temperature_ligne_ajout {
+    display: block;
+  }
+  .entrepot_stockage_temperature_range_container, .entrepot_stockage_temperature_volume_container {
+    display: inline-flex;
+  }
+  .entrepot_stockage_temperature_range_lign, .entrepot_stockage_temperature_range_label_margin_left{
+    margin-left:0;
+  }
+  .entrepot_stockage_temperature_input, .entrepot_stockage_temperature_ligne_ajout{
+    margin-right: 0;
+  }
+  .entrepot_stockage_temperature_label, .entrepot_services_log_et_clients_label{
+    padding-left:0
+  }
+  .entrepot_clients_lign {
+    display: block;
+    text-align: center;
+  }
+  .entrepot_clients_input{
+    margin-right: 0;
+  }
+
+
+}
+@media (max-width:700px) {
+  .contenu_page {
+    padding: 15px 50px;
+  }
+  .entrepot_infos_resume_subcontainer {
+    display: block;
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+  .entrepot_infos_resume_column_edit {
+    display: block;
+  }
+  .entrepot_infos_resume_label_edit {
+    flex: 1;
+  }
+  .entrepot_infos_input_resume {
+    flex: 1;
+    max-width: none;
+    margin-right: 0;
+  }
+
+}
+@media (max-width:1100px){
+  .entrepot_onglets_container {
+    display: block;
+    margin: 20px 50px 0px 50px;
+  }
+  .entrepot_onglet_selectionne {
+    background: $dark-blue;
+    width: 100%;
+    border: 2px solid $dark-blue;
+    border-radius: 5px;
+    padding-bottom: 0.6rem;
+    color: #fff;
+    margin: 2px 0px;
+  }
+  .entrepot_onglet_non_selectionne {
+    background: transparent;
+    width: 100%;
+    border: 2px solid $dark-blue;
+    border-radius: 5px;
+    padding-bottom: 0.6rem;
+    color: $dark-blue;
+    margin: 2px 0px;
+  }
+  .entrepot_infos_main_container {
+        display: block;
+  }
+  .contenu_page, .contenu_page_full_width{
+        width:100%;
+  }
+  .div_with_big_bottom_padding {
+    padding-bottom: 0;
+  }
+  .entrepot_infos_description_box {
+    margin-left: 0;
+  }
+  .entrepot_stockage_main_container {
+    display: block;
+  }
+  .entrepot_securite_main_container {
+    display: block;
+  }
+  .entrepot_box_temperature_stockage{
+    margin-bottom: 2em;
+  }
+  .entrepot_infos_dispo_box {
+    margin-bottom: 2em;
+  }
+  .entrepot_box{
+    margin-bottom:2em;
+  }
+  .entrepots_infos_container_droite_divise_deux{
+    margin-top: 0;
+  }
+  .entrepot_contact_container{
+    width:100%;
+  }
+  .entrepot_clients_main_container {
+    display: block;
+  }
+}
 
 

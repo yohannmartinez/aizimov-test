@@ -24,14 +24,15 @@ class Demande extends React.Component {
   render() {
     return (
       <tr className="container_cotation" onClick={this.afficherInfosSupp}>
-        {this.state.statut === "Attente-client" && <td className="infos_cotations_txt"><div className="rondStatut" style={{"background-color" : "#f3ea95"}}></div>En attente de la réponse du client</td>}
-        {this.state.statut === "Attente-fournisseur" && <td className="infos_cotations_txt"><div className="rondStatut" style={{"background-color" : "orange"}}></div>En attente de votre réponse</td>}
-        {this.state.statut === "passee-perdue" && <td className="infos_cotations_txt"><div className="rondStatut" style={{"background-color" : "#a80b0b"}}></div>Cotation perdue</td>}
-        {this.state.statut === "passee-refusee" && <td className="infos_cotations_txt"><div className="rondStatut" style={{"background-color" : "#f3ea95"}}></div>Cotation refusée</td>}
-        {this.state.statut === "passee-gagnee" && <td className="infos_cotations_txt"><div className="rondStatut" style={{"background-color" : "#6c996c"}}></div>Cotation gagnée</td>}
-        <td className="infos_cotations_txt">{this.state.produits}</td>
-        <td className="infos_cotations_txt">{this.state.volume} {this.state.volume_unite}</td>
-        <td className="infos_cotations_txt">{this.state.duree}</td>
+          {this.state.statut === "Attente-client" && <td className="infos_cotations_txt_status"><span className="infos_cotations_title">Statut : </span><span className="infos_cotations_value"><div className="rondStatut" style={{"background-color" : "#f3ea95"}}></div>En attente de la réponse du client</span></td>}
+          {this.state.statut === "Attente-fournisseur" && <td className="infos_cotations_txt_status"><span className="infos_cotations_title">Statut : </span><span className="infos_cotations_value"><div className="rondStatut" style={{"background-color" : "orange"}}></div>En attente de votre réponse</span></td>}
+          {this.state.statut === "passee-perdue" && <td className="infos_cotations_txt_status"><span className="infos_cotations_title">Statut : </span><span className="infos_cotations_value"><div className="rondStatut" style={{"background-color" : "#a80b0b"}}></div>Cotation perdue</span></td>}
+          {this.state.statut === "passee-refusee" && <td className="infos_cotations_txt_status"><span className="infos_cotations_title">Statut : </span><span className="infos_cotations_value"><div className="rondStatut" style={{"background-color" : "#f3ea95"}}></div>Cotation refusée</span></td>}
+          {this.state.statut === "passee-gagnee" && <td className="infos_cotations_txt_status"><span className="infos_cotations_title">Statut : </span><span className="infos_cotations_value"><div className="rondStatut" style={{"background-color" : "#6c996c"}}></div>Cotation gagnée</span></td>}
+          <td className="infos_cotations_txt"><span className="infos_cotations_title">Produits : </span><span className="infos_cotations_value">{this.state.produits}</span></td>
+          <td className="infos_cotations_txt"><span className="infos_cotations_title">Volume : </span><span className="infos_cotations_value">{this.state.volume} {this.state.volume_unite}</span></td>
+          <td className="infos_cotations_txt"><span className="infos_cotations_title">Durée : </span><span className="infos_cotations_value">{this.state.duree}</span></td>
+            <td className="infos_cotations_button"><button onClick={this.afficherInfosSupp}>Voir plus de détails</button></td>
       </tr>
     );
   }

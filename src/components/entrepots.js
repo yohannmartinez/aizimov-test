@@ -64,65 +64,7 @@ class entrepots extends React.Component {
             current_image_number: 0,
             max_image_number: 0, 
             au_moins_une_temperature: false, 
-            test: 10,    
-            disponibilite_initial: {
-                ambiant_couvert : { 
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}
-                 }, 
-                 frais : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }, 
-                 surgele : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }, 
-                 ambiant_exterieur : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }                 
-            },         
+            test: 10, 
             disponibilite_nouveau: {
                 ambiant_couvert : { 
                     1: {annee: '', pourcentage: '', timestamp: ''},
@@ -257,14 +199,12 @@ class entrepots extends React.Component {
 
     getState() {
         console.log(this.state)
-        console.log(this.state.images['image_1'] === '')
+        console.log(this.state.disponibilite['ambiant_couvert'][this.state.current_month]['pourcentage'])
     }
 
     /*--> fonction pour annuler les changements */
     lalaland() {
-        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, 
-            disponibilite: this.state.disponibilite_initial,
-            confirm_changes: false, editResume: false, editDescription: false });
+        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, confirm_changes: false, editResume: false, editDescription: false });
     }
     handleOnChangeTest(value) {
         this.setState({
@@ -386,11 +326,11 @@ class entrepots extends React.Component {
 
     async onDrop(files) {
         var files_with_id = files
-        if (this.state.images['image_1'] === '' || this.state.images['image_1']=== undefined ) {
+        if (this.state.images['image_1'] === '') {
             var numero = '1'
-        } else if (this.state.images['image_2'] === '' || this.state.images['image_2']=== undefined) {
+        } else if (this.state.images['image_2'] === '') {
             var numero = '2'
-        } else if (this.state.images['image_3'] === '' || this.state.images['image_3']=== undefined) {
+        } else if (this.state.images['image_3'] === '') {
             var numero = '3'
         } else {
             var numero = '4'
@@ -403,15 +343,6 @@ class entrepots extends React.Component {
             files: files_with_id
         });
         this.setState({ 'pdf_ajoute': true })
-
-        var liste_urls = this.state.liste_urls
-        var max_image_number = this.state.max_image_number + 1
-        liste_urls.push('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=' + 'image-entrepot-' + this.state.informations_entrepot.id_entrepot + '-' + String(numero) + '.png')
-        this.setState({
-            liste_urls: liste_urls, 
-            max_image_number: max_image_number
-        })
-
         try {
             await upload.post('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/upload')
             // await upload.post('http://localhost:3000/upload')
@@ -603,8 +534,6 @@ class entrepots extends React.Component {
                                 this.setState({disponibilites_bdd: disponibilites_bdd})
                                 /* On récupère l'état initial des disponibilités (vide pour tous les mois et températures pour l'instant) */
                                 var disponibilite_state = this.state.disponibilite
-                                var disponibiliteCopy = Object.assign({}, this.state.disponibilite);
-
                                 disponibilites_bdd.forEach(function(element) {
                                         disponibilite_state[element.temperature][element.mois]['annee'] = element.annee
                                         disponibilite_state[element.temperature][element.mois]['date_ajout'] = element.date_ajout
@@ -615,8 +544,6 @@ class entrepots extends React.Component {
                                         }
                                     }                                    
                                 )
-                                
-                                this.setState({disponibilite_initial: disponibilite_state})
                                 this.setState({disponibilite: disponibilite_state})                            
                             })                            
                         })
@@ -678,7 +605,7 @@ class entrepots extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
+                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
@@ -710,7 +637,7 @@ class entrepots extends React.Component {
                                 Stockage
                             </div>
                             <div onClick={() => { this.props.history.push('/entrepots-securite') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
-                                Sécurité
+                                Informations bâtiment
                             </div>
                             <div onClick={() => { this.props.history.push('/entrepots-contact') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Personnes à contacter
@@ -792,7 +719,7 @@ class entrepots extends React.Component {
                                                                         value={this.state.disponibilite['ambiant_couvert'][item]['pourcentage']}
                                                                         orientation="vertical"
                                                                         onChange = {(e) => this.handleOnChangeDisponibilite(e, 'ambiant_couvert',item)}
-                                                                        step = {10}             
+                                                                        step = {10}
                                                                         className = 'entrepot_disponibilite_slider'                                                           
                                                                     />
                                                                     <div className = 'entrepot_disponibilite_label'> 
@@ -974,7 +901,7 @@ class entrepots extends React.Component {
                                                             }                                                                
                                                         </div>  
                                                     </div>
-                                                    {this.state.liste_urls.length < 4 &&
+                                                    {this.state.liste_urls.length < 3 &&
                                                     <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
                                                         <button className='entrepot_infos_button' >Ajouter une photo </button>
                                                     </Dropzone>                                                        
