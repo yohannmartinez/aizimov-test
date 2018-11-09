@@ -193,7 +193,7 @@ class entrepotsContact extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
+                        <span className="navbar_usermail">{this.state.user.email}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
@@ -254,9 +254,14 @@ class entrepotsContact extends React.Component {
                             </div>
                         </div>
                         <div className='contenu_page'>
-                            <p className="entrepot_contact_title_page ">Personnes à contacter
+                            <div className="entrepot_contact_title_button_container">
+                                <div className="entrepot_contact_title_page_container">
+                                    <p className="entrepot_contact_title_page ">Personnes à contacter</p>
+                                </div>
+                                <div className="entrepot_contact_button_ajouter_contact_container">
                                     <button className="entrepot_contact_button_ajouter_contact" onClick={() => { this.setState({ divAjouterContact: true }) }}>Ajouter un contact</button>
-                            </p>
+                                </div>
+                            </div>
                             <p className="entrepot_contact_description_page">Renseignez ici les responsables de l'entrepot à contacter</p>
                             {this.state.infosContact.length === 0 &&
                                 <div>
