@@ -51,7 +51,18 @@
     padding-bottom: 1em; 
     padding-right: 1.1em; 
     font-size: 0.9em; 
+    white-space: pre-line;
+    font-weight: 350; 
 }
+
+.clients-text-if-nothing{
+    font-size: 0.9em; 
+    color: $dark-grey; 
+    padding-right: 20%; 
+    line-height: 150%; 
+    font-weight: 500; 
+}
+
   
 @media (max-width: 600px) {
     .fiche_demande_resume_lign, .fiche_demande_resume_title {

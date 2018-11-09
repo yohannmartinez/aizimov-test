@@ -32,6 +32,7 @@ class cotationsPassees extends React.Component {
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
         this.getIdDemande = this.getIdDemande.bind(this);
+        this.getState = this.getState.bind(this)
     }
 
     async componentDidMount() {
@@ -59,10 +60,11 @@ class cotationsPassees extends React.Component {
             console.log('pas de token')
         }
 
-
-
     }
 
+    getState() {
+        console.log(this.state)
+    }
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
     }
@@ -182,7 +184,7 @@ class cotationsPassees extends React.Component {
                                         {this.state.selectedCotation.statut === "passee-refusee" &&
                                             <p className="infos_supp_txt">Cotation refusée</p>
                                         }
-                                        {this.state.selectedCotation.statut === "passee-gagnee" &&
+                                        {this.state.selectedCotation.statut === "Client" &&
                                             <p className="infos_supp_txt">Cotation gagnée</p>
                                         }
                                         <p className="infos_supp_txt">{this.state.selectedCotation.volume} {this.state.selectedCotation.volume_unite}</p>
@@ -196,6 +198,7 @@ class cotationsPassees extends React.Component {
                             }
                         </div>
                     </div>
+                    <button onClick = {this.getState}> Get State </button>
 
 
 

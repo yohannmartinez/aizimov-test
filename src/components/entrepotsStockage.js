@@ -570,7 +570,7 @@ class entrepotsStockage extends React.Component {
                                                             Hauteur maximale
                                                         </div> 
                                                         <div className= 'entrepot_stockage_temperature_container_input'>
-                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.ambiant_couvert_hauteur_racks} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert_hauteur_racks'/>                                                         
+                                                            <input className = ' entrepot_stockage_temperature_input ' value={this.state.informations_entrepot.ambiant_couvert_vrac_hauteur} onChange={this.handleChangeInformationsEntrepot}  name = 'ambiant_couvert_vrac_hauteur'/>                                                         
                                                         </div> 
                                                     </div>                                                                                                         
                                                 </div>                                                
