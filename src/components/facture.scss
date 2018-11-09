@@ -1,0 +1,58 @@
+.facture_infos_supp_title{
+    font-size:1.6em;
+    margin:0;
+    color:$dark-grey;
+}
+
+.facture_infos_supp_title_light{
+    font-size:1em;
+    margin:0;
+    color:$dark-grey;
+}
+
+.facture_infos_supp_montant_txt{
+    color: $dark-grey; 
+    font-size: 1em; 
+    margin-bottom: 2.4em; 
+}
+
+.facture_infos_supp_txt{
+    color: $middle-grey; 
+    font-size: 0.85em; 
+    margin-bottom: 1.4em; 
+
+}
+@media(max-width:1200px){
+
+
+}
+@media/*(min-width: 577px) and */(max-width: 992px) {
+  .contenu_page_contations_grand{
+    width:100%;
+  }
+  .contenu_page_contations_petit{
+    width:100%;
+  }
+  .container_infos_supp{
+    width:100%;
+  }
+  .contenu_page_contations_grand{
+    padding: 30px;
+  }
+
+}
+
+@media (max-width: 800px) {
+  .infos_cotations_txt {
+    display: block;
+    text-align: center;
+  }
+  .infos_cotations_button {
+    text-align: center;
+  }
+  .infos_cotations_title, .infos_cotations_value {
+    width: 100%;
+    display: block;
+    flex: none;
+  }
+}
