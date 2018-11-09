@@ -10,10 +10,10 @@ import { triggerMenu } from '../actions/menuburger';
 import Dropzone from 'react-dropzone'
 const uuidv4 = require('uuid/v4');
 const upload = require('superagent');
-import flechePleineDroite from '../img/fleche_pleine_droite.png'; 
-import flechePleineGauche from '../img/fleche_pleine_gauche.png'; 
-import flecheVideDroite from '../img/fleche_vide_droite.png'; 
-import flecheVideGauche from '../img/fleche_vide_gauche.png'; 
+import flechePleineDroite from '../img/fleche_pleine_droite.png';
+import flechePleineGauche from '../img/fleche_pleine_gauche.png';
+import flecheVideDroite from '../img/fleche_vide_droite.png';
+import flecheVideGauche from '../img/fleche_vide_gauche.png';
 import Slider from 'react-rangeslider'
 
 
@@ -27,17 +27,17 @@ const settings = {
     slidesToScroll: 1
 };
 const mois_nom_chiffre = {
-    0: 'Dec', 
-    1: 'Jan', 
-    2: 'Fev', 
-    3: 'Mar', 
-    4: 'Avr', 
-    5: 'Mai', 
-    6: 'Juin', 
-    7: 'Juil', 
-    8: 'Aou', 
-    9: 'Sep', 
-    10: 'Oct', 
+    0: 'Dec',
+    1: 'Jan',
+    2: 'Fev',
+    3: 'Mar',
+    4: 'Avr',
+    5: 'Mai',
+    6: 'Juin',
+    7: 'Juil',
+    8: 'Aou',
+    9: 'Sep',
+    10: 'Oct',
     11: 'Nov'
 }
 
@@ -62,182 +62,182 @@ class entrepots extends React.Component {
             confirm_changes: false,
             current_image: '',
             current_image_number: 0,
-            max_image_number: 0, 
-            au_moins_une_temperature: false, 
-            test: 10,    
+            max_image_number: 0,
+            au_moins_une_temperature: false,
+            test: 10,
             disponibilite_initial: {
-                ambiant_couvert : { 
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}
-                 }, 
-                 frais : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }, 
-                 surgele : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }, 
-                 ambiant_exterieur : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }                 
-            },         
+                ambiant_couvert: {
+                    1: { annee: '', pourcentage: '', timestamp: '' },
+                    2: { annee: '', pourcentage: '', timestamp: '' },
+                    3: { annee: '', pourcentage: '', timestamp: '' },
+                    4: { annee: '', pourcentage: '', timestamp: '' },
+                    5: { annee: '', pourcentage: '', timestamp: '' },
+                    6: { annee: '', pourcentage: '', timestamp: '' },
+                    7: { annee: '', pourcentage: '', timestamp: '' },
+                    8: { annee: '', pourcentage: '', timestamp: '' },
+                    9: { annee: '', pourcentage: '', timestamp: '' },
+                    10: { annee: '', pourcentage: '', timestamp: '' },
+                    11: { annee: '', pourcentage: '', timestamp: '' },
+                    0: { annee: '', pourcentage: '', timestamp: '' }
+                },
+                frais: {
+                    1: { annee: '', pourcentage: '', timestamp: '' },
+                    2: { annee: '', pourcentage: '', timestamp: '' },
+                    3: { annee: '', pourcentage: '', timestamp: '' },
+                    4: { annee: '', pourcentage: '', timestamp: '' },
+                    5: { annee: '', pourcentage: '', timestamp: '' },
+                    6: { annee: '', pourcentage: '', timestamp: '' },
+                    7: { annee: '', pourcentage: '', timestamp: '' },
+                    8: { annee: '', pourcentage: '', timestamp: '' },
+                    9: { annee: '', pourcentage: '', timestamp: '' },
+                    10: { annee: '', pourcentage: '', timestamp: '' },
+                    11: { annee: '', pourcentage: '', timestamp: '' },
+                    0: { annee: '', pourcentage: '', timestamp: '' }
+                },
+                surgele: {
+                    1: { annee: '', pourcentage: '', timestamp: '' },
+                    2: { annee: '', pourcentage: '', timestamp: '' },
+                    3: { annee: '', pourcentage: '', timestamp: '' },
+                    4: { annee: '', pourcentage: '', timestamp: '' },
+                    5: { annee: '', pourcentage: '', timestamp: '' },
+                    6: { annee: '', pourcentage: '', timestamp: '' },
+                    7: { annee: '', pourcentage: '', timestamp: '' },
+                    8: { annee: '', pourcentage: '', timestamp: '' },
+                    9: { annee: '', pourcentage: '', timestamp: '' },
+                    10: { annee: '', pourcentage: '', timestamp: '' },
+                    11: { annee: '', pourcentage: '', timestamp: '' },
+                    0: { annee: '', pourcentage: '', timestamp: '' }
+                },
+                ambiant_exterieur: {
+                    1: { annee: '', pourcentage: '', timestamp: '' },
+                    2: { annee: '', pourcentage: '', timestamp: '' },
+                    3: { annee: '', pourcentage: '', timestamp: '' },
+                    4: { annee: '', pourcentage: '', timestamp: '' },
+                    5: { annee: '', pourcentage: '', timestamp: '' },
+                    6: { annee: '', pourcentage: '', timestamp: '' },
+                    7: { annee: '', pourcentage: '', timestamp: '' },
+                    8: { annee: '', pourcentage: '', timestamp: '' },
+                    9: { annee: '', pourcentage: '', timestamp: '' },
+                    10: { annee: '', pourcentage: '', timestamp: '' },
+                    11: { annee: '', pourcentage: '', timestamp: '' },
+                    0: { annee: '', pourcentage: '', timestamp: '' }
+                }
+            },
             disponibilite_nouveau: {
-                ambiant_couvert : { 
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}
-                 }, 
-                 frais : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }, 
-                 surgele : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }, 
-                 ambiant_exterieur : {
-                    1: {annee: '', pourcentage: '', timestamp: ''},
-                    2: {annee: '', pourcentage: '', timestamp: ''},
-                    3: {annee: '', pourcentage: '', timestamp: ''},
-                    4: {annee: '', pourcentage: '', timestamp: ''},
-                    5: {annee: '', pourcentage: '', timestamp: ''},
-                    6: {annee: '', pourcentage: '', timestamp: ''},
-                    7: {annee: '', pourcentage: '', timestamp: ''},
-                    8: {annee: '', pourcentage: '', timestamp: ''},
-                    9: {annee: '', pourcentage: '', timestamp: ''},
-                    10: {annee: '', pourcentage: '', timestamp: ''},
-                    11: {annee: '', pourcentage: '', timestamp: ''},
-                    0: {annee: '', pourcentage: '', timestamp: ''}                     
-                 }                 
-            }, 
+                ambiant_couvert: {
+                    1: { annee: '', pourcentage: '', timestamp: '' },
+                    2: { annee: '', pourcentage: '', timestamp: '' },
+                    3: { annee: '', pourcentage: '', timestamp: '' },
+                    4: { annee: '', pourcentage: '', timestamp: '' },
+                    5: { annee: '', pourcentage: '', timestamp: '' },
+                    6: { annee: '', pourcentage: '', timestamp: '' },
+                    7: { annee: '', pourcentage: '', timestamp: '' },
+                    8: { annee: '', pourcentage: '', timestamp: '' },
+                    9: { annee: '', pourcentage: '', timestamp: '' },
+                    10: { annee: '', pourcentage: '', timestamp: '' },
+                    11: { annee: '', pourcentage: '', timestamp: '' },
+                    0: { annee: '', pourcentage: '', timestamp: '' }
+                },
+                frais: {
+                    1: { annee: '', pourcentage: '', timestamp: '' },
+                    2: { annee: '', pourcentage: '', timestamp: '' },
+                    3: { annee: '', pourcentage: '', timestamp: '' },
+                    4: { annee: '', pourcentage: '', timestamp: '' },
+                    5: { annee: '', pourcentage: '', timestamp: '' },
+                    6: { annee: '', pourcentage: '', timestamp: '' },
+                    7: { annee: '', pourcentage: '', timestamp: '' },
+                    8: { annee: '', pourcentage: '', timestamp: '' },
+                    9: { annee: '', pourcentage: '', timestamp: '' },
+                    10: { annee: '', pourcentage: '', timestamp: '' },
+                    11: { annee: '', pourcentage: '', timestamp: '' },
+                    0: { annee: '', pourcentage: '', timestamp: '' }
+                },
+                surgele: {
+                    1: { annee: '', pourcentage: '', timestamp: '' },
+                    2: { annee: '', pourcentage: '', timestamp: '' },
+                    3: { annee: '', pourcentage: '', timestamp: '' },
+                    4: { annee: '', pourcentage: '', timestamp: '' },
+                    5: { annee: '', pourcentage: '', timestamp: '' },
+                    6: { annee: '', pourcentage: '', timestamp: '' },
+                    7: { annee: '', pourcentage: '', timestamp: '' },
+                    8: { annee: '', pourcentage: '', timestamp: '' },
+                    9: { annee: '', pourcentage: '', timestamp: '' },
+                    10: { annee: '', pourcentage: '', timestamp: '' },
+                    11: { annee: '', pourcentage: '', timestamp: '' },
+                    0: { annee: '', pourcentage: '', timestamp: '' }
+                },
+                ambiant_exterieur: {
+                    1: { annee: '', pourcentage: '', timestamp: '' },
+                    2: { annee: '', pourcentage: '', timestamp: '' },
+                    3: { annee: '', pourcentage: '', timestamp: '' },
+                    4: { annee: '', pourcentage: '', timestamp: '' },
+                    5: { annee: '', pourcentage: '', timestamp: '' },
+                    6: { annee: '', pourcentage: '', timestamp: '' },
+                    7: { annee: '', pourcentage: '', timestamp: '' },
+                    8: { annee: '', pourcentage: '', timestamp: '' },
+                    9: { annee: '', pourcentage: '', timestamp: '' },
+                    10: { annee: '', pourcentage: '', timestamp: '' },
+                    11: { annee: '', pourcentage: '', timestamp: '' },
+                    0: { annee: '', pourcentage: '', timestamp: '' }
+                }
+            },
             disponibilite: {
-                ambiant_couvert : { 
-                    1: {annee: '', pourcentage: 0, timestamp: ''},
-                    2: {annee: '', pourcentage: 0, timestamp: ''},
-                    3: {annee: '', pourcentage: 0, timestamp: ''},
-                    4: {annee: '', pourcentage: 0, timestamp: ''},
-                    5: {annee: '', pourcentage: 0, timestamp: ''},
-                    6: {annee: '', pourcentage: 0, timestamp: ''},
-                    7: {annee: '', pourcentage: 0, timestamp: ''},
-                    8: {annee: '', pourcentage: 0, timestamp: ''},
-                    9: {annee: '', pourcentage: 0, timestamp: ''},
-                    10: {annee: '', pourcentage: 0, timestamp: ''},
-                    11: {annee: '', pourcentage: 0, timestamp: ''},
-                    0: {annee: '', pourcentage: 0, timestamp: ''}
-                 }, 
-                 frais : {
-                    1: {annee: '', pourcentage: 0, timestamp: ''},
-                    2: {annee: '', pourcentage: 0, timestamp: ''},
-                    3: {annee: '', pourcentage: 0, timestamp: ''},
-                    4: {annee: '', pourcentage: 0, timestamp: ''},
-                    5: {annee: '', pourcentage: 0, timestamp: ''},
-                    6: {annee: '', pourcentage: 0, timestamp: ''},
-                    7: {annee: '', pourcentage: 0, timestamp: ''},
-                    8: {annee: '', pourcentage: 0, timestamp: ''},
-                    9: {annee: '', pourcentage: 0, timestamp: ''},
-                    10: {annee: '', pourcentage: 0, timestamp: ''},
-                    11: {annee: '', pourcentage: 0, timestamp: ''},
-                    0: {annee: '', pourcentage: 0, timestamp: ''}                     
-                 }, 
-                 surgele : {
-                    1: {annee: '', pourcentage: 0, timestamp: ''},
-                    2: {annee: '', pourcentage: 0, timestamp: ''},
-                    3: {annee: '', pourcentage: 0, timestamp: ''},
-                    4: {annee: '', pourcentage: 0, timestamp: ''},
-                    5: {annee: '', pourcentage: 0, timestamp: ''},
-                    6: {annee: '', pourcentage: 0, timestamp: ''},
-                    7: {annee: '', pourcentage: 0, timestamp: ''},
-                    8: {annee: '', pourcentage: 0, timestamp: ''},
-                    9: {annee: '', pourcentage: 0, timestamp: ''},
-                    10: {annee: '', pourcentage: 0, timestamp: ''},
-                    11: {annee: '', pourcentage: 0, timestamp: ''},
-                    0: {annee: '', pourcentage: 0, timestamp: ''}                     
-                 }, 
-                 ambiant_exterieur : {
-                    1: {annee: '', pourcentage: 0, timestamp: ''},
-                    2: {annee: '', pourcentage: 0, timestamp: ''},
-                    3: {annee: '', pourcentage: 0, timestamp: ''},
-                    4: {annee: '', pourcentage: 0, timestamp: ''},
-                    5: {annee: '', pourcentage: 0, timestamp: ''},
-                    6: {annee: '', pourcentage: 0, timestamp: ''},
-                    7: {annee: '', pourcentage: 0, timestamp: ''},
-                    8: {annee: '', pourcentage: 0, timestamp: ''},
-                    9: {annee: '', pourcentage: 0, timestamp: ''},
-                    10: {annee: '', pourcentage: 0, timestamp: ''},
-                    11: {annee: '', pourcentage: 0, timestamp: ''},
-                    0: {annee: '', pourcentage: 0, timestamp: ''}                     
-                 }                 
+                ambiant_couvert: {
+                    1: { annee: '', pourcentage: 0, timestamp: '' },
+                    2: { annee: '', pourcentage: 0, timestamp: '' },
+                    3: { annee: '', pourcentage: 0, timestamp: '' },
+                    4: { annee: '', pourcentage: 0, timestamp: '' },
+                    5: { annee: '', pourcentage: 0, timestamp: '' },
+                    6: { annee: '', pourcentage: 0, timestamp: '' },
+                    7: { annee: '', pourcentage: 0, timestamp: '' },
+                    8: { annee: '', pourcentage: 0, timestamp: '' },
+                    9: { annee: '', pourcentage: 0, timestamp: '' },
+                    10: { annee: '', pourcentage: 0, timestamp: '' },
+                    11: { annee: '', pourcentage: 0, timestamp: '' },
+                    0: { annee: '', pourcentage: 0, timestamp: '' }
+                },
+                frais: {
+                    1: { annee: '', pourcentage: 0, timestamp: '' },
+                    2: { annee: '', pourcentage: 0, timestamp: '' },
+                    3: { annee: '', pourcentage: 0, timestamp: '' },
+                    4: { annee: '', pourcentage: 0, timestamp: '' },
+                    5: { annee: '', pourcentage: 0, timestamp: '' },
+                    6: { annee: '', pourcentage: 0, timestamp: '' },
+                    7: { annee: '', pourcentage: 0, timestamp: '' },
+                    8: { annee: '', pourcentage: 0, timestamp: '' },
+                    9: { annee: '', pourcentage: 0, timestamp: '' },
+                    10: { annee: '', pourcentage: 0, timestamp: '' },
+                    11: { annee: '', pourcentage: 0, timestamp: '' },
+                    0: { annee: '', pourcentage: 0, timestamp: '' }
+                },
+                surgele: {
+                    1: { annee: '', pourcentage: 0, timestamp: '' },
+                    2: { annee: '', pourcentage: 0, timestamp: '' },
+                    3: { annee: '', pourcentage: 0, timestamp: '' },
+                    4: { annee: '', pourcentage: 0, timestamp: '' },
+                    5: { annee: '', pourcentage: 0, timestamp: '' },
+                    6: { annee: '', pourcentage: 0, timestamp: '' },
+                    7: { annee: '', pourcentage: 0, timestamp: '' },
+                    8: { annee: '', pourcentage: 0, timestamp: '' },
+                    9: { annee: '', pourcentage: 0, timestamp: '' },
+                    10: { annee: '', pourcentage: 0, timestamp: '' },
+                    11: { annee: '', pourcentage: 0, timestamp: '' },
+                    0: { annee: '', pourcentage: 0, timestamp: '' }
+                },
+                ambiant_exterieur: {
+                    1: { annee: '', pourcentage: 0, timestamp: '' },
+                    2: { annee: '', pourcentage: 0, timestamp: '' },
+                    3: { annee: '', pourcentage: 0, timestamp: '' },
+                    4: { annee: '', pourcentage: 0, timestamp: '' },
+                    5: { annee: '', pourcentage: 0, timestamp: '' },
+                    6: { annee: '', pourcentage: 0, timestamp: '' },
+                    7: { annee: '', pourcentage: 0, timestamp: '' },
+                    8: { annee: '', pourcentage: 0, timestamp: '' },
+                    9: { annee: '', pourcentage: 0, timestamp: '' },
+                    10: { annee: '', pourcentage: 0, timestamp: '' },
+                    11: { annee: '', pourcentage: 0, timestamp: '' },
+                    0: { annee: '', pourcentage: 0, timestamp: '' }
+                }
             }
         }
         this.handleChange = this.handleChange.bind(this);
@@ -251,8 +251,8 @@ class entrepots extends React.Component {
         this.lalaland = this.lalaland.bind(this);
         this.handleImageAdd = this.handleImageAdd.bind(this);
         this.handleImageSubstract = this.handleImageSubstract.bind(this);
-        this.handleOnChangeTest = this.handleOnChangeTest.bind(this); 
-        this.handleOnChangeDisponibilite = this.handleOnChangeDisponibilite.bind(this); 
+        this.handleOnChangeTest = this.handleOnChangeTest.bind(this);
+        this.handleOnChangeDisponibilite = this.handleOnChangeDisponibilite.bind(this);
     }
 
     getState() {
@@ -262,31 +262,36 @@ class entrepots extends React.Component {
 
     /*--> fonction pour annuler les changements */
     lalaland() {
-        this.setState({ informations_entrepot: this.state.informations_entrepot_initial, 
+        console.log('annulation')
+        console.log(this.state.disponibilite);
+        console.log(this.state.disponibilite_initial);
+        this.setState({
+            informations_entrepot: this.state.informations_entrepot_initial,
             disponibilite: this.state.disponibilite_initial,
-            confirm_changes: false, editResume: false, editDescription: false });
+            confirm_changes: false, editResume: false, editDescription: false
+        });
     }
     handleOnChangeTest(value) {
         this.setState({
-          test: value
+            test: value
         })
-      }
-      handleOnChangeDisponibilite(e, temperature, mois ){
+    }
+    handleOnChangeDisponibilite(e, temperature, mois) {
         var disponibiliteCopy = Object.assign({}, this.state.disponibilite);
         var disponibilite_nouveauCopy = this.state.disponibilite_nouveau
         console.log(mois)
         console.log(disponibiliteCopy[temperature][mois]['pourcentage'])
-        console.log(disponibiliteCopy[temperature][mois])        
+        console.log(disponibiliteCopy[temperature][mois])
         disponibilite_nouveauCopy[temperature][mois]['pourcentage'] = e
         disponibiliteCopy[temperature][mois]['pourcentage'] = e
         disponibiliteCopy[temperature][mois]['annee'] = this.state.mois_annee[mois]
         disponibilite_nouveauCopy[temperature][mois]['annee'] = this.state.mois_annee[mois]
-          this.setState({
-            disponibilite: disponibiliteCopy, 
-            disponibilite_nouveau: disponibilite_nouveauCopy, 
+        this.setState({
+            disponibilite: disponibiliteCopy,
+            disponibilite_nouveau: disponibilite_nouveauCopy,
             confirm_changes: true
-          })
-      }
+        })
+    }
 
 
     handleImageAdd() {
@@ -326,7 +331,7 @@ class entrepots extends React.Component {
             } catch (errors) {
                 alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
             }
-            
+
             var current_date = Math.floor(Date.now() / 1000)
             var disponibilite = this.state.disponibilite_nouveau
             var disponibilite_to_send = []
@@ -334,8 +339,8 @@ class entrepots extends React.Component {
             var temperature = ['ambiant_couvert', 'frais', 'surgele', 'ambiant_exterieur']
             var id_entrepot = this.state.informations_entrepot.id_entrepot
             console.log(id_entrepot)
-            temperature.forEach(function(element) {
-                for (i = 0; i < 12; i++) { 
+            temperature.forEach(function (element) {
+                for (i = 0; i < 12; i++) {
                     if (disponibilite[element][i].pourcentage != '') {
                         var to_send_temp = []
                         to_send_temp.push(id_entrepot)
@@ -345,12 +350,12 @@ class entrepots extends React.Component {
                         to_send_temp.push(disponibilite[element][i].pourcentage)
                         to_send_temp.push(current_date)
                         disponibilite_to_send.push(to_send_temp)
-                    } 
+                    }
                 }
             })
             try {
                 // var response = fetch('http://localhost:3000/modifierDisponibilitesEntrepot', {
-                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierDisponibilitesEntrepot', {                    
+                var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/modifierDisponibilitesEntrepot', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(disponibilite_to_send),
@@ -360,11 +365,11 @@ class entrepots extends React.Component {
                 }
             } catch (errors) {
                 alert("Ca n'a pas marché pour l'ajout des dispos ", errors);
-            }            
+            }
             console.log(disponibilite_to_send)
-            
 
-        })        
+
+        })
 
 
     }
@@ -386,11 +391,11 @@ class entrepots extends React.Component {
 
     async onDrop(files) {
         var files_with_id = files
-        if (this.state.images['image_1'] === '' || this.state.images['image_1']=== undefined ) {
+        if (this.state.images['image_1'] === '' || this.state.images['image_1'] === undefined) {
             var numero = '1'
-        } else if (this.state.images['image_2'] === '' || this.state.images['image_2']=== undefined) {
+        } else if (this.state.images['image_2'] === '' || this.state.images['image_2'] === undefined) {
             var numero = '2'
-        } else if (this.state.images['image_3'] === '' || this.state.images['image_3']=== undefined) {
+        } else if (this.state.images['image_3'] === '' || this.state.images['image_3'] === undefined) {
             var numero = '3'
         } else {
             var numero = '4'
@@ -408,13 +413,13 @@ class entrepots extends React.Component {
         var max_image_number = this.state.max_image_number + 1
         liste_urls.push('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getImageFromS3?fileKey=' + 'image-entrepot-' + this.state.informations_entrepot.id_entrepot + '-' + String(numero) + '.png')
         this.setState({
-            liste_urls: liste_urls, 
+            liste_urls: liste_urls,
             max_image_number: max_image_number
         })
 
         try {
             await upload.post('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/upload')
-            // await upload.post('http://localhost:3000/upload')
+                // await upload.post('http://localhost:3000/upload')
                 .attach('file', this.state.files[0])
                 .field({ id: this.state.files[0].id }) // sends a JSON post body
                 .end((err, res) => {
@@ -496,13 +501,13 @@ class entrepots extends React.Component {
     async componentDidMount() {
         var d = new Date();
         var n = d.getMonth() + 1;
-        var y = d.getFullYear(); 
+        var y = d.getFullYear();
         var mois_annee = {}
         /*  On va créer un object pour récupérer  l'année correspondante des 12 prochains mois */
         var i
-        for (i = 0; i < 12; i++) { 
+        for (i = 0; i < 12; i++) {
             if (n > i) {
-                mois_annee[i] = y+1
+                mois_annee[i] = y + 1
             } else {
                 mois_annee[i] = y
             }
@@ -513,17 +518,17 @@ class entrepots extends React.Component {
         console.log(mois_annee)
 
         this.setState({
-            current_month: n, 
+            current_month: n,
             current_year: y
         })
 
-        /* On créé une liste des mois, dans le bon ordre d'affichage */ 
+        /* On créé une liste des mois, dans le bon ordre d'affichage */
         var indents = [];
         for (var i = n; i < 12 + n; i++) {
             indents.push(i % 12);
         }
         this.setState({
-            all_months : indents
+            all_months: indents
         })
 
         /* fonction pour check si l'user est connecté */
@@ -596,29 +601,29 @@ class entrepots extends React.Component {
 
                             })
                             axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getDisponibiliteEntrepot', { params: { id_entrepot: this.state.informations_entrepot.id_entrepot } }).then(response => {
-                            // axios.get('http://localhost:3000/getDisponibiliteEntrepot', { params: { id_entrepot: this.state.informations_entrepot.id_entrepot } }).then(response => {
-                                
+                                // axios.get('http://localhost:3000/getDisponibiliteEntrepot', { params: { id_entrepot: this.state.informations_entrepot.id_entrepot } }).then(response => {
+
                                 /* On récupère les données de la BDD */
                                 var disponibilites_bdd = response.data
-                                this.setState({disponibilites_bdd: disponibilites_bdd})
+                                this.setState({ disponibilites_bdd: disponibilites_bdd })
                                 /* On récupère l'état initial des disponibilités (vide pour tous les mois et températures pour l'instant) */
                                 var disponibilite_state = this.state.disponibilite
                                 var disponibiliteCopy = Object.assign({}, this.state.disponibilite);
 
-                                disponibilites_bdd.forEach(function(element) {
-                                        disponibilite_state[element.temperature][element.mois]['annee'] = element.annee
-                                        disponibilite_state[element.temperature][element.mois]['date_ajout'] = element.date_ajout
-                                        try{
-                                            disponibilite_state[element.temperature][element.mois]['pourcentage'] = parseInt(element.disponibilite, 10)
-                                        } catch(err){
-                                            disponibilite_state[element.temperature][element.mois]['pourcentage'] = 0   
-                                        }
-                                    }                                    
+                                disponibilites_bdd.forEach(function (element) {
+                                    disponibilite_state[element.temperature][element.mois]['annee'] = element.annee
+                                    disponibilite_state[element.temperature][element.mois]['date_ajout'] = element.date_ajout
+                                    try {
+                                        disponibilite_state[element.temperature][element.mois]['pourcentage'] = parseInt(element.disponibilite, 10)
+                                    } catch (err) {
+                                        disponibilite_state[element.temperature][element.mois]['pourcentage'] = 0
+                                    }
+                                }
                                 )
-                                
-                                this.setState({disponibilite_initial: disponibilite_state})
-                                this.setState({disponibilite: disponibilite_state})                            
-                            })                            
+
+                                this.setState({ disponibilite_initial: disponibilite_state })
+                                this.setState({ disponibilite: disponibilite_state })
+                            })
                         })
 
                     }
@@ -659,7 +664,7 @@ class entrepots extends React.Component {
 
 
     render() {
-       
+
         return (
             <div>
                 <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
@@ -726,7 +731,7 @@ class entrepots extends React.Component {
                                         <div className='entrepot_box'>
                                             <p className="entrepot_box_title"> RÉSUMÉ
                                             </p>
-                                        
+
                                             <div className="entrepot_infos_resume_subcontainer">
                                                 <div className="entrepot_infos_resume_column_edit">
                                                     <div className='entrepot_infos_resume_lign'>
@@ -763,143 +768,143 @@ class entrepots extends React.Component {
 
                                         <div className='entrepots_infos_container_droite_divise_deux'>
                                             <div className='entrepot_box entrepot_infos_dispo_box'>
-                                                <p className="entrepot_box_title"> 
+                                                <p className="entrepot_box_title">
                                                     DISPONIBILITÉS
                                                 </p>
                                                 {!this.state.au_moins_une_temperature &&
-                                                    <div className = 'entrepot_explication'> 
-                                                        Vous n'avez pas encore renseigné les températures de stockage que vous pouvez faire. <br/> 
-                                                        Veuillez les renseigner <span className = 'entrepot_explication_link'> ici </span>
-                                                    </div> 
+                                                    <div className='entrepot_explication'>
+                                                        Vous n'avez pas encore renseigné les températures de stockage que vous pouvez faire. <br />
+                                                        Veuillez les renseigner <span className='entrepot_explication_link'> ici </span>
+                                                    </div>
                                                 }
                                                 {this.state.au_moins_une_temperature &&
-                                                    <div> 
-                                                        <div className = 'entrepot_explication'> 
-                                                        Pour chaque type de température que vous faites, veuillez renseigner votre taux d'occupation de manière mensuelle (estimations)
+                                                    <div>
+                                                        <div className='entrepot_explication'>
+                                                            Pour chaque type de température que vous faites, veuillez renseigner votre taux d'occupation de manière mensuelle (estimations)
                                                         </div>
                                                         {this.state.informations_entrepot.ambiant_couvert === 'Oui' &&
-                                                        <div className = 'entrepot_stockage_temperature_container'> 
-                                                            <div className = 'entrepot_stockage_temperature_title_container'>
-                                                                <div className = 'entrepot_stockage_temperature_title'>
-                                                                    Ambiant couvert     
-                                                                </div> 
-                                                            </div> 
-                                                            <div className = 'entrepot_disponibilite_sliders_container'> 
-                                                            {this.state.all_months.map((item) => (
-                                                                <div className = 'entrepot_disponibilite_slider_container'> 
-                                                                    <p className = 'entrepot_disponibilite_percentage_label'> {this.state.disponibilite['ambiant_couvert'][item]['pourcentage']} % </p>
-                                                                    <Slider
-                                                                        value={this.state.disponibilite['ambiant_couvert'][item]['pourcentage']}
-                                                                        orientation="vertical"
-                                                                        onChange = {(e) => this.handleOnChangeDisponibilite(e, 'ambiant_couvert',item)}
-                                                                        step = {10}             
-                                                                        className = 'entrepot_disponibilite_slider'                                                           
-                                                                    />
-                                                                    <div className = 'entrepot_disponibilite_label'> 
-                                                                        {mois_nom_chiffre[item] } <br/>
-                                                                        {this.state.mois_annee[item]}
-                                                                    </div> 
-                                                                </div> 
-                                                            )
-                                                            )}
-                                                               
-                                                            </div> 
-                                                        </div> 
+                                                            <div className='entrepot_stockage_temperature_container'>
+                                                                <div className='entrepot_stockage_temperature_title_container'>
+                                                                    <div className='entrepot_stockage_temperature_title'>
+                                                                        Ambiant couvert
+                                                                </div>
+                                                                </div>
+                                                                <div className='entrepot_disponibilite_sliders_container'>
+                                                                    {this.state.all_months.map((item) => (
+                                                                        <div className='entrepot_disponibilite_slider_container'>
+                                                                            <p className='entrepot_disponibilite_percentage_label'> {this.state.disponibilite['ambiant_couvert'][item]['pourcentage']} % </p>
+                                                                            <Slider
+                                                                                value={this.state.disponibilite['ambiant_couvert'][item]['pourcentage']}
+                                                                                orientation="vertical"
+                                                                                onChange={(e) => this.handleOnChangeDisponibilite(e, 'ambiant_couvert', item)}
+                                                                                step={10}
+                                                                                className='entrepot_disponibilite_slider'
+                                                                            />
+                                                                            <div className='entrepot_disponibilite_label'>
+                                                                                {mois_nom_chiffre[item]} <br />
+                                                                                {this.state.mois_annee[item]}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                    )}
+
+                                                                </div>
+                                                            </div>
                                                         }
                                                         {this.state.informations_entrepot.frais === 'Oui' &&
-                                                        <div className = 'entrepot_stockage_temperature_container'> 
-                                                            <div className = 'entrepot_stockage_temperature_title_container'>
-                                                                <div className = 'entrepot_stockage_temperature_title'>
-                                                                    Froid positif     
-                                                                </div> 
-                                                            </div> 
-                                                            <div className = 'entrepot_disponibilite_sliders_container'> 
-                                                            {this.state.all_months.map((item) => (
-                                                                <div className = 'entrepot_disponibilite_slider_container'> 
-                                                                    <p className = 'entrepot_disponibilite_percentage_label'> {this.state.disponibilite['frais'][item]['pourcentage']} % </p>
-                                                                    <Slider
-                                                                        value={this.state.disponibilite['frais'][item]['pourcentage']}
-                                                                        orientation="vertical"
-                                                                        onChange = {(e) => this.handleOnChangeDisponibilite(e, 'frais',item)}
-                                                                        step = {10}             
-                                                                        className = 'entrepot_disponibilite_slider'                                                           
-                                                                    />
-                                                                    <div className = 'entrepot_disponibilite_label'> 
-                                                                        {mois_nom_chiffre[item] } <br/>
-                                                                        {this.state.mois_annee[item]}
-                                                                    </div> 
-                                                                </div> 
-                                                            )
-                                                            )}
-                                                               
-                                                            </div> 
-                                                        </div> 
+                                                            <div className='entrepot_stockage_temperature_container'>
+                                                                <div className='entrepot_stockage_temperature_title_container'>
+                                                                    <div className='entrepot_stockage_temperature_title'>
+                                                                        Froid positif
+                                                                </div>
+                                                                </div>
+                                                                <div className='entrepot_disponibilite_sliders_container'>
+                                                                    {this.state.all_months.map((item) => (
+                                                                        <div className='entrepot_disponibilite_slider_container'>
+                                                                            <p className='entrepot_disponibilite_percentage_label'> {this.state.disponibilite['frais'][item]['pourcentage']} % </p>
+                                                                            <Slider
+                                                                                value={this.state.disponibilite['frais'][item]['pourcentage']}
+                                                                                orientation="vertical"
+                                                                                onChange={(e) => this.handleOnChangeDisponibilite(e, 'frais', item)}
+                                                                                step={10}
+                                                                                className='entrepot_disponibilite_slider'
+                                                                            />
+                                                                            <div className='entrepot_disponibilite_label'>
+                                                                                {mois_nom_chiffre[item]} <br />
+                                                                                {this.state.mois_annee[item]}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                    )}
+
+                                                                </div>
+                                                            </div>
                                                         }
                                                         {this.state.informations_entrepot.surgele === 'Oui' &&
-                                                        <div className = 'entrepot_stockage_temperature_container'> 
-                                                            <div className = 'entrepot_stockage_temperature_title_container'>
-                                                                <div className = 'entrepot_stockage_temperature_title'>
-                                                                    Froid négatif   
-                                                                </div> 
-                                                            </div> 
-                                                            <div className = 'entrepot_disponibilite_sliders_container'> 
-                                                            {this.state.all_months.map((item) => (
-                                                                <div className = 'entrepot_disponibilite_slider_container'> 
-                                                                    <p className = 'entrepot_disponibilite_percentage_label'> {this.state.disponibilite['surgele'][item]['pourcentage']} % </p>
-                                                                    <Slider
-                                                                        value={this.state.disponibilite['surgele'][item]['pourcentage']}
-                                                                        orientation="vertical"
-                                                                        onChange = {(e) => this.handleOnChangeDisponibilite(e, 'surgele',item)}
-                                                                        step = {10}             
-                                                                        className = 'entrepot_disponibilite_slider'                                                           
-                                                                    />
-                                                                    <div className = 'entrepot_disponibilite_label'> 
-                                                                        {mois_nom_chiffre[item] } <br/>
-                                                                        {this.state.mois_annee[item]}
-                                                                    </div> 
-                                                                </div> 
-                                                            )
-                                                            )}
-                                                               
-                                                            </div> 
-                                                        </div> 
+                                                            <div className='entrepot_stockage_temperature_container'>
+                                                                <div className='entrepot_stockage_temperature_title_container'>
+                                                                    <div className='entrepot_stockage_temperature_title'>
+                                                                        Froid négatif
+                                                                </div>
+                                                                </div>
+                                                                <div className='entrepot_disponibilite_sliders_container'>
+                                                                    {this.state.all_months.map((item) => (
+                                                                        <div className='entrepot_disponibilite_slider_container'>
+                                                                            <p className='entrepot_disponibilite_percentage_label'> {this.state.disponibilite['surgele'][item]['pourcentage']} % </p>
+                                                                            <Slider
+                                                                                value={this.state.disponibilite['surgele'][item]['pourcentage']}
+                                                                                orientation="vertical"
+                                                                                onChange={(e) => this.handleOnChangeDisponibilite(e, 'surgele', item)}
+                                                                                step={10}
+                                                                                className='entrepot_disponibilite_slider'
+                                                                            />
+                                                                            <div className='entrepot_disponibilite_label'>
+                                                                                {mois_nom_chiffre[item]} <br />
+                                                                                {this.state.mois_annee[item]}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                    )}
+
+                                                                </div>
+                                                            </div>
                                                         }
                                                         {this.state.informations_entrepot.ambiant_exterieur === 'Oui' &&
-                                                        <div className = 'entrepot_stockage_temperature_container'> 
-                                                            <div className = 'entrepot_stockage_temperature_title_container'>
-                                                                <div className = 'entrepot_stockage_temperature_title'>
-                                                                    Ambiant extérieur     
-                                                                </div> 
-                                                            </div> 
-                                                            <div className = 'entrepot_disponibilite_sliders_container'> 
-                                                            {this.state.all_months.map((item) => (
-                                                                <div className = 'entrepot_disponibilite_slider_container'> 
-                                                                    <p className = 'entrepot_disponibilite_percentage_label'> {this.state.disponibilite['ambiant_exterieur'][item]['pourcentage']} % </p>
-                                                                    <Slider
-                                                                        value={this.state.disponibilite['ambiant_exterieur'][item]['pourcentage']}
-                                                                        orientation="vertical"
-                                                                        onChange = {(e) => this.handleOnChangeDisponibilite(e, 'ambiant_exterieur',item)}
-                                                                        step = {10}             
-                                                                        className = 'entrepot_disponibilite_slider'                                                           
-                                                                    />
-                                                                    <div className = 'entrepot_disponibilite_label'> 
-                                                                        {mois_nom_chiffre[item] } <br/>
-                                                                        {this.state.mois_annee[item]}
-                                                                    </div> 
-                                                                </div> 
-                                                            )
-                                                            )}
-                                                               
-                                                            </div> 
-                                                        </div> 
+                                                            <div className='entrepot_stockage_temperature_container'>
+                                                                <div className='entrepot_stockage_temperature_title_container'>
+                                                                    <div className='entrepot_stockage_temperature_title'>
+                                                                        Ambiant extérieur
+                                                                </div>
+                                                                </div>
+                                                                <div className='entrepot_disponibilite_sliders_container'>
+                                                                    {this.state.all_months.map((item) => (
+                                                                        <div className='entrepot_disponibilite_slider_container'>
+                                                                            <p className='entrepot_disponibilite_percentage_label'> {this.state.disponibilite['ambiant_exterieur'][item]['pourcentage']} % </p>
+                                                                            <Slider
+                                                                                value={this.state.disponibilite['ambiant_exterieur'][item]['pourcentage']}
+                                                                                orientation="vertical"
+                                                                                onChange={(e) => this.handleOnChangeDisponibilite(e, 'ambiant_exterieur', item)}
+                                                                                step={10}
+                                                                                className='entrepot_disponibilite_slider'
+                                                                            />
+                                                                            <div className='entrepot_disponibilite_label'>
+                                                                                {mois_nom_chiffre[item]} <br />
+                                                                                {this.state.mois_annee[item]}
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                    )}
+
+                                                                </div>
+                                                            </div>
                                                         }
-                                                        <div> 
-                                                        </div> 
+                                                        <div>
+                                                        </div>
                                                     </div>
                                                 }
 
-                                                <div className = 'entrepot_dispo_lign'> 
-                                                </div> 
+                                                <div className='entrepot_dispo_lign'>
+                                                </div>
 
                                             </div>
                                         </div>
@@ -910,80 +915,80 @@ class entrepots extends React.Component {
                                         <div className='entrepot_box entrepot_infos_description_box'>
                                             <p className="entrepot_box_title"> DESCRIPTION
                                             </p>
-                                            <div className = 'entrepot_explication'>
-                                            Veuillez renseigner une description en quelques lignes de votre entrepot qui sera présentée à vos potentiels clients.
-                                            </div> 
+                                            <div className='entrepot_explication'>
+                                                Veuillez renseigner une description en quelques lignes de votre entrepot qui sera présentée à vos potentiels clients.
+                                            </div>
                                             <textarea style={{ "resize": "none" }} className='entrepot_input entrepot_input_description ' placeholder="Description de votre entrepôt en quelques lignes" name="description" value={this.state.informations_entrepot.description} onChange={this.handleChangeInformationsEntrepot} />
 
-                                            <div className = 'entrepot_infos_description_label'>
+                                            <div className='entrepot_infos_description_label'>
                                                 Plaquette de votre entreprise
-                                            </div> 
+                                            </div>
                                             {this.state.informations_entrepot.description_reference_pdf != '' &&
-                                                <div className = ''> 
-                                                    <p className = 'entrepot_infos_lien_plaquette'> {this.state.informations_entrepot.description_reference_pdf} </p>
-                                                    <button className = 'entrepot_infos_button'> 
+                                                <div className=''>
+                                                    <p className='entrepot_infos_lien_plaquette'> {this.state.informations_entrepot.description_reference_pdf} </p>
+                                                    <button className='entrepot_infos_button'>
                                                         Voir ma plaquette
-                                                    </button> 
+                                                    </button>
                                                     <Dropzone onDrop={this.onDropPdf.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
                                                         <button className='entrepot_infos_button' >Modifier ma plaquette </button>
-                                                    </Dropzone>                                                    
-                                                </div> 
+                                                    </Dropzone>
+                                                </div>
                                             }
                                             {this.state.informations_entrepot.description_reference_pdf === '' &&
                                                 <Dropzone onDrop={this.onDropPdf.bind(this)} className='entrepot_infos_dropzone entrepot_margin_end_box' accept="image/jpeg,  image/jpg, image/png, application/pdf">
                                                     <button className='entrepot_infos_button' >Modifier ma plaquette </button>
-                                                </Dropzone>                                               
+                                                </Dropzone>
                                             }
-                                            <div className ='entrepot_margin_end_box'>
-                                            </div> 
+                                            <div className='entrepot_margin_end_box'>
+                                            </div>
 
-                                            <div className = 'entrepot_infos_description_label entrepot_margin_end_box'>
+                                            <div className='entrepot_infos_description_label entrepot_margin_end_box'>
                                                 Photos de votre entrepôt (max 4)
-                                            </div> 
+                                            </div>
                                             {this.state.liste_urls.length < 1 &&
-                                                <div> 
+                                                <div>
                                                     <div className='entrepot_explication'> Vous n’avez pas encore ajouté de photos de votre entrepot. C’est une étape importante qui augmente vos chances de gagner une cotation.   </div>
                                                     <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
                                                         <button className='entrepot_infos_button' >Ajouter une photo </button>
-                                                    </Dropzone>    
-                                                    <div className = 'entrepot_margin_end_box'> </div>                                              
-                                                </div> 
+                                                    </Dropzone>
+                                                    <div className='entrepot_margin_end_box'> </div>
+                                                </div>
                                             }
                                             {this.state.liste_urls.length >= 1 &&
-                                                <div> 
-                                                    <div className='entrepot_image_container'> 
-                                                        <div className = 'entrepot_image_container_button'>
+                                                <div>
+                                                    <div className='entrepot_image_container'>
+                                                        <div className='entrepot_image_container_button'>
                                                             {this.state.current_image_number > 0 &&
-                                                                <img src = {flechePleineGauche} className = 'entrepot_image_fleche' onClick = {this.handleImageSubstract}/> 
+                                                                <img src={flechePleineGauche} className='entrepot_image_fleche' onClick={this.handleImageSubstract} />
                                                             }
                                                             {this.state.current_image_number === 0 &&
-                                                                <img src = {flecheVideGauche} className = 'entrepot_image_fleche'/> 
-                                                            }                                                                                                                      
+                                                                <img src={flecheVideGauche} className='entrepot_image_fleche' />
+                                                            }
                                                         </div>
 
-                                                        <div className = 'entrepot_image_container_image'>
+                                                        <div className='entrepot_image_container_image'>
                                                             <img src={this.state.current_image} className='entrepot_infos_images' />
-                                                        </div> 
+                                                        </div>
 
-                                                        <div className = 'entrepot_image_container_button'>
-                                                            {this.state.current_image_number === this.state.max_image_number -1 &&
-                                                                <img src = {flecheVideDroite} className = 'entrepot_image_fleche' /> 
+                                                        <div className='entrepot_image_container_button'>
+                                                            {this.state.current_image_number === this.state.max_image_number - 1 &&
+                                                                <img src={flecheVideDroite} className='entrepot_image_fleche' />
                                                             }
-                                                            {this.state.current_image_number < this.state.max_image_number -1 &&
-                                                                <img src = {flechePleineDroite} className = 'entrepot_image_fleche' onClick = {this.handleImageAdd}/> 
-                                                            }                                                                
-                                                        </div>  
+                                                            {this.state.current_image_number < this.state.max_image_number - 1 &&
+                                                                <img src={flechePleineDroite} className='entrepot_image_fleche' onClick={this.handleImageAdd} />
+                                                            }
+                                                        </div>
                                                     </div>
                                                     {this.state.liste_urls.length < 4 &&
-                                                    <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
-                                                        <button className='entrepot_infos_button' >Ajouter une photo </button>
-                                                    </Dropzone>                                                        
-                                                    }                                                    
-                                                </div>                                           
-                                            }                                            
-                                            <div className = 'entrepot_margin_end_box'> </div>    
-                                            
-                                        </div>                        
+                                                        <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
+                                                            <button className='entrepot_infos_button' >Ajouter une photo </button>
+                                                        </Dropzone>
+                                                    }
+                                                </div>
+                                            }
+                                            <div className='entrepot_margin_end_box'> </div>
+
+                                        </div>
 
                                     </div>
                                 </div>
