@@ -81,26 +81,51 @@ a{
     padding-right:15px;
 }
 
-.fiche_demande_container_infos{
-    border-radius:10px;
-    overflow:hidden;
-    background-color:#f8f8f8;
-    margin-top:20px;
-    margin-bottom:40px;
-    padding:none;
+.fiche_demande_container_resume, .fiche_demande_container_infos, .fiche_demande_container_details {
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #f8f8f8;
+    margin-top: 20px;
+    padding: 0;
     position: relative;
-    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
-    max-width:900px;
-    text-align:center;
-    color:#6d6d6d;
-    font-weight:500;
+    max-width: 900px;
+    text-align: center;
+    color: #6d6d6d;
+    font-weight: 500;
+    flex: 1;
+    border: 1px solid #B8B8B8;
 }
-
+.fiche_demande_container_details {
+    max-width: none;
+    padding-right:1.1em;
+}
+.fiche_demande_container_resume{
+    margin-right: 2%
+}
+.fiche_demande_container_infos{
+    margin-left: 2%
+}
+.fiche_demande_container {
+    display: flex;
+}
+.fiche_demande_resume_title{
+    color:#16376D;
+}
+.fiche_demande_details_text{
+    text-align: justify;
+    line-height: 1.4em;
+}
 .fiche_demande_sous_title{
     display:block;
     margin-top:20px;
     font-weight:500;
     color:#6d6d6d
+}
+.fiche_demande_resume_text_title{
+    margin-right: 4%;
+}
+.fiche_demande_infos_text_title{
+    width: 20%
 }
 
 .fiche_demande_textarea{
@@ -140,17 +165,17 @@ a{
     cursor:pointer;
 }
 
-.container_fiche_demande{
-    display:flex;
-}
-
-.fiche_demande_infos {
-    flex:1.5;
-    padding-right:30px;
-}
-
 .container_statut_demande{
     margin-bottom:35px;
+    flex:1;
+}
+.containter_fiche_demande_statut {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.container_status, .container_buttons_devis {
+    flex: 1;
 }
 
 .fiche_demande_title_page{
@@ -172,7 +197,7 @@ a{
 }
 
 .container_buttons_devis{
-    display:inline-block;
+    display:flex;
     margin-bottom:15px; 
 }
 
@@ -186,30 +211,34 @@ a{
     border-radius: 5px;
     font-weight:500;
     cursor: pointer;
-    width:300px;
+    width:150px;
+    margin-left: 5px;
+    border: 1px solid $dark-blue;
+    line-height: 0.8;
 }
 
 .title_devis_fiche_demande{
     margin:0;
 }
 
-.fiche_demande_button_refuser_demande{
-    border:none;
-    background-color:rgb(177, 33, 33);
-    padding:10px;
-    display:block;
-    margin-top:15px;
-    color:white;
+.fiche_demande_button_refuser_demande {
+    border: none;
+    background-color: #fff;
+    padding: 10px;
+    display: block;
+    margin-top: 15px;
+    color: $dark-blue;
     border-radius: 5px;
     font-weight: 500;
-    width:300px;
+    width: 150px;
     cursor: pointer;
-    
+    margin-left: auto;
+    border: 1px solid $dark-blue;
+    line-height: 0.8;
 }
 
 .fiche_demande_statut{
-    flex:1;
-    text-align: right;
+    display: flex;
     color:rgb(87, 87, 87);
     font-size:16px;
     font-weight:500;
@@ -264,15 +293,26 @@ a{
 
 .fiche_demande_resume_lign{
     display: flex; 
-    text-align: left; 
+    text-align: left;
+}
+.fiche_demande_details_lign{
+    display: block;
+    text-align: justify;
 }
 
-.fiche_demande_resume_text{
-    flex: 1; 
+.fiche_demande_resume_text, .fiche_demande_infos_text, .fiche_demande_details_text {
     padding-left: 1.1em; 
     font-size: 0.9em; 
-    color: $dark-grey; 
+    color: $dark-grey;
+    display: flex
 }
+.fiche_demande_resume_text{
+    flex: 1; 
+}
+.fiche_demande_infos_text{
+    width: 100%
+}
+
 .fiche_demande_resume_title{
     color: $dark-grey; 
     flex: 1; 
@@ -296,4 +336,17 @@ a{
     font-size:14px;
     margin-top:15px;
     width:100%;
+}
+.fiche_demande_breadcrumb_before, .fiche_demande_breadcrumb_sep, .fiche_demande_breadcrumb_actual{
+    margin-right:5px;
+    font-weight: 500;
+}
+.fiche_demande_breadcrumb_before {
+    background: none;
+    border: none;
+    margin: 0;
+    cursor: pointer;
+}
+.fiche_demande_breadcrumb_before:hover {
+    text-decoration: underline;
 }
