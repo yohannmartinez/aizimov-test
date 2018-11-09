@@ -14,10 +14,12 @@ class DemandesList extends React.Component {
       <table className='table_cotations'>
         <thead>
           <tr className="container_cotation_title">
-            <td className="infos_cotations_column_status">Statut</td>
-            <td className="infos_cotations_column">Produits</td>
-            <td className="infos_cotations_column">Volume</td>
-            <td className="infos_cotations_column">Durée</td>
+            <div className="container_cotation_title_line">
+              <td className="infos_cotations_column_status infos_cotations_first">Statut</td>
+              <td className="infos_cotations_column infos_cotations_second">Type de Produits</td>
+              <td className="infos_cotations_column infos_cotations_third">Volume</td>
+              <td className="infos_cotations_column infos_cotations_fourth">Durée</td>
+            </div>
           </tr>
         </thead>
         <tbody>
