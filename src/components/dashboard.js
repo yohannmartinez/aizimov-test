@@ -93,7 +93,7 @@ class dashboard extends React.Component {
                                                                         rempli_good: good,
                                                                         rempli_percentage: percentage
                                                                     }, () => {
-                                                                        axios.get('http://localhost:3000/getNombreSemainesDisponibilitesPasRemplies', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                                                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getNombreSemainesDisponibilitesPasRemplies', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
                                                                             let dateRemplissage = response.data[0].max;
                                                                             let Today = Math.floor(Date.now() / 1000);
                                                                             let NombreSemainesSansRemplir = Math.floor((Today - dateRemplissage) / 604800);
