@@ -276,7 +276,7 @@ class entrepotsStockage extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
+                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
@@ -340,16 +340,18 @@ class entrepotsStockage extends React.Component {
                                         <div className='entrepot_securite_lign'> 
                                             <div className = 'entrepot_securite_label'> 
                                                     Horaires
-                                            </div>      
-                                            <div className = 'entrepot_securite_horaire_div'> 
-                                                <p className = 'entrepot_horaire_label'> Début </p>
-                                                <input className = 'entrepot_input entrepot_horaire_input' value={this.state.informations_entrepot.heure_ouverture_1_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'heure_ouverture_1_debut'/>                                                       
-                                            </div>                                            
-                                            <div className = 'entrepot_securite_horaire_div'> 
-                                                <p className = 'entrepot_horaire_label'> Fin </p>
-                                                <input className = 'entrepot_input entrepot_horaire_input' value={this.state.informations_entrepot.heure_ouverture_1_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'heure_ouverture_1_fin'/>                                                       
-                                      
-                                            </div>  
+                                            </div>
+                                            <div className="entrepot_securite_horaire_div_container">
+                                                <div className = 'entrepot_securite_horaire_div'>
+                                                    <p className = 'entrepot_horaire_label'> Début </p>
+                                                    <input className = 'entrepot_input entrepot_horaire_input' value={this.state.informations_entrepot.heure_ouverture_1_debut} onChange={this.handleChangeInformationsEntrepot}  name = 'heure_ouverture_1_debut'/>
+                                                </div>
+                                                <div className = 'entrepot_securite_horaire_div'>
+                                                    <p className = 'entrepot_horaire_label'> Fin </p>
+                                                    <input className = 'entrepot_input entrepot_horaire_input' value={this.state.informations_entrepot.heure_ouverture_1_fin} onChange={this.handleChangeInformationsEntrepot}  name = 'heure_ouverture_1_fin'/>
+
+                                                </div>
+                                            </div>
                                         
                                         </div> 
                                         <div className='entrepot_securite_lign'> 

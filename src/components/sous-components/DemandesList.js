@@ -14,7 +14,7 @@ class DemandesList extends React.Component {
       <table className='table_cotations'>
         <thead>
           <tr className="container_cotation_title">
-            <td className="infos_cotations_column">Statut</td>
+            <td className="infos_cotations_column_status">Statut</td>
             <td className="infos_cotations_column">Produits</td>
             <td className="infos_cotations_column">Volume</td>
             <td className="infos_cotations_column">Durée</td>

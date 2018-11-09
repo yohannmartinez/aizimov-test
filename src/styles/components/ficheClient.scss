@@ -46,13 +46,18 @@
 
 .fiche_client_brief_text{
     padding-left: 1.1em; 
-    color: $dark-grey; 
-    text-align: left; 
+    
     padding-top: 1em; 
     padding-bottom: 1em; 
     padding-right: 1.1em; 
     font-size: 0.9em; 
-    white-space: pre-line;
-    font-weight: 350; 
-
 }
+  
+@media (max-width: 600px) {
+    .fiche_demande_resume_lign, .fiche_demande_resume_title {
+        display: block;
+        text-align: center;
+        padding-left: 0;
+    }
+
+  }

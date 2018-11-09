@@ -257,7 +257,7 @@ class entrepots extends React.Component {
 
     getState() {
         console.log(this.state)
-        console.log(this.state.images['image_1'] === '')
+        console.log(this.state.disponibilite['ambiant_couvert'][this.state.current_month]['pourcentage'])
     }
 
     /*--> fonction pour annuler les changements */
@@ -391,11 +391,11 @@ class entrepots extends React.Component {
 
     async onDrop(files) {
         var files_with_id = files
-        if (this.state.images['image_1'] === '' || this.state.images['image_1'] === undefined) {
+        if (this.state.images['image_1'] === '') {
             var numero = '1'
-        } else if (this.state.images['image_2'] === '' || this.state.images['image_2'] === undefined) {
+        } else if (this.state.images['image_2'] === '') {
             var numero = '2'
-        } else if (this.state.images['image_3'] === '' || this.state.images['image_3'] === undefined) {
+        } else if (this.state.images['image_3'] === '') {
             var numero = '3'
         } else {
             var numero = '4'
@@ -608,22 +608,18 @@ class entrepots extends React.Component {
                                 this.setState({ disponibilites_bdd: disponibilites_bdd })
                                 /* On récupère l'état initial des disponibilités (vide pour tous les mois et températures pour l'instant) */
                                 var disponibilite_state = this.state.disponibilite
-                                var disponibiliteCopy = Object.assign({}, this.state.disponibilite);
-
-                                disponibilites_bdd.forEach(function (element) {
-                                    disponibilite_state[element.temperature][element.mois]['annee'] = element.annee
-                                    disponibilite_state[element.temperature][element.mois]['date_ajout'] = element.date_ajout
-                                    try {
-                                        disponibilite_state[element.temperature][element.mois]['pourcentage'] = parseInt(element.disponibilite, 10)
-                                    } catch (err) {
-                                        disponibilite_state[element.temperature][element.mois]['pourcentage'] = 0
-                                    }
-                                }
+                                disponibilites_bdd.forEach(function(element) {
+                                        disponibilite_state[element.temperature][element.mois]['annee'] = element.annee
+                                        disponibilite_state[element.temperature][element.mois]['date_ajout'] = element.date_ajout
+                                        try{
+                                            disponibilite_state[element.temperature][element.mois]['pourcentage'] = parseInt(element.disponibilite, 10)
+                                        } catch(err){
+                                            disponibilite_state[element.temperature][element.mois]['pourcentage'] = 0   
+                                        }
+                                    }                                    
                                 )
-
-                                this.setState({ disponibilite_initial: disponibilite_state })
-                                this.setState({ disponibilite: disponibilite_state })
-                            })
+                                this.setState({disponibilite: disponibilite_state})                            
+                            })                            
                         })
 
                     }
@@ -683,7 +679,7 @@ class entrepots extends React.Component {
                         <img src={logo} className="navbar_logo" />
                     </div>
                     <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
+                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
                         <div className="navbar_profile" onClick={this.toggleDeconnexion}>
                             <i class="fas fa-user"></i>
                         </div>
@@ -715,7 +711,7 @@ class entrepots extends React.Component {
                                 Stockage
                             </div>
                             <div onClick={() => { this.props.history.push('/entrepots-securite') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
-                                Sécurité
+                                Informations bâtiment
                             </div>
                             <div onClick={() => { this.props.history.push('/entrepots-contact') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Personnes à contacter
@@ -783,33 +779,33 @@ class entrepots extends React.Component {
                                                             Pour chaque type de température que vous faites, veuillez renseigner votre taux d'occupation de manière mensuelle (estimations)
                                                         </div>
                                                         {this.state.informations_entrepot.ambiant_couvert === 'Oui' &&
-                                                            <div className='entrepot_stockage_temperature_container'>
-                                                                <div className='entrepot_stockage_temperature_title_container'>
-                                                                    <div className='entrepot_stockage_temperature_title'>
-                                                                        Ambiant couvert
-                                                                </div>
-                                                                </div>
-                                                                <div className='entrepot_disponibilite_sliders_container'>
-                                                                    {this.state.all_months.map((item) => (
-                                                                        <div className='entrepot_disponibilite_slider_container'>
-                                                                            <p className='entrepot_disponibilite_percentage_label'> {this.state.disponibilite['ambiant_couvert'][item]['pourcentage']} % </p>
-                                                                            <Slider
-                                                                                value={this.state.disponibilite['ambiant_couvert'][item]['pourcentage']}
-                                                                                orientation="vertical"
-                                                                                onChange={(e) => this.handleOnChangeDisponibilite(e, 'ambiant_couvert', item)}
-                                                                                step={10}
-                                                                                className='entrepot_disponibilite_slider'
-                                                                            />
-                                                                            <div className='entrepot_disponibilite_label'>
-                                                                                {mois_nom_chiffre[item]} <br />
-                                                                                {this.state.mois_annee[item]}
-                                                                            </div>
-                                                                        </div>
-                                                                    )
-                                                                    )}
-
-                                                                </div>
-                                                            </div>
+                                                        <div className = 'entrepot_stockage_temperature_container'> 
+                                                            <div className = 'entrepot_stockage_temperature_title_container'>
+                                                                <div className = 'entrepot_stockage_temperature_title'>
+                                                                    Ambiant couvert     
+                                                                </div> 
+                                                            </div> 
+                                                            <div className = 'entrepot_disponibilite_sliders_container'> 
+                                                            {this.state.all_months.map((item) => (
+                                                                <div className = 'entrepot_disponibilite_slider_container'> 
+                                                                    <p className = 'entrepot_disponibilite_percentage_label'> {this.state.disponibilite['ambiant_couvert'][item]['pourcentage']} % </p>
+                                                                    <Slider
+                                                                        value={this.state.disponibilite['ambiant_couvert'][item]['pourcentage']}
+                                                                        orientation="vertical"
+                                                                        onChange = {(e) => this.handleOnChangeDisponibilite(e, 'ambiant_couvert',item)}
+                                                                        step = {10}
+                                                                        className = 'entrepot_disponibilite_slider'                                                           
+                                                                    />
+                                                                    <div className = 'entrepot_disponibilite_label'> 
+                                                                        {mois_nom_chiffre[item] } <br/>
+                                                                        {this.state.mois_annee[item]}
+                                                                    </div> 
+                                                                </div> 
+                                                            )
+                                                            )}
+                                                               
+                                                            </div> 
+                                                        </div> 
                                                         }
                                                         {this.state.informations_entrepot.frais === 'Oui' &&
                                                             <div className='entrepot_stockage_temperature_container'>
@@ -979,16 +975,16 @@ class entrepots extends React.Component {
                                                             }
                                                         </div>
                                                     </div>
-                                                    {this.state.liste_urls.length < 4 &&
-                                                        <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
-                                                            <button className='entrepot_infos_button' >Ajouter une photo </button>
-                                                        </Dropzone>
-                                                    }
-                                                </div>
-                                            }
-                                            <div className='entrepot_margin_end_box'> </div>
-
-                                        </div>
+                                                    {this.state.liste_urls.length < 3 &&
+                                                    <Dropzone onDrop={this.onDrop.bind(this)} className='entrepot_infos_dropzone' accept="image/jpeg,  image/jpg, image/png, application/pdf">
+                                                        <button className='entrepot_infos_button' >Ajouter une photo </button>
+                                                    </Dropzone>                                                        
+                                                    }                                                    
+                                                </div>                                           
+                                            }                                            
+                                            <div className = 'entrepot_margin_end_box'> </div>    
+                                            
+                                        </div>                        
 
                                     </div>
                                 </div>
