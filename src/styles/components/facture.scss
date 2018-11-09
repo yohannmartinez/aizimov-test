@@ -22,3 +22,67 @@
     margin-bottom: 1.4em; 
 
 }
+
+@media(max-width:1200px){
+  .cotations_sous_title{
+    font-size:15px;
+  }
+  .container_demande_attente_fournisseur, .container_cotation, .container_cotation_title,.cotations_button_filter,.infos_supp_txt,.infos_supp_button{
+    font-size:12px;
+  }
+  .infos_cotations_button{
+    display: block;
+  }
+  .infos_cotations_txt {
+    display: flex;
+    margin-top:3px;
+    margin-bottom: 3px;
+    width:100%;
+    font-size: 1.1em;
+    font-weight: 450;
+    color: #2C3E50;
+  }
+  .container_cotation_title {
+    display: none;
+  }
+  .infos_cotations_title {
+    font-weight: 600;
+    flex:1;
+    display:block;
+  }
+  .infos_cotations_value{
+    flex:6;
+    margin-bottom: 5px;
+  }
+
+}
+@media/*(min-width: 577px) and */(max-width: 992px) {
+  .contenu_page_contations_grand{
+    width:100%;
+  }
+  .contenu_page_contations_petit{
+    width:100%;
+  }
+  .container_infos_supp{
+    width:100%;
+  }
+  .contenu_page_contations_grand{
+    padding: 30px;
+  }
+
+}
+
+@media (max-width: 800px) {
+  .infos_cotations_txt {
+    display: block;
+    text-align: center;
+  }
+  .infos_cotations_button {
+    text-align: center;
+  }
+  .infos_cotations_title, .infos_cotations_value {
+    width: 100%;
+    display: block;
+    flex: none;
+  }
+}
