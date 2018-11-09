@@ -54,5 +54,12 @@
     font-size: 0.9em; 
     white-space: pre-line;
     font-weight: 350; 
+}
 
+.clients-text-if-nothing{
+    font-size: 0.9em; 
+    color: $dark-grey; 
+    padding-right: 20%; 
+    line-height: 150%; 
+    font-weight: 500; 
 }

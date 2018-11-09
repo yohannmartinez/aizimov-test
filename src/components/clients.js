@@ -142,7 +142,16 @@ class clients extends React.Component {
                         <div className="cotations_container_title">
                             <p className="cotations_title_page">Mes clients</p>
                         </div> 
+                        {this.state.liste_clients.length === 0 && 
+                            <p className = 'clients-text-if-nothing'>
+                                Vous n'avez pas encore contractualisé de client via SpaceFill. 
+                                <br/> 
+                                Pour augmenter vos chances de recevoir des demandes, veuillez renseigner le plus possible vos informations d'entrepôt.
+
+                            </p> 
+                        }
                         <CardClientList liste_clients={this.state.liste_clients} />                                
+                    
                         <button onClick = {this.getState}>Get State</button> 
                     </div>
                 </div>

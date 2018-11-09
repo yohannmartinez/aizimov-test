@@ -182,7 +182,7 @@ class cotationsPassees extends React.Component {
                                         {this.state.selectedCotation.statut === "passee-refusee" &&
                                             <p className="infos_supp_txt">Cotation refusée</p>
                                         }
-                                        {this.state.selectedCotation.statut === "passee-gagnee" &&
+                                        {this.state.selectedCotation.statut === "Client" &&
                                             <p className="infos_supp_txt">Cotation gagnée</p>
                                         }
                                         <p className="infos_supp_txt">{this.state.selectedCotation.volume} {this.state.selectedCotation.volume_unite}</p>

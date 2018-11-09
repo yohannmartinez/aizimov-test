@@ -59,7 +59,7 @@ class factures extends React.Component {
         } else {
             console.log('pas de token')
         }
-        try {
+        try { 
             console.log('user '+ this.state.user.id_compte)
             console.log('on va chercher la liste de factures')            
             // const response = await fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getFacturesforId?id=' + this.state.user.id_compte)

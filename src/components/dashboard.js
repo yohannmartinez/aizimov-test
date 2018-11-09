@@ -11,6 +11,11 @@ import {triggerMenu} from '../actions/menuburger'
 
 const token = '';
 
+const liste_inputs_importants = ['adresse', 'ambiant_couvert', 'ambiant_exterieur', 'chiffreaffaires', 
+'clients', 'code_postal', 'commissionnaire_de_transport', 'description', 'description_reference_pdf', 
+'ecommerce_bool', 'entreprise', 'frais', 'image_1_reference', 'siret', 'site_web', 'surface_totale', 'surgele', 
+'ville', 'quais_de_chargement', 'heure_ouverture_1_debut', 'heure_ouverture_1_fin', 
+'acces_routier', 'commande_min_duree', 'commande_min_taille', 'commande_min_valeur', 'commande_min_volume']
 
 
 class dashboard extends React.Component {
@@ -29,7 +34,8 @@ class dashboard extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
-        this.deconnexion = this.deconnexion.bind(this);
+        this.deconnexion = this.deconnexion.bind(this);    
+        this.getState = this.getState.bind(this);     
     }
 
     async componentDidMount() {
@@ -43,9 +49,49 @@ class dashboard extends React.Component {
                 this.setState({ userId: userloged.id_utilisateur });
                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
-                    this.setState({ user: user.data[0] })
+                    this.setState({ user: user.data[0] }, () => {
+                        
+                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {                        
+                            this.setState({informations_entrepot: response.data[0]})
+                            var informations_entrepot = response.data[0]
+                            var informations_entrepot_keys= Object.keys(informations_entrepot)
+
+                            var tot = 0
+                            var good = 0
+                            informations_entrepot_keys.forEach(function(element) {
+                              if (liste_inputs_importants.includes(element)) {
+                                tot += 1
+                                if (informations_entrepot[element] != '' && informations_entrepot[element] != null){
+                                    good += 1
+                                }
+                              }
+                            });     
+                            var percentage =  (Math.round( (good / tot) * 10 ) / 10 ) * 100;
+                            this.setState({
+                                rempli_total: tot, 
+                                rempli_good: good, 
+                                rempli_percentage: percentage
+                            }, () => {
+                                var d = new Date();
+                                var mois = (d.getMonth() + 1) % 12 ;
+                                var annee = d.getFullYear(); 
+                                console.log(mois)
+                                console.log(annee)
+                                // axios.get('http://localhost:3000/getDisponibiliteMoisEntrepot', {params: {id_compte: this.state.user.id_compte } }).then(response => {                            
+
+                                axios.get('http://localhost:3000/getDisponibiliteMoisEntrepot', { params: { id_entrepot: this.state.informations_entrepot.id_entrepot, mois: mois, annee: annee } }).then(dispo => {        
+                                    console.log('on va chercher les dispos')
+                                    console.log(dispo)
+                                    // console.log(dispo.data[0])
+                                })                
+
+                            })                       
+
+
+                        })
                 })
-            }
+            })
+        }
         } else {
             console.log('pas de token')
         }
@@ -56,6 +102,10 @@ class dashboard extends React.Component {
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
+    }
+
+    getState() {
+        console.log(this.state)
     }
 
     toogleCotation() {
@@ -123,6 +173,8 @@ class dashboard extends React.Component {
                     <div className="contenu_page">
                         dashboard
                 </div>
+                <button onClick = {this.getState}> Get State </button> 
+
                 </div>
             </div>
 
