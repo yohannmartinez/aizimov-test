@@ -22,6 +22,8 @@
 	font-size:14px;
 	font-weight: 500;
 	position:relative;
+	margin-bottom:30px;
+	transition:0.5s;
 }
 
 .dashboard_alert_button_modify_infos{
@@ -46,8 +48,9 @@
 }
 
 .dashboard_container_divs_taux_remplissage{
-	display:flex;
-	margin-top:30px;
+	display:block;
+	padding:none;
+	margin-top:-30px;
 }
 
 .dashboard_div_taux_remplissage_margin_left{
@@ -56,10 +59,18 @@
 
 .dashboard_div_taux_remplissage{
 	background-color:white;
-	flex:1;
 	border-radius:5px;
 	box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 	padding:15px;
+	height:110px;
+	cursor:pointer;
+	display:inline-block;
+	margin-top:30px;
+}
+
+.dashboard_red_element{
+	background-color:#E9B8B8;
+	color:#d46464;
 }
 
 .dashboard_container_image_dispos{
@@ -106,8 +117,8 @@
 .dashboard_pourcentage_dispos_phrase{
 	display:block;
 	color:#979595;
-	font-size:14px;
-	font-weight:500;
+	font-size:0.7rem;
+	font-weight:600;
 }
 
 .dashboard_container_demande_recues{
@@ -341,4 +352,17 @@
 	right:25px;
 	top:20px;
 	transition: 0.5s;
+}
+
+@media(max-width:1370px){
+	.dashboard_container_alert{
+		font-size:11px;
+		font-weight:600;
+	}
+}
+
+@media(max-width:1590px){
+	.dashboard_table_item{
+		font-size:11px;
+	}
 }
