@@ -24,12 +24,12 @@ class CardFactureFournisseur extends React.Component {
   render() {
     return ( 
       <tr className="container_cotation"  onClick={this.afficherInfosSupp} >
-        <td className="infos_cotations_txt">{this.state.statut}</td>
-        <td className="infos_cotations_txt">{this.state.entreprise}</td>
-        <td className="infos_cotations_txt">{this.state.montant}</td>
-        <td className="infos_cotations_txt">{this.state.date_creation}</td>
+        <td className="infos_cotations_txt_status">{this.state.statut}</td>
+        <td className="infos_cotations_txt_status">{this.state.entreprise}</td>
+        <td className="infos_cotations_txt_status">{this.state.montant}</td>
+        <td className="infos_cotations_txt_status">{this.state.date_creation}</td>
       </tr>
-    );
+    ); 
   }
 } 
 

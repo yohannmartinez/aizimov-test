@@ -8,15 +8,18 @@ class CardFacturesFournisseursList extends React.Component {
     }
   }
   render() {
-    return (
-
+    return ( 
       <table className='table_cotations'>
         <thead>
-          <tr className="container_cotation_title">
-            <td className="infos_cotations_txt">Statut</td>
-            <td className="infos_cotations_txt">Entreprise</td>
-            <td className="infos_cotations_txt">Montant</td>
-            <td className="infos_cotations_txt">Date de création</td>
+          <tr className="container_cotation_title container_facture_title">
+            {/* <div className="container_facture_title_line"> */}
+              <td className="infos_facture_column">Statut</td>
+              <td className="infos_facture_column">Entreprise</td>
+              <td className="infos_facture_column">Montant</td>
+              <td className="infos_facture_column">Date de création</td>
+            {/* </div>  */}
+
+            {/* </div> */}
           </tr>
         </thead>
         <tbody>

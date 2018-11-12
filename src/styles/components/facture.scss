@@ -20,8 +20,28 @@
     color: $middle-grey; 
     font-size: 0.85em; 
     margin-bottom: 1.4em; 
-
 }
+
+.infos_facture_column{
+  flex: 1; 
+  text-align: center;
+  font-weight:  600; 
+}
+
+.container_facture_title{
+  padding-bottom: 1em;
+  border-bottom:1px solid #B8B8B8;
+}
+
+.container_facture_title_line {
+  display: flex;
+  width: 100%; 
+  align-items: center;
+  padding-bottom: 0.6em;
+  border-bottom:1px solid #B8B8B8;
+  margin-bottom: 4px;
+}
+
 @media(max-width:1200px){
 
 
