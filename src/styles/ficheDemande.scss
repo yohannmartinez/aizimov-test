@@ -350,3 +350,37 @@ a{
 .fiche_demande_breadcrumb_before:hover {
     text-decoration: underline;
 }
+.container_status {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+@media (max-width:1200px){
+    .fiche_demande_container {
+        display: block;
+    }
+    .fiche_demande_container_resume {
+        margin-right: 0;
+        width: 100%;
+        max-width: none;
+        flex:none;
+    }
+    .fiche_demande_container_infos {
+        margin-left: 0;
+        width: 100%;
+        max-width: none;
+        flex:none;
+    }
+}
+@media (max-width:800px){
+    .containter_fiche_demande_statut {
+        display: block;
+    }
+    .fiche_demande_button_refuser_demande{
+        margin-left:0;
+    }
+    .container_status {
+        padding-bottom: 0;
+    }
+
+
+}

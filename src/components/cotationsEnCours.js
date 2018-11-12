@@ -37,12 +37,14 @@ class cotationsEnCours extends React.Component {
         this.deconnexion = this.deconnexion.bind(this);
         this.getIdDemande = this.getIdDemande.bind(this);
         this.closeInfosSupp = this.closeInfosSupp.bind(this);
+        this.getState = this.getState.bind(this)
+    }
+
+    getState() {
+        console.log(this.state)
     }
 
     async componentDidMount() {
-
-        
-        
 
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
@@ -168,7 +170,7 @@ class cotationsEnCours extends React.Component {
                             <p className="cotations_title_page">COTATIONS EN COURS</p>
                             {/* <button className="cotations_button_filter">Filtrer</button> */}
                         </div>
-                        {<div>
+                        {/*<div>
                             <p className="cotations_sous_title">Cotations en attente de votre réponse</p>
                             {this.state.demandesAttenteFournisseur.length > 0 &&
                                 <DemandesAttenteFournisseurList demandes={this.state.demandesAttenteFournisseur} getIdDemande={this.getIdDemande} />
@@ -177,7 +179,7 @@ class cotationsEnCours extends React.Component {
                             {this.state.demandesAttenteFournisseur.length === 0 &&
                                 <span>Aucune demande en attente de votre confirmation</span>
                             }
-                        </div>}
+                        </div>*/}
                         <div>
                             <p className="cotations_sous_title">Toutes vos cotations en attente</p>
                             <DemandesList demandes={this.state.demandes} getIdDemande={this.getIdDemande} />
@@ -211,6 +213,7 @@ class cotationsEnCours extends React.Component {
                             }
                         </div>
                     </div>
+                    <button onClick = {this.getState}> Get State </button>
                 </div>
 
 
