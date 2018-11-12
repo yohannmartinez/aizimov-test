@@ -12,6 +12,7 @@ import logoDispo from '../img/dispologo.svg'
 import increaseArrow from '../img/increase.svg'
 import toggleArrow from '../img/toggleArrow.svg'
 import boxes from '../img/boxes.svg'
+import { runInThisContext } from 'vm';
 
 const token = '';
 const liste_inputs_importants = ['adresse', 'ambiant_couvert', 'ambiant_exterieur', 'chiffreaffaires',
@@ -19,7 +20,7 @@ const liste_inputs_importants = ['adresse', 'ambiant_couvert', 'ambiant_exterieu
     'ecommerce_bool', 'entreprise', 'frais', 'image_1_reference', 'siret', 'site_web', 'surface_totale', 'surgele',
     'ville', 'quais_de_chargement', 'heure_ouverture_1_debut', 'heure_ouverture_1_fin',
     'acces_routier', 'commande_min_duree', 'commande_min_taille', 'commande_min_valeur', 'commande_min_volume']
-
+let dispoLength = 0;
 
 
 class dashboard extends React.Component {
@@ -34,11 +35,15 @@ class dashboard extends React.Component {
             user_infos: '',
             clients: [],
             number_demande: null,
+            informations_entrepot: '',
 
             currentMonth: (new Date().getMonth() + 1) % 12,
             currentYear: new Date().getFullYear(),
             toogleCotation: false,
             toggleDeconnexion: false,
+            showAlert: true,
+            temperatures: ['ambiant_couvert', 'ambiant_exterieur', 'frais', 'surgele'],
+            number_true: 0,
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
@@ -64,16 +69,20 @@ class dashboard extends React.Component {
                             this.setState({ demandes: response.data }, () => {
                                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getClientsPourUnCompte', { params: { id: this.state.user.id_compte } }).then(response => {
                                     this.setState({ clients: response.data }, () => {
-                                        axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte, mois: this.state.currentMonth, annee: this.state.currentYear } }).then(response => {
+                                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getIdEntrepot', { params: { id_compte: this.state.user.id_compte, mois: this.state.currentMonth, annee: this.state.currentYear } }).then(response => {
                                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
-                                                axios.get('http://localhost:3000/getDisponibiliteMoisEntrepot', { params: { id_entrepot: this.state.id_entrepot, mois: this.state.currentMonth, annee: this.state.currentYear } }).then(response => {
+                                                axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getDisponibiliteMoisEntrepot', { params: { id_entrepot: this.state.id_entrepot, mois: this.state.currentMonth, annee: this.state.currentYear } }).then(response => {
                                                     console.log(response)
                                                     this.setState({ monthDisponibilities: response.data }, () => {
+                                                        console.log("lengtheeeeeeeeeeee " + this.state.monthDisponibilities.length)
                                                         axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getNumberDemandes', { params: { id: this.state.user.id_compte } }).then(response => {
                                                             console.log(response)
                                                             this.setState({ number_demande: response.data[0].count }, () => {
                                                                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                                                                     this.setState({ informations_entrepot: response.data[0] })
+
+
+                                                                    console.log(response.data[0])
                                                                     var informations_entrepot = response.data[0]
                                                                     var informations_entrepot_keys = Object.keys(informations_entrepot)
 
@@ -120,10 +129,11 @@ class dashboard extends React.Component {
             console.log('pas de token')
         }
         console.log(this.state.user)
-
+        window.addEventListener('resize', this.windowResize,false)
 
     }
 
+    
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
     }
@@ -160,13 +170,13 @@ class dashboard extends React.Component {
         }
     }
 
-    accepterDemande(id_demande,i) {
+    accepterDemande(id_demande, i) {
         console.log(id_demande)
         this.state.demandes[i].statut = "Attente-client";
-        
+
         try {
             var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
-                // var response = fetch('http://localhost:3000/changerStatutDemande', {
+                // var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/changerStatutDemande', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -230,27 +240,64 @@ class dashboard extends React.Component {
 
                             <div className="dashboard_global_container_left">
 
-                                <div className="dashboard_container_alert">
-                                    <span>{this.state.NombreSemainesSansRemplir} semaines sans avoir renseigné vos disponibilités</span>
-                                    <button className="dashboard_alert_button_modify_infos" onClick={()=>{this.props.history.push('/entrepots')}}>Modifier mes disponibilités</button>
-                                    <button className="dashboard_button_close_alert"><i class="fas fa-times"></i></button>
-                                </div>
+                                {this.state.showAlert === true &&
+                                    <div className="dashboard_container_alert">
+                                        <span>{this.state.NombreSemainesSansRemplir} semaines sans avoir renseigné vos disponibilités</span>
+                                        <button className="dashboard_alert_button_modify_infos" onClick={() => { this.props.history.push('/entrepots') }}>Modifier mes disponibilités</button>
+                                        <button className="dashboard_button_close_alert" onClick={() => { this.setState({ showAlert: false }) }}><i class="fas fa-times"></i></button>
+                                    </div>
+                                }
 
                                 {this.state.monthDisponibilities &&
-                                    <div className="dashboard_container_divs_taux_remplissage">
-                                        {this.state.monthDisponibilities.map((disponibilité) =>
-                                            <div className="dashboard_div_taux_remplissage dashboard_div_taux_remplissage_margin_left">
-                                                <div className="dashboard_container_image_dispos">
-                                                    <img src={logoDispo} className="dashboard_image_dispos" />
-                                                    <div className="dashboard_div_fond_image_dispos" style={{ "height": disponibilité.disponibilite + "%" }}></div>
-                                                </div>
-                                                <span className="dashboard_pourcentage_dispos">
-                                                    {disponibilité.disponibilite}%
-                                            <span className="dashboard_pourcentage_dispos_phrase">Taux de remplissage en {disponibilité.temperature} </span>
-                                                </span>
-                                            </div>
-                                        )}
-
+                                    <div className="dashboard_container_divs_taux_remplissage" >
+                                        {this.state.monthDisponibilities.map((disponibilité) => {
+                                            if (this.state.informations_entrepot[disponibilité.temperature] === "Oui") {
+                                                this.state.number_true += 1;
+                                                return (
+                                                    <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage">
+                                                        <div className="dashboard_container_image_dispos">
+                                                            <img src={logoDispo} className="dashboard_image_dispos" />
+                                                            <div className="dashboard_div_fond_image_dispos" style={{ "height": disponibilité.disponibilite + "%" }}></div>
+                                                        </div>
+                                                        <span className="dashboard_pourcentage_dispos">
+                                                            {disponibilité.disponibilite}%
+                                                <span className="dashboard_pourcentage_dispos_phrase">Taux de remplissage en {disponibilité.temperature} </span>
+                                                        </span>
+                                                    </div>
+                                                )
+                                            }
+                                        })}
+                                        {this.state.temperatures.map((response, i) => {
+                                            if (this.state.informations_entrepot[this.state.temperatures[i]] === "Oui") {
+                                                console.log("le presta fais du " + this.state.temperatures[i])
+                                                let number_false = 0;
+                                                this.state.monthDisponibilities.map((dispo, i) => {
+                                                    if (response !== dispo.temperature) {
+                                                        number_false += 1;
+                                                    }
+                                                })
+                                                if (number_false === this.state.monthDisponibilities.length) {
+                                                    console.log("Infos non renseignés" + number_false)
+                                                    this.state.number_true += 1;
+                                                    return (
+                                                        <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage">
+                                                            <div className="dashboard_container_image_dispos">
+                                                                <img src={logoDispo} className="dashboard_image_dispos" />
+                                                                <div className="dashboard_div_fond_image_dispos" style={{ "height": 0 + "%" }}></div>
+                                                            </div>
+                                                            <span className="dashboard_pourcentage_dispos">
+                                                                N/D
+                                                <span className="dashboard_pourcentage_dispos_phrase">Vous n'avez pas fournis vos informations de taux de remplissage en {response} </span>
+                                                            </span>
+                                                        </div>
+                                                    )
+                                                } else {
+                                                    console.log("infos renseignés" + number_false)
+                                                }
+                                            } else {
+                                                console.log("le presta ne fais pas du " + this.state.temperatures[i])
+                                            }
+                                        })}
                                     </div>
                                 }
 
@@ -289,9 +336,9 @@ class dashboard extends React.Component {
                                                         </div>
                                                         <div className="dashboard_table_line_action_demande_container_right">
                                                             {demande.statut === "Attente-fournisseur" &&
-                                                                <button className="dashboard_table_line_supp_button_accept" onClick={()=>{this.accepterDemande(demande.id_demande,i)}}>Accepter</button>
+                                                                <button className="dashboard_table_line_supp_button_accept" onClick={() => { this.accepterDemande(demande.id_demande, i) }}>Accepter</button>
                                                             }
-                                                            <button className="dashboard_table_line_supp_button_voir_details" onClick={()=>{this.props.history.push('/fiche-demande/' + demande.id_demande)}}>Voir plus</button>
+                                                            <button className="dashboard_table_line_supp_button_voir_details" onClick={() => { this.props.history.push('/fiche-demande/' + demande.id_demande) }}>Voir plus</button>
                                                         </div>
                                                     </div>
                                                 </div>
