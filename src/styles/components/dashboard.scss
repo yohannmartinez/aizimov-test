@@ -66,6 +66,7 @@
 	cursor:pointer;
 	display:inline-block;
 	margin-top:30px;
+	position:relative;
 }
 
 .dashboard_red_element{
@@ -74,11 +75,12 @@
 }
 
 .dashboard_container_image_dispos{
-	width: 80px;
-    height: 80px;
-    position: relative;
-	background-color: #cacaca;
-	float:left;
+	width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: #cacaca;
+	top: 50%;
+	transform: translate(0,-50%);
 }
 
 .dashboard_image_dispos{
@@ -100,11 +102,13 @@
 
 .dashboard_pourcentage_dispos{
 	color: #16376D;
-    font-size: 35px;
+    font-size:25px;
     font-weight: 600;
-	margin-top:15px;
-	float:left;
-	margin-left:15px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
+	left: 75px;
+	padding-right:15px;
 }
 
 .dashboard_pourcentage_dispos_temperature{
@@ -364,5 +368,56 @@
 @media(max-width:1590px){
 	.dashboard_table_item{
 		font-size:11px;
+	}
+}
+
+@media(max-width:1150px){
+	.dashboard_table_line_supp_button_accept,.dashboard_table_line_supp_button_voir_details{
+		min-width:120px;
+		font-size:11px;
+	}
+	.dashboard_table_line_action_demande_container_left{
+		font-size:11px;
+	}
+}
+
+@media(max-width:1330px){
+	.dashboard_phrase_demande_recues,.dashboard_infos_renseignes_phrase,.dashboard_infos_renseignes_button,.dashboard_clients_adresse_entreprise{
+		font-size:11px;
+	}
+
+	.dashboard_title_categorie, .dashboard_infos_renseignes_pourcentage{
+		font-size:14px;
+	}
+
+	.dashboard_alert_button_modify_infos{
+		display:none;
+	}
+
+	.dashboard_global_container_right{
+		min-width:275px;
+	}
+
+	.produit_column{
+		display:none;
+	}
+	.statut_column{
+		width:45%;
+	}
+	.volume_column{
+		width:26%;
+	}
+	.duree_column{
+		width:15%;
+	}
+	
+	.dashboard_button_close_alert{
+		top:50%;
+		right:15px;
+		transform: translate(0,-50%);
+	}
+
+	.dashboard_table_line_action_demande_container_right{
+		flex:1.75;
 	}
 }

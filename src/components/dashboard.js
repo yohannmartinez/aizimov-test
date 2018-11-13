@@ -81,6 +81,18 @@ class dashboard extends React.Component {
                                                                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                                                                     this.setState({ informations_entrepot: response.data[0] })
 
+                                                                    /* partie pour styliser les divs avec les dispos en fonction de combien il y en a */
+                                                                    if (this.state.number_true === 1) {
+                                                                        console.log('un seuuuuuuul')
+                                                                        document.getElementById('dashboard_div_taux_remplissage').style.width = "100%";
+                                                                        document.getElementById('dashboard_div_taux_remplissage').style.margin = "30px 0 0 0";
+                                                                    } else if (this.state.number_true > 1) {
+                                                                        console.log("plus qu'uuuuuuun")
+                                                                        for (var i = 0; i < document.getElementsByClassName('dashboard_div_taux_remplissage').length; i++ ) {
+                                                                            document.getElementsByClassName('dashboard_div_taux_remplissage')[i].style.width = "45%";
+                                                                            document.getElementsByClassName('dashboard_div_taux_remplissage')[i].style.margin = "30px 2% 0 2%";
+                                                                        }
+                                                                    }
 
                                                                     console.log(response.data[0])
                                                                     var informations_entrepot = response.data[0]
@@ -131,6 +143,14 @@ class dashboard extends React.Component {
         console.log(this.state.user)
         window.addEventListener('resize', this.windowResize,false)
 
+    }
+    
+    windowResize(){
+        if(window.matchMedia("(min-width: 600px)").matches){
+            console.log('600')
+        } else {
+            console.log("600")
+        }
     }
 
     
@@ -261,7 +281,7 @@ class dashboard extends React.Component {
                                                         </div>
                                                         <span className="dashboard_pourcentage_dispos">
                                                             {disponibilité.disponibilite}%
-                                                <span className="dashboard_pourcentage_dispos_phrase">Taux de remplissage en {disponibilité.temperature} </span>
+                                                <span className="dashboard_pourcentage_dispos_phrase">Taux de remplissage en {disponibilité.temperature === "ambiant_couvert" && <span>ambiant couvert</span>} {disponibilité.temperature === "ambiant_exterieur" && <span>ambiant extérieur</span>} {disponibilité.temperature === "frais" && <span>frais</span>}  {disponibilité.temperature === "surgele" && <span>surgelé</span>} </span>
                                                         </span>
                                                     </div>
                                                 )
@@ -287,7 +307,7 @@ class dashboard extends React.Component {
                                                             </div>
                                                             <span className="dashboard_pourcentage_dispos">
                                                                 N/D
-                                                <span className="dashboard_pourcentage_dispos_phrase">Vous n'avez pas fournis vos informations de taux de remplissage en {response} </span>
+                                                <span className="dashboard_pourcentage_dispos_phrase">Taux de remplissage en {response === "ambiant_couvert" && <span>ambiant couvert</span>} {response === "ambiant_exterieur" && <span>ambiant extérieur</span>} {response === "frais" && <span>frais</span>}  {response === "surgele" && <span>surgelé</span>}</span>
                                                             </span>
                                                         </div>
                                                     )
@@ -316,7 +336,7 @@ class dashboard extends React.Component {
                                                 <div style={{ "height": "45px" }} className="dashboard_table_line" onClick={() => { this.afficherDetailsDemande(i) }}>
                                                     {demande.statut === "Attente-client" &&
                                                         <div className="dashboard_table_item statut_column">
-                                                            <div className="rondStatut" style={{ "background-color": "#f3ea95" }}></div>En attente de la réponse du client
+                                                            <div className="rondStatut" style={{ "background-color": "#f3ea95" }}></div>En attente du client
                                                         </div>
                                                     }
                                                     {demande.statut === "Attente-fournisseur" &&
