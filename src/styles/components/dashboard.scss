@@ -326,6 +326,15 @@
 	flex:1;
 }
 
+#mobile{
+	display:none;
+	margin-bottom:30px;
+}
+
+#computer{
+	display:block;
+}
+
 .dashboard_table_line_supp_button_accept{
 	box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 	min-width:150px;
@@ -419,5 +428,48 @@
 
 	.dashboard_table_line_action_demande_container_right{
 		flex:1.75;
+	}
+}
+
+@media(max-width:775px){
+	.dashboard_container_clients{
+		display:none;
+	}
+	.dashboard_global_container{
+		display:block;
+	}
+	.contenu_page{
+		padding:50px 20px 50px 20px;
+	}
+	.dashboard_div_taux_remplissage{
+		width:100% !important;
+		margin:20px 0 0 0 !important;
+		height:80px;
+	}
+	.dashboard_global_container_right{
+		margin:0;
+	}
+	.dashboard_container_infos_renseignes{
+		text-align:center;
+	}
+	.dashboard_title_categorie, .dashboard_infos_renseignes_pourcentage{
+		text-align:center
+	}
+
+	.dashboard_container_demande_recues,.dashboard_container_infos_renseignes{
+		border:none;
+		box-shadow:0 2px 5px rgba(0,0,0,0.2);
+	}
+	#mobile{
+		display:block;
+	}
+	#computer{
+		display:none;
+	}
+}
+
+@media(max-width:500px){
+	.dashboard_table_line_supp_button_accept{
+		display:none;
 	}
 }

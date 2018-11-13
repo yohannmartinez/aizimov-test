@@ -88,7 +88,7 @@ class dashboard extends React.Component {
                                                                         document.getElementById('dashboard_div_taux_remplissage').style.margin = "30px 0 0 0";
                                                                     } else if (this.state.number_true > 1) {
                                                                         console.log("plus qu'uuuuuuun")
-                                                                        for (var i = 0; i < document.getElementsByClassName('dashboard_div_taux_remplissage').length; i++ ) {
+                                                                        for (var i = 0; i < document.getElementsByClassName('dashboard_div_taux_remplissage').length; i++) {
                                                                             document.getElementsByClassName('dashboard_div_taux_remplissage')[i].style.width = "45%";
                                                                             document.getElementsByClassName('dashboard_div_taux_remplissage')[i].style.margin = "30px 2% 0 2%";
                                                                         }
@@ -141,19 +141,19 @@ class dashboard extends React.Component {
             console.log('pas de token')
         }
         console.log(this.state.user)
-        window.addEventListener('resize', this.windowResize,false)
+        window.addEventListener('resize', this.windowResize, false)
 
     }
-    
-    windowResize(){
-        if(window.matchMedia("(min-width: 600px)").matches){
+
+    windowResize() {
+        if (window.matchMedia("(min-width: 600px)").matches) {
             console.log('600')
         } else {
             console.log("600")
         }
     }
 
-    
+
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
     }
@@ -268,6 +268,16 @@ class dashboard extends React.Component {
                                     </div>
                                 }
 
+                                <div className="dashboard_container_infos_renseignes" id="mobile">
+                                    <div className="dashboard_container_progress_bar">
+                                        <div className="dashboard_progress_bar" style={{ "left": this.state.rempli_percentage + "%" }}></div>
+                                    </div>
+
+                                    <p className="dashboard_infos_renseignes_pourcentage">{this.state.rempli_percentage}% du profil complété</p>
+                                    <span className="dashboard_infos_renseignes_phrase">Continuer à renseigner vos informations d’entreprise à fin d’être plus pertinant</span>
+                                    <button className="dashboard_infos_renseignes_button" onClick={() => { this.props.history.push('/entrepots') }}>Renseigner</button>
+                                </div>
+
                                 {this.state.monthDisponibilities &&
                                     <div className="dashboard_container_divs_taux_remplissage" >
                                         {this.state.monthDisponibilities.map((disponibilité) => {
@@ -379,7 +389,8 @@ class dashboard extends React.Component {
                                     <div className="dashboard_arrow_demande_recues"><img src={increaseArrow} /></div>
                                 </div>
 
-                                <div className="dashboard_container_infos_renseignes">
+
+                                <div className="dashboard_container_infos_renseignes" id="computer">
                                     <div className="dashboard_container_progress_bar">
                                         <div className="dashboard_progress_bar" style={{ "left": this.state.rempli_percentage + "%" }}></div>
                                     </div>
@@ -388,6 +399,7 @@ class dashboard extends React.Component {
                                     <span className="dashboard_infos_renseignes_phrase">Continuer à renseigner vos informations d’entreprise à fin d’être plus pertinant</span>
                                     <button className="dashboard_infos_renseignes_button" onClick={() => { this.props.history.push('/entrepots') }}>Renseigner</button>
                                 </div>
+
 
                                 {this.state.clients.length > 0 &&
                                     <div className="dashboard_container_clients">
