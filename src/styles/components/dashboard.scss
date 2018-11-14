@@ -37,6 +37,10 @@
 	cursor:pointer;
 }
 
+.dashboard_alert_button_modify_infos:hover{
+	background-color:#d47575
+}
+
 .dashboard_button_close_alert{
 	color:#d46464;
 	position:absolute;
@@ -188,7 +192,7 @@
 }
 
 .dashboard_infos_renseignes_pourcentage{
-	color:#287693;
+	color:#6d6d6d;
 	font-weight:500;
 	font-size:15px;
 }
@@ -223,7 +227,7 @@
 
 .dashboard_title_categorie{
 	font-weight:600;
-	color:#287693;
+	color:#6d6d6d;
 	display:block;
 	width:100%;
 }

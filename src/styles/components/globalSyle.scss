@@ -110,7 +110,6 @@ body{
 	background-color:#4398C5;
 	position: fixed;
 	top:60px;
-	left:0px;
 	height:calc(100vh - 60px);
 	z-index:11;
 }
@@ -245,12 +244,12 @@ body{
 
 @media(min-width: 17px) and (max-width: 992px) {
     .sidebar{
-		left:-250px;
+		left:-250px ;
 		transition: 0.7s;
 		z-index:50;
 	}
-	.sidebar_page_element::after{
-		display: none;
+	.sidebar_element_selected::after{
+		display:none;
 	}
 	.navbar_container_logo{
 		width:100%;
@@ -273,7 +272,7 @@ body{
 		left:10px;
 		top:50%;
 		transform: translate(0,-50%);
-		color:white;
+		color:#4398C5;
 		font-size:30px;
 		cursor: pointer;
 	}

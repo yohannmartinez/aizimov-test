@@ -9,6 +9,8 @@ import logo from '../img/logo.png'
 import DemandesList from './sous-components/DemandesList'
 import DemandesAttenteFournisseurList from './sous-components/DemandeAttenteFournisseurList'
 import { triggerMenu } from '../actions/menuburger';
+import Navbar from '../components/navbar'
+
 
 const token = '';
 
@@ -129,31 +131,13 @@ class cotationsEnCours extends React.Component {
 
         return (
             <div>
-                <div className="navbar">
-                    {this.state.toggleDeconnexion === true &&
-                        <div class="container_deconnexion">
-                            <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
-                        </div>
-                    }
-                    <div class="menuBurger" onClick={triggerMenu}><i class="fas fa-bars"></i></div>
-
-
-                    <div className="navbar_container_logo">
-                        <img src={logo} className="navbar_logo" />
-                    </div>
-                    <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.email}</span>
-                        <div className="navbar_profile" onClick={this.toggleDeconnexion}>
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-                </div>
+                <Navbar></Navbar>
                 <div className="container_page">
                 <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
                             <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> DASHBOARD</button>
-                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> ENTREPOT</button>
-                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> COTATIONS <i class="cotation_icon fas fa-play"></i></button>
+                            <button className="sidebar_page_element " onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> ENTREPOT</button>
+                            <button className="sidebar_elements sidebar_element_selected" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> COTATIONS <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
                                     <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>COTATIONS EN COURS</button>

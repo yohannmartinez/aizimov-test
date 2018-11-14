@@ -15,6 +15,8 @@ import flechePleineGauche from '../img/fleche_pleine_gauche.png';
 import flecheVideDroite from '../img/fleche_vide_droite.png';
 import flecheVideGauche from '../img/fleche_vide_gauche.png';
 import Slider from 'react-rangeslider'
+import Navbar from '../components/navbar'
+
 
 
 const token = '';
@@ -667,24 +669,7 @@ class entrepots extends React.Component {
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
                 {/* <link rel="stylesheet" href="https://unpkg.com/react-rangeslider/umd/rangeslider.min.css" /> */}
 
-                <div className="navbar">
-
-                    {this.state.toggleDeconnexion === true &&
-                        <div class="container_deconnexion">
-                            <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
-                        </div>
-                    }
-                    <div class="menuBurger" onClick={triggerMenu}><i class="fas fa-bars"></i></div>
-                    <div className="navbar_container_logo">
-                        <img src={logo} className="navbar_logo" />
-                    </div>
-                    <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.nom_utilisateur}</span>
-                        <div className="navbar_profile" onClick={this.toggleDeconnexion}>
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-                </div>
+                <Navbar></Navbar>
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">

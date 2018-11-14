@@ -7,6 +7,7 @@ import { checkConnection } from '../actions/authGuard'
 import axios from 'axios'
 import logo from '../img/logo.png'
 import { triggerMenu } from '../actions/menuburger';
+import Navbar from '../components/navbar'
 
 const token = '';
 
@@ -132,24 +133,7 @@ class ficheClient extends React.Component {
 
         return (
             <div>
-                <div className="navbar">
-                    {this.state.toggleDeconnexion === true &&
-                        <div class="container_deconnexion">
-                            <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
-                        </div>
-                    }
-                    <div class="menuBurger" onClick={triggerMenu}><i class="fas fa-bars"></i></div>
-
-                    <div className="navbar_container_logo">
-                        <img src={logo} className="navbar_logo" />
-                    </div>
-                    <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
-                        <div className="navbar_profile" onClick={this.toggleDeconnexion}>
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-                </div>
+                <Navbar></Navbar>
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">

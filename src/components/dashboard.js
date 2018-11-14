@@ -13,6 +13,8 @@ import increaseArrow from '../img/increase.svg'
 import toggleArrow from '../img/toggleArrow.svg'
 import boxes from '../img/boxes.svg'
 import { runInThisContext } from 'vm';
+import Navbar from '../components/navbar'
+
 
 const token = '';
 const liste_inputs_importants = ['adresse', 'ambiant_couvert', 'ambiant_exterieur', 'chiffreaffaires',
@@ -54,7 +56,8 @@ class dashboard extends React.Component {
     }
 
     async componentDidMount() {
-        console.log(document.getElementById('sidebar').style.transform)
+        console.log(document.getElementById('sidebar').style.transform);
+               
 
         /* fonction pour check si l'user est connecté */
         if (localStorage.getItem('token')) {
@@ -64,6 +67,7 @@ class dashboard extends React.Component {
                 this.setState({ userId: userloged.id_utilisateur });
                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getUser', { params: { id_utilisateur: userloged.id_utilisateur } }).then(user => {
                     console.log(user);
+
                     this.setState({ user: user.data[0] }, () => {
                         axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getDemandes', { params: { id: this.state.user.id_compte } }).then(response => {
                             this.setState({ demandes: response.data }, () => {
@@ -145,14 +149,6 @@ class dashboard extends React.Component {
 
     }
 
-    windowResize() {
-        if (window.matchMedia("(min-width: 600px)").matches) {
-            console.log('600')
-        } else {
-            console.log("600")
-        }
-    }
-
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
@@ -220,24 +216,7 @@ class dashboard extends React.Component {
         return (
             <div>
 
-                <div className="navbar">
-                    {this.state.toggleDeconnexion === true &&
-                        <div class="container_deconnexion">
-                            <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
-                        </div>
-                    }
-                    <div class="menuBurger" onClick={triggerMenu}><i class="fas fa-bars"></i></div>
-
-                    <div className="navbar_container_logo">
-                        <img src={logo} className="navbar_logo" />
-                    </div>
-                    <div class="navbar_container_droite">
-                        <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
-                        <div className="navbar_profile" onClick={this.toggleDeconnexion}>
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-                </div>
+                <Navbar></Navbar>
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
