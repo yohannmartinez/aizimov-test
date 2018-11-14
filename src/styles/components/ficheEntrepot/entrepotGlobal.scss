@@ -2,30 +2,42 @@
 
 // Partie ONGLETS: 
 .entrepot_onglets_container{
-    display: flex; 
-    background: #f8f8f8;     
-    min-height: 2.2rem; 
-    color: $dark-grey; 
-    text-align: center; 
-    font-size: 0.8rem; 
-    cursor:pointer  ;
-    max-width:900px;
-    margin-top:20px;
-    margin-left:50px
+    display: flex;
+    background: white;
+    color: #2C3E50;
+    text-align: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+    /* margin-top: 20px; */
+    float: left;
+    height: 60px;
+    width: 70%;
+    margin-left:10px;
+    /* margin-left: 50px; */
 }
+
 .entrepot_onglet_selectionne{
     flex: 1; 
-    background: #f8f8f8; 
-    padding-top: 0.6rem;
+    background: white;
     font-weight: 650;
-    border-bottom:2px solid $dark-grey;
+    border-bottom:4px solid #287693;
+    color:#287693;
+    line-height:60px;
+    padding:0 10px 0 10px;
 }
+
+.entrepot_onglet_non_selectionne:hover{
+    background-color:rgba(40, 118, 147, 0.07);
+    border-bottom:4px solid rgba(40, 118, 147, 1);
+    color:#6d6d6d;
+}
+
 .entrepot_onglet_non_selectionne{
     flex: 1; 
-    padding-top: 0.6rem; 
     font-weight: 400;
-    color:rgb(163, 162, 162);
-    border-bottom:2px solid rgb(197, 197, 197);
+    color:rgb(148, 148, 148);
+    border-bottom:2px solid white;
+    line-height:60px
 }
 
 

@@ -291,28 +291,6 @@
 
 }
 @media (max-width:1100px){
-  .entrepot_onglets_container {
-    display: block;
-    margin: 20px 50px 0px 50px;
-  }
-  .entrepot_onglet_selectionne {
-    background: $dark-blue;
-    width: 100%;
-    border: 2px solid $dark-blue;
-    border-radius: 5px;
-    padding-bottom: 0.6rem;
-    color: #fff;
-    margin: 2px 0px;
-  }
-  .entrepot_onglet_non_selectionne {
-    background: transparent;
-    width: 100%;
-    border: 2px solid $dark-blue;
-    border-radius: 5px;
-    padding-bottom: 0.6rem;
-    color: $dark-blue;
-    margin: 2px 0px;
-  }
   .entrepot_infos_main_container {
         display: block;
   }

@@ -184,7 +184,45 @@ class entrepotsContact extends React.Component {
 
         return (
             <div>
-                <Navbar></Navbar>
+                <div className="navbar">
+                    {this.state.toggleDeconnexion === true &&
+                        <div class="container_deconnexion">
+                            <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
+                        </div>
+                    }
+                    <div class="menuBurger" onClick={triggerMenu}><i class="fas fa-bars"></i></div>
+
+                    <div className="navbar_container_logo">
+                        <img src={logo} className="navbar_logo" />
+                    </div>
+
+                    <div className='entrepot_onglets_container'>
+                            <div onClick={() => { this.props.history.push('/entrepots') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
+                                Informations principales
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
+                                Stockage
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className='entrepot_onglet_non_selectionne '>
+                                Informations bâtiment
+                            </div>
+                            <div className='entrepot_onglet_selectionne '>
+                                CONTACTS
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className='entrepot_onglet_non_selectionne '>
+                                Conditions
+                            </div>
+                        </div>
+
+                    <div class="navbar_container_droite">
+                        {this.state.user &&
+                            <span className="navbar_usermail">{this.state.user.prenom} {this.state.user.nom}</span>
+                        }
+                        <div className="navbar_profile" onClick={this.toggleDeconnexion}>
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
@@ -222,23 +260,7 @@ class entrepotsContact extends React.Component {
 
 
 
-                        <div className='entrepot_onglets_container'>
-                            <div onClick={() => { this.props.history.push('/entrepots') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
-                                Informations principales
-                            </div>
-                            <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
-                                Stockage
-                            </div>
-                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className='entrepot_onglet_non_selectionne '>
-                                Informations bâtiment
-                            </div>
-                            <div className='entrepot_onglet_selectionne '>
-                                Personnes à contacter
-                            </div>
-                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className='entrepot_onglet_non_selectionne '>
-                                Conditions
-                            </div>
-                        </div>
+                        
                         <div className='contenu_page'>
                             <div className="entrepot_contact_title_button_container">
                                 <div className="entrepot_contact_title_page_container">
