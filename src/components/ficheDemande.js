@@ -310,18 +310,18 @@ class ficheDemande extends React.Component {
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
-                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> DASHBOARD</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> ENTREPOT</button>
+                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> COTATIONS <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
-                                    <button className="sidebar_page_element" onClick={() => { this.props.history.push('/cotationsEnCours') }}>Cotations en cours</button>
-                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>Cotations passées</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>COTATIONS EN COURS</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>COTATIONS PASSEES</button>
                                 </div>
                             }
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> CLIENTS</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> FACTURES</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> PARAMETRES</button>
                         </div>
                     </div>
 
@@ -351,10 +351,10 @@ class ficheDemande extends React.Component {
                                         {!this.state.fileName && <button className="button_fiche_demande_upload_devis">Télécharger un fichier</button>}
                                         {this.state.fileName &&
                                             <div className="fiche_demande_file_container">
-                                                
-                                                    <span className="fiche_demande_file_extension">{this.state.extension_fichier}</span>
-                                                    <span className="fiche_demande_file_nom_fichier">{this.state.fileName}</span>
-                                                
+
+                                                <span className="fiche_demande_file_extension">{this.state.extension_fichier}</span>
+                                                <span className="fiche_demande_file_nom_fichier">{this.state.fileName}</span>
+
                                             </div>
                                         }
                                     </Dropzone>
@@ -390,79 +390,79 @@ class ficheDemande extends React.Component {
                             <div class="container_fiche_demande">
                                 <p class="fiche_demande_title_page">FICHE DEMANDE </p>
                                 <div class='fiche_demande_breadcrumb'>
-                                        <button className="fiche_demande_breadcrumb_before" onClick={()=> {this.props.history.push('/cotationsEnCours')}}>Cotations en cours</button>
-                                        <span className='fiche_demande_breadcrumb_sep'>></span>
-                                        <span className='fiche_demande_breadcrumb_actual'>Référence : {this.state.informations_demande.id_demande}</span>
+                                    <button className="fiche_demande_breadcrumb_before" onClick={() => { this.props.history.push('/cotationsEnCours') }}>Cotations en cours</button>
+                                    <span className='fiche_demande_breadcrumb_sep'>></span>
+                                    <span className='fiche_demande_breadcrumb_actual'>Référence : {this.state.informations_demande.id_demande}</span>
                                 </div>
                                 <div class="fiche_demande_statut">
-                                        {this.state.infosDemandeStatut === "Attente-fournisseur" &&
-                                            <div class="containter_fiche_demande_statut">
-                                                <div class="container_status">
+                                    {this.state.infosDemandeStatut === "Attente-fournisseur" &&
+                                        <div class="containter_fiche_demande_statut">
+                                            <div class="container_status">
                                                 <div className="rondStatut" style={{ "background-color": "orange" }}></div><span>En attente de votre réponse</span>
-                                                </div>
-                                                <div className="container_buttons_devis">
-                                                    <button onClick={this.refuserDemande} className="fiche_demande_button_refuser_demande">Refuser</button>
-                                                    <button onClick={this.accepterDemande} className="fiche_demande_button_accepter_demande">Se positionner</button>
-                                                </div>
                                             </div>
-                                        }
-                                        {this.state.infosDemandeStatut === "Attente-client" &&
-                                            <div class="container_statut_demande">
-                                                <div className="rondStatut" style={{ "background-color": "#f3ea95" }}></div>En attente de la réponse du client
-                                            </div>
-                                        }
-                                        {this.state.infosDemandeStatut === "passee-refusee" &&
-                                            <div class="container_statut_demande">
-                                                <div className="rondStatut" style={{ "background-color": "#f3ea95" }}></div>Vous avez refusé cette demande
-                                            </div>
-                                        }
-                                        {this.state.infosDemandeStatut === "passee-perdue" &&
-                                            <div class="container_statut_demande">
-                                                <div className="rondStatut" style={{ "background-color": "#a80b0b" }}></div>Un autre entrepot à accepté la demande
-                                            </div>
-                                        }
-                                        {this.state.infosDemandeStatut === "passee-gagnee" &&
-                                            <div class="container_statut_demande">
-                                                <div className="rondStatut" style={{ "background-color": "#6c996c" }}></div>Vous avez proposé un devis à cette demande et l'entreprise l'a accepté
-                                            </div>
-                                        }
-                                        {this.state.infosDemandeStatut === "Attente-client" && this.state.infosDemandeSupp.date_ajout_devis === null &&
                                             <div className="container_buttons_devis">
-                                                <span>Vous n'avez pas ajouté de devis</span>
-                                                <button className="fiche_demande_button_accepter_demande" onClick={() => { this.setState({ divPropositionDevis: true }) }}>Ajouter un devis</button>
+                                                <button onClick={this.refuserDemande} className="fiche_demande_button_refuser_demande">Refuser</button>
+                                                <button onClick={this.accepterDemande} className="fiche_demande_button_accepter_demande">Se positionner</button>
                                             </div>
-                                        }
-                                        {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.reference_devis &&
-                                            <div> 
-                                                <p class="title_devis_fiche_demande">Vous avez ajouté un devis le {this.state.dateDevis}</p>
-                                                <div class="container_buttons_devis">
-                                                    <a href={"https://s3.eu-west-3.amazonaws.com/spf-fournisseur-container/" + this.state.infosDemandeSupp.reference_devis}>
-                                                        <button class="fiche_demande_button_accepter_demande">Voir le devis</button>
-                                                    </a>
-                                                </div>
+                                        </div>
+                                    }
+                                    {this.state.infosDemandeStatut === "Attente-client" &&
+                                        <div class="container_statut_demande">
+                                            <div className="rondStatut" style={{ "background-color": "#f3ea95" }}></div>En attente de la réponse du client
                                             </div>
-                                        }
-                                        {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.devis_texte &&
-                                            <div>
-                                                <p class="title_devis_fiche_demande">Vous avez ajouté un devis le {this.state.dateDevis}</p>
-                                                <div class="container_buttons_devis">
-                                                    <button class="fiche_demande_button_accepter_demande" onClick={() => { this.setState({ toggleDivDevisTexte: true }) }}>Voir le devis</button>
-                                                </div>
+                                    }
+                                    {this.state.infosDemandeStatut === "passee-refusee" &&
+                                        <div class="container_statut_demande">
+                                            <div className="rondStatut" style={{ "background-color": "#f3ea95" }}></div>Vous avez refusé cette demande
                                             </div>
-                                        }
-                                        {this.state.toggleDivDevisTexte === true &&
-                                            <div className="bg_devis_texte_fiche_demande">
-                                                <button class="button_close_div_devis_texte" onClick={() => { this.setState({ toggleDivDevisTexte: false }) }}><i class="fas fa-times"></i></button>
-                                                <div className="container_devis_texte_fiche_demande">
-                                                    <p>Prix de l'entrée : {this.state.infosDemandeSupp.prix_entree}</p>
-                                                    <p>Prix de la sortie : {this.state.infosDemandeSupp.prix_sortie}</p>
-                                                    <p>Prix de stockage : {this.state.infosDemandeSupp.prix_stockage}</p>
-                                                    <p>Commentaires : {this.state.infosDemandeSupp.devis_texte}</p>
-                                                </div>
+                                    }
+                                    {this.state.infosDemandeStatut === "passee-perdue" &&
+                                        <div class="container_statut_demande">
+                                            <div className="rondStatut" style={{ "background-color": "#a80b0b" }}></div>Un autre entrepot à accepté la demande
                                             </div>
-                                        }
+                                    }
+                                    {this.state.infosDemandeStatut === "passee-gagnee" &&
+                                        <div class="container_statut_demande">
+                                            <div className="rondStatut" style={{ "background-color": "#6c996c" }}></div>Vous avez proposé un devis à cette demande et l'entreprise l'a accepté
+                                            </div>
+                                    }
+                                    {this.state.infosDemandeStatut === "Attente-client" && this.state.infosDemandeSupp.date_ajout_devis === null &&
+                                        <div className="container_buttons_devis">
+                                            <span>Vous n'avez pas ajouté de devis</span>
+                                            <button className="fiche_demande_button_accepter_demande" onClick={() => { this.setState({ divPropositionDevis: true }) }}>Ajouter un devis</button>
+                                        </div>
+                                    }
+                                    {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.reference_devis &&
+                                        <div>
+                                            <p class="title_devis_fiche_demande">Vous avez ajouté un devis le {this.state.dateDevis}</p>
+                                            <div class="container_buttons_devis">
+                                                <a href={"https://s3.eu-west-3.amazonaws.com/spf-fournisseur-container/" + this.state.infosDemandeSupp.reference_devis}>
+                                                    <button class="fiche_demande_button_accepter_demande">Voir le devis</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                    {this.state.infosDemandeStatut !== "Attente-fournisseur" && this.state.infosDemandeSupp.devis_texte &&
+                                        <div>
+                                            <p class="title_devis_fiche_demande">Vous avez ajouté un devis le {this.state.dateDevis}</p>
+                                            <div class="container_buttons_devis">
+                                                <button class="fiche_demande_button_accepter_demande" onClick={() => { this.setState({ toggleDivDevisTexte: true }) }}>Voir le devis</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    {this.state.toggleDivDevisTexte === true &&
+                                        <div className="bg_devis_texte_fiche_demande">
+                                            <button class="button_close_div_devis_texte" onClick={() => { this.setState({ toggleDivDevisTexte: false }) }}><i class="fas fa-times"></i></button>
+                                            <div className="container_devis_texte_fiche_demande">
+                                                <p>Prix de l'entrée : {this.state.infosDemandeSupp.prix_entree}</p>
+                                                <p>Prix de la sortie : {this.state.infosDemandeSupp.prix_sortie}</p>
+                                                <p>Prix de stockage : {this.state.infosDemandeSupp.prix_stockage}</p>
+                                                <p>Commentaires : {this.state.infosDemandeSupp.devis_texte}</p>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
-                            
+
                                 <div class="fiche_demande_infos">
                                     {/*<span class="fiche_demande_sous_title">Résumé</span>*/}
                                     <div class='fiche_demande_container'>
@@ -491,17 +491,17 @@ class ficheDemande extends React.Component {
                                     </div>
                                 </div>
                                 <div class='fiche_demande_container'>
-                                        <div class="fiche_demande_container_details">
-                                            {/*<div className='fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div>*/}
-                                            <p className='fiche_demande_resume_title'>Brief</p>
-                                            <div className='fiche_demande_details_lign'>
-                                                <p className='fiche_demande_details_text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porta erat maximus sapien faucibus tincidunt. Aliquam posuere facilisis lectus, porttitor ultricies enim faucibus ut. Aliquam ac velit et justo sodales finibus. Quisque accumsan magna vel dolor porta, id feugiat orci eleifend. Phasellus vel rutrum lectus. Etiam venenatis orci velit. Nam sapien sapien, efficitur at maximus sed, pharetra vitae neque.</p>
-                                                <p className='fiche_demande_details_text'>Cras ac lacus sagittis, porttitor purus ac, volutpat magna. Integer sit amet tincidunt neque, eu sagittis nunc. Sed hendrerit turpis lobortis vehicula lacinia. Aliquam quis scelerisque ipsum. Curabitur mattis elit id fermentum maximus. In hac habitasse platea dictumst. Nulla vitae lectus sed tellus fringilla elementum. Vivamus sit amet dui quis dolor tempor volutpat quis in sapien. Vestibulum tincidunt augue tempus mi ultrices, vel eleifend sapien rhoncus. Pellentesque erat justo, faucibus vel rhoncus ac, dignissim et nunc. Curabitur ac tortor facilisis, rutrum sapien et, pharetra neque. Nunc ut tellus lectus. Maecenas mattis massa felis, vitae gravida tortor tincidunt sit amet. Sed at tellus ex. Nullam ut vehicula lacus, ac eleifend diam.</p>
-                                            </div>
+                                    <div class="fiche_demande_container_details">
+                                        {/*<div className='fiche_demande_resume_title'> Référence : {this.state.informations_demande.id_demande}</div>*/}
+                                        <p className='fiche_demande_resume_title'>Brief</p>
+                                        <div className='fiche_demande_details_lign'>
+                                            <p className='fiche_demande_details_text'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porta erat maximus sapien faucibus tincidunt. Aliquam posuere facilisis lectus, porttitor ultricies enim faucibus ut. Aliquam ac velit et justo sodales finibus. Quisque accumsan magna vel dolor porta, id feugiat orci eleifend. Phasellus vel rutrum lectus. Etiam venenatis orci velit. Nam sapien sapien, efficitur at maximus sed, pharetra vitae neque.</p>
+                                            <p className='fiche_demande_details_text'>Cras ac lacus sagittis, porttitor purus ac, volutpat magna. Integer sit amet tincidunt neque, eu sagittis nunc. Sed hendrerit turpis lobortis vehicula lacinia. Aliquam quis scelerisque ipsum. Curabitur mattis elit id fermentum maximus. In hac habitasse platea dictumst. Nulla vitae lectus sed tellus fringilla elementum. Vivamus sit amet dui quis dolor tempor volutpat quis in sapien. Vestibulum tincidunt augue tempus mi ultrices, vel eleifend sapien rhoncus. Pellentesque erat justo, faucibus vel rhoncus ac, dignissim et nunc. Curabitur ac tortor facilisis, rutrum sapien et, pharetra neque. Nunc ut tellus lectus. Maecenas mattis massa felis, vitae gravida tortor tincidunt sit amet. Sed at tellus ex. Nullam ut vehicula lacus, ac eleifend diam.</p>
                                         </div>
                                     </div>
-                 
-                            
+                                </div>
+
+
                             </div>
                         }
                     </div>

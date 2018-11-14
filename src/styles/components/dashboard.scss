@@ -67,6 +67,11 @@
 	display:inline-block;
 	margin-top:30px;
 	position:relative;
+	transition: 0.2s;
+}
+
+.dashboard_div_taux_remplissage:hover{
+	box-shadow: 0 7px 12px rgba(0,0,0,0.3);
 }
 
 .dashboard_red_element{
@@ -93,7 +98,7 @@
 
 .dashboard_div_fond_image_dispos{
 	z-index:90;
-	background-color:#16376D;
+	background-color:#4398C5;
 	position: absolute;
 	bottom:0;
 	left:0;
@@ -101,7 +106,7 @@
 }
 
 .dashboard_pourcentage_dispos{
-	color: #16376D;
+	color: #4398C5;
     font-size:25px;
     font-weight: 600;
     position: absolute;
@@ -135,13 +140,13 @@
 }
 
 .dashboard_logo_demandes_recues{
-	color:#16376D;
+	color:#4398C5;
 	font-size:40px;
 }
 
 .dashboard_phrase_demande_recues{
 	font-size:15px;
-	color:#16376d;
+	color:#4398C5;
 	line-height:45px;
 	font-weight:500;
 	margin-left:10px;
@@ -178,12 +183,12 @@
 	position:absolute;
 	width:100%;
 	height:100%;
-	background-color:#16376d;
+	background-color:#4398C5;
 	transform: translate(-100%);
 }
 
 .dashboard_infos_renseignes_pourcentage{
-	color:#16376d;
+	color:#287693;
 	font-weight:500;
 	font-size:15px;
 }
@@ -199,18 +204,26 @@
 .dashboard_infos_renseignes_button{
 	border:none;
 	padding:10px;
-	background-color:#16376D;
+	background-color:#4398C5;
+	border:1px solid #4398C5;
 	color:white;
 	font-size:15px;
 	border-radius:5px;
 	cursor:pointer;
 	font-weight:500;
 	box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+	transition:0.2s;
+}
+
+.dashboard_infos_renseignes_button:hover{
+	color:#4398C5;
+	background-color:white;
+	border:1px solid #4398C5;
 }
 
 .dashboard_title_categorie{
 	font-weight:600;
-	color:#666666;
+	color:#287693;
 	display:block;
 	width:100%;
 }
@@ -229,6 +242,11 @@
 	border:1px solid #dbdbdb;
 	width:100%;
 	cursor: pointer;
+	transition:0.2s;
+}
+
+.dashboard_clients_client_container:hover{
+	background-color:rgba(67, 152, 197,0.05)
 }
 
 
@@ -278,6 +296,10 @@
 	overflow:hidden;
 	transition: 0.5s;
 	box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dashboard_table_line:hover{
+	background-color:rgba(67, 152, 197,0.05)
 }
 
 .dashboard_table_item{
@@ -340,12 +362,18 @@
 	min-width:150px;
 	font-weight:500;
 	padding:10px;
-	border:1px solid #16376D;
-	color:#16376d;
+	border:1px solid #4398C5;
+	color:#4398C5;
 	background-color:white;
 	border-radius:5px;
 	cursor: pointer;
 	margin-left:20px;
+	transition:0.2s;
+}
+
+.dashboard_table_line_supp_button_accept:hover{
+	background-color:#4398C5;
+	color:white;
 }
 
 .dashboard_table_line_supp_button_voir_details{
@@ -354,11 +382,17 @@
 	font-weight:500;
 	margin-left:20px;
 	padding:10px;
-	border:1px solid #16376D;
+	border:1px solid #4398C5;
 	color:#fff;
-	background-color:#16376D;
+	background-color:#4398C5;
 	border-radius:5px;
+	transition:0.2s;
 	cursor: pointer;
+}
+
+.dashboard_table_line_supp_button_voir_details:hover{
+	background-color:white;
+	color:#4398C5;
 }
 
 .dashboard_table_line_toggleArrow{

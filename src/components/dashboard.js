@@ -241,18 +241,18 @@ class dashboard extends React.Component {
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
-                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
-                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
+                            <button className="sidebar_elements sidebar_element_selected" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> DASHBOARD</button>
+                            <button className="sidebar_page_element " onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> ENTREPOT</button>
+                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> COTATIONS <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
-                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>Cotations en cours</button>
-                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>Cotations passées</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>COTATIONS EN COURS</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>COTATIONS PASSEES</button>
                                 </div>
                             }
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> CLIENTS</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> FACTURES</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> PARAMETRES</button>
                         </div>
                     </div>
                     <div className="contenu_page">
@@ -284,7 +284,7 @@ class dashboard extends React.Component {
                                             if (this.state.informations_entrepot[disponibilité.temperature] === "Oui") {
                                                 this.state.number_true += 1;
                                                 return (
-                                                    <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage" onClick={()=>{this.props.history.push('/entrepots')}}>
+                                                    <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage" onClick={() => { this.props.history.push('/entrepots') }}>
                                                         <div className="dashboard_container_image_dispos">
                                                             <img src={logoDispo} className="dashboard_image_dispos" />
                                                             <div className="dashboard_div_fond_image_dispos" style={{ "height": disponibilité.disponibilite + "%" }}></div>
@@ -310,7 +310,7 @@ class dashboard extends React.Component {
                                                     console.log("Infos non renseignés" + number_false)
                                                     this.state.number_true += 1;
                                                     return (
-                                                        <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage" onClick={()=>{this.props.history.push('/entrepots')}}>
+                                                        <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage" onClick={() => { this.props.history.push('/entrepots') }}>
                                                             <div className="dashboard_container_image_dispos">
                                                                 <img src={logoDispo} className="dashboard_image_dispos" />
                                                                 <div className="dashboard_div_fond_image_dispos" style={{ "height": 0 + "%" }}></div>
@@ -333,7 +333,7 @@ class dashboard extends React.Component {
 
                                 {this.state.demandes.length > 0 &&
                                     <div className="dashboard_cotations">
-                                        <p className="dashboard_title_categorie">Cotations en attentes ({this.state.demandes.length})</p>
+                                        <p className="dashboard_title_categorie">COTATIONS EN ATTENTE ({this.state.demandes.length})</p>
                                         <div class="dashboard_tableau_demandes">
                                             <div className="dashboard_table_head">
                                                 <div className="dashboard_table_item statut_column">Statut</div>
@@ -404,7 +404,7 @@ class dashboard extends React.Component {
 
                                 {this.state.clients.length > 0 &&
                                     <div className="dashboard_container_clients">
-                                        <p className="dashboard_title_categorie">Mes clients ({this.state.clients.length})</p>
+                                        <p className="dashboard_title_categorie">MES CLIENTS ({this.state.clients.length})</p>
                                         {this.state.clients.map((client, i) =>
                                             <div className="dashboard_clients_client_container" onClick={() => { this.props.history.push('/fiche-client/' + client.id_demande) }}>
                                                 <div className="dashboard_clients_container_infos">

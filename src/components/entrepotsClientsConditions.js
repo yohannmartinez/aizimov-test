@@ -17,22 +17,22 @@ class entrepotsClientsConditions extends React.Component {
             userId: null,
             user: '',
             user_infos: '',
-            informations_entrepot: 'nada', 
+            informations_entrepot: 'nada',
             informations_entrepot_initial: 'nada',
-            informations_entrepot_nouveau: '',  
+            informations_entrepot_nouveau: '',
             toogleCotation: false,
-            toggleDeconnexion : false,
-            confirm_changes: false, 
+            toggleDeconnexion: false,
+            confirm_changes: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.toogleCotation = this.toogleCotation.bind(this);
         this.toggleDeconnexion = this.toggleDeconnexion.bind(this);
         this.deconnexion = this.deconnexion.bind(this);
-        this.getState = this.getState.bind(this); 
-        this.handleChangeInformationsEntrepot = this.handleChangeInformationsEntrepot.bind(this); 
-        this.confirmModifications = this.confirmModifications.bind(this); 
-        this.cancelModifications = this.cancelModifications.bind(this); 
-        this.handleChangeInformationsEntrepotCheckbox = this.handleChangeInformationsEntrepotCheckbox.bind(this); 
+        this.getState = this.getState.bind(this);
+        this.handleChangeInformationsEntrepot = this.handleChangeInformationsEntrepot.bind(this);
+        this.confirmModifications = this.confirmModifications.bind(this);
+        this.cancelModifications = this.cancelModifications.bind(this);
+        this.handleChangeInformationsEntrepotCheckbox = this.handleChangeInformationsEntrepotCheckbox.bind(this);
     }
 
     getState() {
@@ -54,12 +54,12 @@ class entrepotsClientsConditions extends React.Component {
                     this.setState({ user: user.data[0] }, () => {
                         console.log('aaaa')
 
-                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosEntrepot', {params: {id_compte: this.state.user.id_compte } }).then(response => {
+                        axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getInfosEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             console.log(response.data[0])
                             this.setState({
-                                informations_entrepot: response.data[0], informations_entrepot_initial: response.data[0]                      
-                            })            
-                                                                                                                                                                                                                                                                                                                                                                                                 
+                                informations_entrepot: response.data[0], informations_entrepot_initial: response.data[0]
+                            })
+
 
                         })
                     })
@@ -72,11 +72,11 @@ class entrepotsClientsConditions extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    handleChangeInformationsEntrepot(event){
+    handleChangeInformationsEntrepot(event) {
         let informationsCopy = Object.assign({}, this.state.informations_entrepot);
         informationsCopy[event.target.name] = event.target.value;
         let informationsNewCopy = Object.assign({}, this.state.informations_entrepot_nouveau);
-        informationsNewCopy[event.target.name] = event.target.value;        
+        informationsNewCopy[event.target.name] = event.target.value;
         this.setState({ informations_entrepot: informationsCopy, informations_entrepot_nouveau: informationsNewCopy, confirm_changes: true });
     }
 
@@ -89,7 +89,7 @@ class entrepotsClientsConditions extends React.Component {
         let informationsCopy = Object.assign({}, this.state.informations_entrepot);
         informationsCopy[event.target.name] = checked;
         let informationsNewCopy = Object.assign({}, this.state.informations_entrepot_nouveau);
-        informationsNewCopy[event.target.name] = checked;        
+        informationsNewCopy[event.target.name] = checked;
         this.setState({ informations_entrepot: informationsCopy, informations_entrepot_nouveau: informationsNewCopy, confirm_changes: true });
     }
 
@@ -163,105 +163,105 @@ class entrepotsClientsConditions extends React.Component {
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/dashboard')}}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_page_element sidebar_element_selected" onClick={()=>{this.props.history.push('/entrepots')}}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
-                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> DASHBOARD</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> ENTREPOT</button>
+                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> COTATIONS <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
-                                    <button className="sidebar_sous_elements" onClick={()=>{this.props.history.push('/cotationsEnCours')}}>Cotations en cours</button>
-                                    <button className="sidebar_sous_elements" onClick={()=>{this.props.history.push('/cotationsPassees')}}>Cotations passées</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>COTATIONS EN COURS</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>COTATIONS PASSEES</button>
                                 </div>
                             }
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/clients')}}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/factures')}}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
-                            <button className="sidebar_elements" onClick={()=>{this.props.history.push('/parametres')}}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> CLIENTS</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> FACTURES</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> PARAMETRES</button>
                         </div>
                     </div>
                     <div className="contenu_page_full_width">
-                        <div className = 'entrepot_onglets_container'>
-                            <div onClick={() => { this.props.history.push('/entrepots') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
+                        <div className='entrepot_onglets_container'>
+                            <div onClick={() => { this.props.history.push('/entrepots') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
                                 Informations principales
-                            </div> 
-                            <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right '>
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-stockage') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right '>
                                 Stockage
-                            </div>    
-                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className = 'entrepot_onglet_non_selectionne entrepot_onglet_border_right '>
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-securite') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right '>
                                 Informations bâtiment
-                            </div>   
-                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className = 'entrepot_onglet_non_selectionne '>
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-contact') }} className='entrepot_onglet_non_selectionne '>
                                 Personnes à contacter
-                            </div>       
-                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className = 'entrepot_onglet_selectionne '>
+                            </div>
+                            <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className='entrepot_onglet_selectionne '>
                                 Conditions
-                            </div>                                                                                                
+                            </div>
                         </div>
                         {this.state.informations_entrepot != 'nada' &&
-                        <div className = 'contenu_page'>
-                            <div className = 'entrepot_clients_main_container'>    
-                                <div className = 'entrepot_clients_container_gauche'> 
+                            <div className='contenu_page'>
+                                <div className='entrepot_clients_main_container'>
+                                    <div className='entrepot_clients_container_gauche'>
 
-                                    <div className = 'entrepot_box entrepot_box_temperature_stockage div_gauche'> 
-                                        <p className="entrepot_box_title"> CONDITIONS MINIMALES 
-                                        </p>  
-                                        <div className='entrepot_clients_lign'>                                        
-                                            <div className = 'entrepot_clients_label'> 
+                                        <div className='entrepot_box entrepot_box_temperature_stockage div_gauche'>
+                                            <p className="entrepot_box_title"> CONDITIONS MINIMALES
+                                        </p>
+                                            <div className='entrepot_clients_lign'>
+                                                <div className='entrepot_clients_label'>
                                                     Volume minimal
-                                            </div>    
-                                            <input className = 'entrepot_input entrepot_clients_input' value={this.state.informations_entrepot.commande_min_taille} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_taille'/>                                                                                                          
-                                        </div>
-                                        <div className='entrepot_clients_lign'>                                        
-                                            <div className = 'entrepot_clients_label'> 
+                                            </div>
+                                                <input className='entrepot_input entrepot_clients_input' value={this.state.informations_entrepot.commande_min_taille} onChange={this.handleChangeInformationsEntrepot} name='commande_min_taille' />
+                                            </div>
+                                            <div className='entrepot_clients_lign'>
+                                                <div className='entrepot_clients_label'>
                                                     Durée minimale
-                                            </div>    
-                                            <input className = 'entrepot_input entrepot_clients_input' value={this.state.informations_entrepot.commande_min_duree} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_duree'/>                                                                                                          
-                                        </div>  
-                                        <div className='entrepot_clients_lign'>                                        
-                                            <div className = 'entrepot_clients_label'> 
+                                            </div>
+                                                <input className='entrepot_input entrepot_clients_input' value={this.state.informations_entrepot.commande_min_duree} onChange={this.handleChangeInformationsEntrepot} name='commande_min_duree' />
+                                            </div>
+                                            <div className='entrepot_clients_lign'>
+                                                <div className='entrepot_clients_label'>
                                                     Valeur minimale
-                                            </div>    
-                                            <input className = 'entrepot_input entrepot_clients_input' value={this.state.informations_entrepot.commande_min_valeur} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_valeur'/>                                                                                                          
-                                        </div> 
-                                        <div className='entrepot_clients_lign'>                                        
-                                            <div className = 'entrepot_clients_label'> 
+                                            </div>
+                                                <input className='entrepot_input entrepot_clients_input' value={this.state.informations_entrepot.commande_min_valeur} onChange={this.handleChangeInformationsEntrepot} name='commande_min_valeur' />
+                                            </div>
+                                            <div className='entrepot_clients_lign'>
+                                                <div className='entrepot_clients_label'>
                                                     Autres contraintes
-                                            </div>    
-                                            <textarea className = 'entrepot_input entrepot_clients_input_textarea' value={this.state.informations_entrepot.commande_min_autre_contrainte} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_autre_contrainte'/>                                                                                                          
-                                        </div>                                                                                                                       
-                                    </div>    
-                                </div>   
-                                <div style = {{flex: '0.12'}}>
-                                </div>                                 
-                                <div className = 'entrepot_clients_container_droite'> 
+                                            </div>
+                                                <textarea className='entrepot_input entrepot_clients_input_textarea' value={this.state.informations_entrepot.commande_min_autre_contrainte} onChange={this.handleChangeInformationsEntrepot} name='commande_min_autre_contrainte' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style={{ flex: '0.12' }}>
+                                    </div>
+                                    <div className='entrepot_clients_container_droite'>
 
-                                    <div className = "entrepot_box entrepot_box_temperature_stockage div_droite"> 
-                                        <p className="entrepot_box_title"> TYPES DE DEMANDES ACCEPTEES
-                                        </p>  
-                                        <div className ="entrepot_lign_checkbox">
-                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="stock_mort_possible" value={this.state.informations_entrepot.stock_mort_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.stock_mort_possible}/>  
-                                            <span className = "entrepot_checkbox_input"> Stock mort </span>
-                                        </div> 
-                                        <div className ="entrepot_lign_checkbox">
-                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="fort_taux_rotation_possible" value={this.state.informations_entrepot.fort_taux_rotation_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.fort_taux_rotation_possible}/>  
-                                            <span className = "entrepot_checkbox_input"> Fort taux de rotation </span>
-                                        </div> 
-                                        <div className ="entrepot_lign_checkbox">
-                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="preparation_commande_possible" value={this.state.informations_entrepot.preparation_commande_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.preparation_commande_possible}/>  
-                                            <span className = "entrepot_checkbox_input"> Stockage avec préparation de commande </span>
-                                        </div> 
-                                        <div className ="entrepot_lign_checkbox">
-                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="acces_ponctuel" value={this.state.informations_entrepot.acces_ponctuel} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
-                                            <span className = "entrepot_checkbox_input"> Accès ponctuel à l'entrepôt pour le client </span>
-                                        </div> 
-                                        <div className ="entrepot_lign_checkbox">
-                                            <input type="checkbox" className = "entrepot_checkbox_clients" name="sous_loc_possible" value={this.state.informations_entrepot.sous_loc_possible} onChange = {this.handleChangeInformationsEntrepotCheckbox}/>  
-                                            <span className = "entrepot_checkbox_input"> Sous-location d'une partie de l'entrepôt </span>
-                                        </div>                                                                                                                                                                                                            
-                                    </div> 
+                                        <div className="entrepot_box entrepot_box_temperature_stockage div_droite">
+                                            <p className="entrepot_box_title"> TYPES DE DEMANDES ACCEPTEES
+                                        </p>
+                                            <div className="entrepot_lign_checkbox">
+                                                <input type="checkbox" className="entrepot_checkbox_clients" name="stock_mort_possible" value={this.state.informations_entrepot.stock_mort_possible} onChange={this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.stock_mort_possible} />
+                                                <span className="entrepot_checkbox_input"> Stock mort </span>
+                                            </div>
+                                            <div className="entrepot_lign_checkbox">
+                                                <input type="checkbox" className="entrepot_checkbox_clients" name="fort_taux_rotation_possible" value={this.state.informations_entrepot.fort_taux_rotation_possible} onChange={this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.fort_taux_rotation_possible} />
+                                                <span className="entrepot_checkbox_input"> Fort taux de rotation </span>
+                                            </div>
+                                            <div className="entrepot_lign_checkbox">
+                                                <input type="checkbox" className="entrepot_checkbox_clients" name="preparation_commande_possible" value={this.state.informations_entrepot.preparation_commande_possible} onChange={this.handleChangeInformationsEntrepotCheckbox} defaultChecked={this.state.informations_entrepot.preparation_commande_possible} />
+                                                <span className="entrepot_checkbox_input"> Stockage avec préparation de commande </span>
+                                            </div>
+                                            <div className="entrepot_lign_checkbox">
+                                                <input type="checkbox" className="entrepot_checkbox_clients" name="acces_ponctuel" value={this.state.informations_entrepot.acces_ponctuel} onChange={this.handleChangeInformationsEntrepotCheckbox} />
+                                                <span className="entrepot_checkbox_input"> Accès ponctuel à l'entrepôt pour le client </span>
+                                            </div>
+                                            <div className="entrepot_lign_checkbox">
+                                                <input type="checkbox" className="entrepot_checkbox_clients" name="sous_loc_possible" value={this.state.informations_entrepot.sous_loc_possible} onChange={this.handleChangeInformationsEntrepotCheckbox} />
+                                                <span className="entrepot_checkbox_input"> Sous-location d'une partie de l'entrepôt </span>
+                                            </div>
+                                        </div>
 
 
-                                </div> 
+                                    </div>
 
-                                                                    {/* <div className = 'entrepot_infos_title_box'> 
+                                    {/* <div className = 'entrepot_infos_title_box'> 
                                         Conditions minimales
                                     </div> 
                                     <div className = 'entrepot_box '> 
@@ -290,15 +290,15 @@ class entrepotsClientsConditions extends React.Component {
                                             <input className = 'entrepots_infos_input entrepot_min_commande_input' value={this.state.informations_entrepot.commande_min_autre_contrainte} onChange={this.handleChangeInformationsEntrepot}  name = 'commande_min_autre_contrainte'/> 
                                         </div>                                                                                     
                                     </div>  */}
-                            </div>                         
-                        </div>     
-                        }       
-                        <button onClick = {this.getState} > Get State </button> 
+                                </div>
+                            </div>
+                        }
+                        <button onClick={this.getState} > Get State </button>
 
-                    </div> 
+                    </div>
                     {this.state.confirm_changes === true &&
                         <div class="container_action_modification">
-                            <span className = 'container_action_modification_text'>Vous avez effectué des modifications !</span>
+                            <span className='container_action_modification_text'>Vous avez effectué des modifications !</span>
                             <button class="container_action_modification_button" onClick={this.confirmModifications}>Confirmer</button>
                             <button class="container_action_modification_button_annuler" onClick={this.cancelModifications}>Annuler</button>
                         </div>

@@ -68,7 +68,7 @@ class entrepotsContact extends React.Component {
                             // axios.get('http://localhost:3000/getIdEntrepot', { params: { id_compte: this.state.user.id_compte } }).then(response => {
                             this.setState({ id_entrepot: response.data[0].id_entrepot }, () => {
                                 axios.get('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
-                                // axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
+                                    // axios.get('http://localhost:3000/getContactsEntrepots', { params: { id_entrepot: this.state.id_entrepot } }).then(response => {
                                     this.setState({ infosContact: response.data });
                                 });
                             });
@@ -150,8 +150,8 @@ class entrepotsContact extends React.Component {
     ajouterContact() {
         this.setState({ divAjouterContact: false })
         try {
-            var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/addContact', {            
-            // var response = fetch('http://localhost:3000/addContact', {
+            var response = fetch('http://spfplatformserver-env.n7twcr5kkg.us-east-1.elasticbeanstalk.com/addContact', {
+                // var response = fetch('http://localhost:3000/addContact', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -166,7 +166,7 @@ class entrepotsContact extends React.Component {
                     actif: 'Oui',
                 }),
             }).then(
-                this.state.infosContact.push({ id: this.state.infosContact[this.state.infosContact.length -1].id +1 ,id_entrepot : this.state.id_entrepot, nom: this.state.infos_ajout_contact.nom, prenom: this.state.infos_ajout_contact.prenom, mail: this.state.infos_ajout_contact.mail, telephone_fixe: this.state.infos_ajout_contact.telephone_fixe, telephone_portable: this.state.infos_ajout_contact.telephone_portable, poste: this.state.infos_ajout_contact.poste }),
+                this.state.infosContact.push({ id: this.state.infosContact[this.state.infosContact.length - 1].id + 1, id_entrepot: this.state.id_entrepot, nom: this.state.infos_ajout_contact.nom, prenom: this.state.infos_ajout_contact.prenom, mail: this.state.infos_ajout_contact.mail, telephone_fixe: this.state.infos_ajout_contact.telephone_fixe, telephone_portable: this.state.infos_ajout_contact.telephone_portable, poste: this.state.infos_ajout_contact.poste }),
                 console.log(this.state.infosContact)
 
             )
@@ -202,18 +202,18 @@ class entrepotsContact extends React.Component {
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
-                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> DASHBOARD</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> ENTREPOT</button>
+                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> COTATIONS <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
-                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>Cotations en cours</button>
-                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>Cotations passées</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>COTATIONS EN COURS</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>COTATIONS PASSEES</button>
                                 </div>
                             }
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> CLIENTS</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> FACTURES</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> PARAMETRES</button>
                         </div>
                     </div>
                     <div className="contenu_page_full_width">

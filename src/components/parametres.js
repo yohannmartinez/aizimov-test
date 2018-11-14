@@ -233,18 +233,18 @@ class parametres extends React.Component {
                 <div className="container_page">
                     <div className="sidebar" id="sidebar">
                         <div className="sidebar_element_container">
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> Dashboard</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> Entrepots</button>
-                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> Cotations <i class="cotation_icon fas fa-play"></i></button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/dashboard') }}><i class=" sidebar_element_icon fas fa-tachometer-alt"></i> DASHBOARD</button>
+                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/entrepots') }}><i class=" sidebar_element_icon fas fa-warehouse"></i> ENTREPOT</button>
+                            <button className="sidebar_elements" onClick={this.toogleCotation}><i class=" sidebar_element_icon far fa-question-circle"></i> COTATIONS <i class="cotation_icon fas fa-play"></i></button>
                             {this.state.toogleCotation === true &&
                                 <div>
-                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>Cotations en cours</button>
-                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>Cotations passées</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsEnCours') }}>COTATIONS EN COURS</button>
+                                    <button className="sidebar_sous_elements" onClick={() => { this.props.history.push('/cotationsPassees') }}>COTATIONS PASSEES</button>
                                 </div>
                             }
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> Clients</button>
-                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> Factures</button>
-                            <button className="sidebar_page_element sidebar_element_selected" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> Paramètres</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/clients') }}><i class=" sidebar_element_icon fas fa-clipboard-list"></i> CLIENTS</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/factures') }}><i class=" sidebar_element_icon fas fa-file-invoice-dollar"></i> FACTURES</button>
+                            <button className="sidebar_elements" onClick={() => { this.props.history.push('/parametres') }}><i class=" sidebar_element_icon fas fa-sliders-h"></i> PARAMETRES</button>
                         </div>
                     </div>
 
@@ -330,8 +330,8 @@ class parametres extends React.Component {
                             {this.state.editFactureInfos === true &&
                                 <div className="parametres_infos_sous_container">
                                     <div className="parametres_infos_column">
-                                    <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">SIRET :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="siret" placeholder="SIRET" value={this.state.infosFacturation.siret} /></div>
-                                    <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">TVA : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="tva" placeholder="TVA" value={this.state.infosFacturation.tva} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">SIRET :</p> <input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="siret" placeholder="SIRET" value={this.state.infosFacturation.siret} /></div>
+                                        <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">TVA : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="tva" placeholder="TVA" value={this.state.infosFacturation.tva} /></div>
                                         <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">BIC : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="bic" placeholder="BIC" value={this.state.infosFacturation.bic} /></div>
                                         <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title">IBAN : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="iban" placeholder="IBAN" value={this.state.infosFacturation.iban} /></div>
                                         <div className="container_infos_modifier_contact"><p className="container_infos_modifier_contact_title"> Banque : </p><input className="parametres_infos_column_input" onChange={this.handleChange_facturation_info} name="banque" placeholder="banque" value={this.state.infosFacturation.banque} /></div>
@@ -349,7 +349,7 @@ class parametres extends React.Component {
 
                         {this.state.toggleDivChangePassword === true &&
                             <div className="parametres_background_change_password">
-                                <button class="button_close_container_change_password" onClick={()=>{this.setState({toggleDivChangePassword : false}) }}><i class="fas fa-times"></i></button>
+                                <button class="button_close_container_change_password" onClick={() => { this.setState({ toggleDivChangePassword: false }) }}><i class="fas fa-times"></i></button>
                                 <div className="parametres_container_change_password">
                                     <p>Adresse Mail</p>
                                     <input onChange={this.handleChangeNewPassword} name="mail" value={this.state.change_password.mail} className="parametres_infos_column_input" placeholder="adresse mail" />

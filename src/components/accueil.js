@@ -185,7 +185,6 @@ class accueil extends React.Component {
                     alert('prenom');
                 } else if (this.state.compte_creation_mail.length === 0 || this.state.compte_creation_mail.indexOf("@") == -1 || this.state.compte_creation_mail.indexOf(".") == -1) {
                     alert('mail');
-                    console.log(this.state.compte_creation_mail.indexOf("."))
                 } else if (this.state.compte_creation_telephone.length !== 10) {
                     alert('telephone');
                 } else if (this.state.compte_creation_password.length < 8 || !this.state.compte_creation_password.match(/[A-Z]/) || !this.state.compte_creation_password.match(/[!a-z]/)) {
@@ -202,7 +201,6 @@ class accueil extends React.Component {
                     })
                     /* si tout est bon, on passe à la deuxieme étape */
                     this.setState({ etape1: true })
-                    console.log(this.state.etape1)
                 }
             } else {
                 /* adresse mail et siret pas dispo */
@@ -218,8 +216,6 @@ class accueil extends React.Component {
 
     handleChangeOptions(selectedOption) {
         this.setState({ selectedOptions: selectedOption }, () => {
-            console.log(this.state.selectedOptions);
-            console.log(selectedOption);
         });
     }
 
@@ -240,7 +236,6 @@ class accueil extends React.Component {
                 }),
             })
             if (response.status >= 200 && response.status < 300) {
-                console.log('tout est bon')
             }
         } catch (errors) {
             alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
@@ -264,7 +259,6 @@ class accueil extends React.Component {
                 }),
             })
             if (response.status >= 200 && response.status < 300) {
-                console.log('tout est bon')
             }
         } catch (errors) {
             alert("Ca n'a pas marché pour l'ajout de la demande ", errors);
