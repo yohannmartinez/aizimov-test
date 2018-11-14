@@ -125,7 +125,7 @@ class Contact extends React.Component {
             <div>
               <div class="entrepot_contact_container_bleu">
                 <div className="entrepot_contact_icone_user"><i class="fas fa-user"></i></div>
-                <button className="entrepot_contact_modifier_contact" onClick={this.afficherInfosSupp}><i cl'ass="fas fa-pen"></i></button>
+                <button className="entrepot_contact_modifier_contact" onClick={this.afficherInfosSupp}><i class="fas fa-pen"></i></button>
                 <button className="entrepot_contact_supprimer_contact" onClick={this.deleteContact}><i class="fas fa-trash"></i></button>
               </div>
               <div className="entrepot_contact_infos_contact">
