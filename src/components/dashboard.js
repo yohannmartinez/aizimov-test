@@ -284,7 +284,7 @@ class dashboard extends React.Component {
                                             if (this.state.informations_entrepot[disponibilité.temperature] === "Oui") {
                                                 this.state.number_true += 1;
                                                 return (
-                                                    <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage">
+                                                    <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage" onClick={()=>{this.props.history.push('/entrepots')}}>
                                                         <div className="dashboard_container_image_dispos">
                                                             <img src={logoDispo} className="dashboard_image_dispos" />
                                                             <div className="dashboard_div_fond_image_dispos" style={{ "height": disponibilité.disponibilite + "%" }}></div>
@@ -310,7 +310,7 @@ class dashboard extends React.Component {
                                                     console.log("Infos non renseignés" + number_false)
                                                     this.state.number_true += 1;
                                                     return (
-                                                        <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage">
+                                                        <div className="dashboard_div_taux_remplissage" id="dashboard_div_taux_remplissage" onClick={()=>{this.props.history.push('/entrepots')}}>
                                                             <div className="dashboard_container_image_dispos">
                                                                 <img src={logoDispo} className="dashboard_image_dispos" />
                                                                 <div className="dashboard_div_fond_image_dispos" style={{ "height": 0 + "%" }}></div>
@@ -365,10 +365,11 @@ class dashboard extends React.Component {
                                                             <span>Début: {demande.date_debut}</span>
                                                         </div>
                                                         <div className="dashboard_table_line_action_demande_container_right">
+
+                                                            <button className="dashboard_table_line_supp_button_voir_details" onClick={() => { this.props.history.push('/fiche-demande/' + demande.id_demande) }}>Voir plus</button>
                                                             {demande.statut === "Attente-fournisseur" &&
                                                                 <button className="dashboard_table_line_supp_button_accept" onClick={() => { this.accepterDemande(demande.id_demande, i) }}>Accepter</button>
                                                             }
-                                                            <button className="dashboard_table_line_supp_button_voir_details" onClick={() => { this.props.history.push('/fiche-demande/' + demande.id_demande) }}>Voir plus</button>
                                                         </div>
                                                     </div>
                                                 </div>
