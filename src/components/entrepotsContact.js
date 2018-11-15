@@ -184,7 +184,7 @@ class entrepotsContact extends React.Component {
 
         return (
             <div>
-                <div className="navbar">
+                <div className="navbar" id="navbar_top">
                     {this.state.toggleDeconnexion === true &&
                         <div class="container_deconnexion">
                             <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>

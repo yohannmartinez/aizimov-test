@@ -8,22 +8,19 @@
     text-align: center;
     font-size: 0.8rem;
     cursor: pointer;
-    /* margin-top: 20px; */
     float: left;
     height: 60px;
-    width: 70%;
-    margin-left:10px;
-    /* margin-left: 50px; */
+    width: fit-content;
+    margin-left: 10px;
 }
 
 .entrepot_onglet_selectionne{
-    flex: 1; 
     background: white;
     font-weight: 650;
-    border-bottom:4px solid #287693;
-    color:#287693;
-    line-height:60px;
-    padding:0 10px 0 10px;
+    border-bottom: 4px solid #287693;
+    color: #287693;
+    line-height: 60px;
+    padding: 0 40px 0 40px;
 }
 
 .entrepot_onglet_non_selectionne:hover{
@@ -33,11 +30,11 @@
 }
 
 .entrepot_onglet_non_selectionne{
-    flex: 1; 
     font-weight: 400;
-    color:rgb(148, 148, 148);
-    border-bottom:2px solid white;
-    line-height:60px
+    color: #949494;
+    border-bottom: 2px solid white;
+    padding: 0 40px 0 40px;
+    line-height: 60px;
 }
 
 
@@ -118,4 +115,16 @@
 .entrepot_explication_link{
     font-weight: 700; 
     font-style: italic; 
+}
+
+@media(max-width:1425px){
+    .entrepot_onglet_non_selectionne, .entrepot_onglet_selectionne{
+        padding:0 20px 0 20px;
+    }
+}
+
+@media(max-width:1185px){
+    .entrepot_onglet_non_selectionne, .entrepot_onglet_selectionne{
+        font-size:11px;
+    }
 }

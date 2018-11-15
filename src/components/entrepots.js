@@ -669,7 +669,7 @@ class entrepots extends React.Component {
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
                 {/* <link rel="stylesheet" href="https://unpkg.com/react-rangeslider/umd/rangeslider.min.css" /> */}
 
-                <div className="navbar">
+                <div className="navbar" id="navbar_top">
                     {this.state.toggleDeconnexion === true &&
                         <div class="container_deconnexion">
                             <button className="container_deconnexion_button" onClick={this.deconnexion}>Deconnexion</button>
@@ -692,7 +692,7 @@ class entrepots extends React.Component {
                             Informations bâtiment
                             </div>
                         <div onClick={() => { this.props.history.push('/entrepots-contact') }} className='entrepot_onglet_non_selectionne entrepot_onglet_border_right'>
-                            Personnes à contacter
+                            Contacts
                             </div>
                         <div onClick={() => { this.props.history.push('/entrepots-clients-conditions') }} className='entrepot_onglet_non_selectionne '>
                             Conditions
