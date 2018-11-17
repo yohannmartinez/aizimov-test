@@ -1,27 +1,8 @@
 @import './base/settings';
 @import './components/accueil';
-@import './components/connexion.scss' ;
-@import './components/globalSyle.scss' ;
-@import './components/notVerify.scss';
-@import './components//parametres.scss';
-@import './components/cotationsEnCours.scss';
-@import './components/ficheDemande.scss';
-@import './components/ajoutFacture.scss';
-@import './components/ficheEntrepot/entrepotContact.scss'; 
-@import './components/ficheEntrepot/entrepotGlobal.scss'; 
-@import './components/ficheEntrepot/entrepotSecurite.scss'; 
-@import './components/ficheEntrepot/entrepotStockage.scss'; 
-@import './components/ficheEntrepot/entrepotInfos'; 
-@import './components/entrepot.scss'; 
-@import './components/cardClient.scss'; 
-@import './components/facture.scss';
-@import './components/ficheClient.scss';
-@import './components/ficheEntrepot/disponibiliteSlider.scss';
-@import './components/ficheEntrepot/entrepotClientsConditions.scss';
-@import './components/dashboard.scss';
-// @import './components/entrepotClientsConditions.scss'; 
 
-@import "../../node_modules/react-day-picker/lib/style"; 
-// @import "../../node_modules/react-rangeslider/lib/index"; 
 
+@import "../../node_modules/react-day-picker/lib/style";  
+
+/* import pour la font */
 @import url('https://fonts.googleapis.com/css?family=Poppins')

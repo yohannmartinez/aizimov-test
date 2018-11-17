@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import AppRouter from './routers/routes';
 require('./styles/styles.scss');
 import  {Provider}  from 'react-redux';
-import store from './store/store'
-// import {createStore, combineReducers } from 'redux';
+import store from './config/store'
 import 'tachyons';
 
 
@@ -17,6 +16,6 @@ const App = (
 );
 
 
-ReactDOM.render(<AppRouter />, document.getElementById('root'));
+ReactDOM.render(App, document.getElementById('root'));
 
 
